@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Dto\Account\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Mappings\" />
     <Folder Include="Features\" />
-    <Folder Include="ViewModel\" />
   </ItemGroup>
 
   <ItemGroup>

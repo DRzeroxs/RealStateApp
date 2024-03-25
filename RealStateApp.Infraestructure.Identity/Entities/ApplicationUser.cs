@@ -11,8 +11,8 @@ namespace RealStateApp.Infraestructure.Identity.Entities
     {
         public string FirstName { get; set; }   
         public string LastName { get; set; }
-        public string ImgUrl { get; set; }  
-        public string UserName {  get; set; }   
-
+        public string ImgUrl { get; set; }
+        public bool IsActive { get; set; }
+        public string TypeOfUser { get; set; }  
     }
 }

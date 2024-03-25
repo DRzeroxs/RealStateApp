@@ -20,3 +20,13 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.formulario__registro input {
+    border: none;
+    border-bottom: 1px solid;
+}
+
+.formulario__registro {
+    border: 5px solid #0B5ED7;
+    padding: 35px;
+}

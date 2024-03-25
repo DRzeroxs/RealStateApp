@@ -26,9 +26,11 @@ namespace RealStateApp.Infraestructure.Identity.Seeds
 
             defaultUser.EmailConfirmed = true;
 
-            defaultUser.PhoneNumber = "8093334554";
+            defaultUser.ImgUrl = "asas";
 
-            defaultUser.ImgUrl = string.Empty;  
+            defaultUser.TypeOfUser = "Admin";
+            
+            defaultUser.IsActive = true;    
 
             defaultUser.PhoneNumberConfirmed = true;
 

@@ -1,6 +1,7 @@
 using RealStateApp.Infraestructure.Persistence;
 using RealStateApp.Infraestructure.Identity;
 using RealStateApp.Infraestructure.Identity.Seeds;
+using RealStateApp.Infraestructure.Shared;
 using RealStateApp.Core.Application;
 
 namespace RealStateApp
@@ -15,6 +16,7 @@ namespace RealStateApp
             builder.Services.AddControllersWithViews();
             builder.Services.AddPersistenceLayer(builder.Configuration);
             builder.Services.AddIdentityLayer(builder.Configuration);
+            builder.Services.AddSharedInfraestrucutre(builder.Configuration);
             builder.Services.AddApplicationLayer();
             var app = builder.Build();
 

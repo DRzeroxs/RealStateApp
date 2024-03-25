@@ -17,7 +17,7 @@ namespace RealStateApp.Infraestructure.Identity.Seeds
 
             defaultUser.FirstName = "Pedro";
 
-            defaultUser.LastName = "Encarnacion";
+            defaultUser.LastName = "Martinez";
 
             defaultUser.UserName = "Pedro";
 
@@ -28,6 +28,10 @@ namespace RealStateApp.Infraestructure.Identity.Seeds
             defaultUser.PhoneNumber = "8093334554";
 
             defaultUser.ImgUrl = string.Empty;
+
+            defaultUser.TypeOfUser = "Agente";
+
+            defaultUser.IsActive = true;
 
             defaultUser.PhoneNumberConfirmed = true;
 

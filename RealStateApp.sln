@@ -13,13 +13,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{B2338E7E-0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestructure", "Infraestructure", "{8888F647-DD93-4741-9B7F-B6814CE25660}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealStateApp.Core.Domain", "RealStateApp.Core.Domain\RealStateApp.Core.Domain.csproj", "{E34BFD89-ED5B-4377-B097-A58A8EFDBA6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealStateApp.Core.Domain", "RealStateApp.Core.Domain\RealStateApp.Core.Domain.csproj", "{E34BFD89-ED5B-4377-B097-A58A8EFDBA6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealStateApp.Core.Application", "RealStateApp.Core.Application\RealStateApp.Core.Application.csproj", "{211D7787-6215-4E01-8860-DBA65BF06F6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealStateApp.Core.Application", "RealStateApp.Core.Application\RealStateApp.Core.Application.csproj", "{211D7787-6215-4E01-8860-DBA65BF06F6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealStateApp.Infraestructure.Identity", "RealStateApp.Infraestructure.Identity\RealStateApp.Infraestructure.Identity.csproj", "{1E000D43-BC18-468A-AB3B-88CABEA420E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealStateApp.Infraestructure.Identity", "RealStateApp.Infraestructure.Identity\RealStateApp.Infraestructure.Identity.csproj", "{1E000D43-BC18-468A-AB3B-88CABEA420E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealStateApp.Infraestructure.Persistence", "RealStateApp.Infraestructure.Persistence\RealStateApp.Infraestructure.Persistence.csproj", "{F3C930FB-3684-4E3D-956C-E73274CD0C2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealStateApp.Infraestructure.Persistence", "RealStateApp.Infraestructure.Persistence\RealStateApp.Infraestructure.Persistence.csproj", "{F3C930FB-3684-4E3D-956C-E73274CD0C2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealStateApp.Infraestructure.Shared", "RealStateApp.Infraestructure.Shared\RealStateApp.Infraestructure.Shared.csproj", "{FFD9E6A4-3DCA-42A9-99E9-FB2C6B740BDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{F3C930FB-3684-4E3D-956C-E73274CD0C2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3C930FB-3684-4E3D-956C-E73274CD0C2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3C930FB-3684-4E3D-956C-E73274CD0C2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFD9E6A4-3DCA-42A9-99E9-FB2C6B740BDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFD9E6A4-3DCA-42A9-99E9-FB2C6B740BDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFD9E6A4-3DCA-42A9-99E9-FB2C6B740BDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFD9E6A4-3DCA-42A9-99E9-FB2C6B740BDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{211D7787-6215-4E01-8860-DBA65BF06F6E} = {B2338E7E-00EF-4603-9AB5-3C149AE9762D}
 		{1E000D43-BC18-468A-AB3B-88CABEA420E5} = {8888F647-DD93-4741-9B7F-B6814CE25660}
 		{F3C930FB-3684-4E3D-956C-E73274CD0C2E} = {8888F647-DD93-4741-9B7F-B6814CE25660}
+		{FFD9E6A4-3DCA-42A9-99E9-FB2C6B740BDA} = {8888F647-DD93-4741-9B7F-B6814CE25660}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4322107D-21CE-4047-98F9-74F77731D427}
