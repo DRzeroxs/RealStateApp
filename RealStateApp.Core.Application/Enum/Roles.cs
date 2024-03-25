@@ -10,6 +10,7 @@ namespace RealStateApp.Core.Application.Enum
     {
         Admin,
         Cliente,
-        Agente
+        Agente,
+        Developer
     }
 }

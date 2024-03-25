@@ -12,8 +12,8 @@ using RealStateApp.Infraestructure.Identity.Context;
 namespace RealStateApp.Infraestructure.Identity.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20240325010529_Identityinti")]
-    partial class Identityinti
+    [Migration("20240325185838_IdentityInit")]
+    partial class IdentityInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -227,7 +227,6 @@ namespace RealStateApp.Infraestructure.Identity.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 

@@ -26,7 +26,9 @@ namespace RealStateApp.Infraestructure.Identity.Seeds
                     await DefaultRoles.SeedAsync(roleManager);
                     await DefaultAdminUser.SeedAsync(userManager);
                     await DefaultAgenteUser.SeedAsync(userManager); 
-                    await DefaultClienteUser.SeedAsync(userManager);    
+                    await DefaultClienteUser.SeedAsync(userManager);
+                    await DefaultDeveloperUser.SeedAsync(userManager, roleManager);
+                   
                 }
                 catch (Exception ex)
                 {

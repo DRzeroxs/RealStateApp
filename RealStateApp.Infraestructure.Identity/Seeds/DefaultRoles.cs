@@ -15,6 +15,7 @@ namespace RealStateApp.Infraestructure.Identity.Seeds
             await roleManager.CreateAsync(new IdentityRole(Roles.Admin.ToString()));
             await roleManager.CreateAsync(new IdentityRole(Roles.Cliente.ToString()));
             await roleManager.CreateAsync(new IdentityRole(Roles.Agente.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(Roles.Developer.ToString()));
         }
     }
 }
