@@ -21,11 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealStateApp.Infraestructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealStateApp.Infraestructure.Persistence", "RealStateApp.Infraestructure.Persistence\RealStateApp.Infraestructure.Persistence.csproj", "{F3C930FB-3684-4E3D-956C-E73274CD0C2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealStateApp.Infraestructure.Shared", "RealStateApp.Infraestructure.Shared\RealStateApp.Infraestructure.Shared.csproj", "{FFD9E6A4-3DCA-42A9-99E9-FB2C6B740BDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealStateApp.Infraestructure.Shared", "RealStateApp.Infraestructure.Shared\RealStateApp.Infraestructure.Shared.csproj", "{FFD9E6A4-3DCA-42A9-99E9-FB2C6B740BDA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{ACE20A16-5063-4500-AE68-F9D9B41E33C8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{2CC35F43-97F7-422C-8271-E17B818C3580}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealStateApp.Api", "RealStateApp.Api\RealStateApp.Api.csproj", "{9D19F647-B582-4F0B-98A5-FEA17C941545}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{FFD9E6A4-3DCA-42A9-99E9-FB2C6B740BDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFD9E6A4-3DCA-42A9-99E9-FB2C6B740BDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFD9E6A4-3DCA-42A9-99E9-FB2C6B740BDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D19F647-B582-4F0B-98A5-FEA17C941545}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D19F647-B582-4F0B-98A5-FEA17C941545}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D19F647-B582-4F0B-98A5-FEA17C941545}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D19F647-B582-4F0B-98A5-FEA17C941545}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{FFD9E6A4-3DCA-42A9-99E9-FB2C6B740BDA} = {8888F647-DD93-4741-9B7F-B6814CE25660}
 		{ACE20A16-5063-4500-AE68-F9D9B41E33C8} = {51C65589-1CDF-4812-BAB2-D5E239149E19}
 		{2CC35F43-97F7-422C-8271-E17B818C3580} = {ACE20A16-5063-4500-AE68-F9D9B41E33C8}
+		{9D19F647-B582-4F0B-98A5-FEA17C941545} = {2CC35F43-97F7-422C-8271-E17B818C3580}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4322107D-21CE-4047-98F9-74F77731D427}

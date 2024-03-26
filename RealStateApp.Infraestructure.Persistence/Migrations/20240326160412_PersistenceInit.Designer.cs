@@ -12,8 +12,8 @@ using RealStateApp.Infraestructure.Persistence.Context;
 namespace RealStateApp.Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240326021126_IdentityMigration")]
-    partial class IdentityMigration
+    [Migration("20240326160412_PersistenceInit")]
+    partial class PersistenceInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -238,6 +238,9 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AgenteId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -262,7 +265,7 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                     b.Property<int>("NumHabitaciones")
                         .HasColumnType("int");
 
-                    b.Property<double>("Pprecio")
+                    b.Property<double>("Precio")
                         .HasColumnType("float");
 
                     b.Property<string>("Size")
@@ -276,6 +279,9 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AgenteId")
+                        .IsUnique();
 
                     b.HasIndex("TipoPropiedadId")
                         .IsUnique();
@@ -457,6 +463,12 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
 
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Propiedad", b =>
                 {
+                    b.HasOne("RealStateApp.Core.Domain.Entities.Users.Agente", "Agente")
+                        .WithOne("Propiedad")
+                        .HasForeignKey("RealStateApp.Core.Domain.Entities.Propiedad", "AgenteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("RealStateApp.Core.Domain.Entities.Descripcion.TipoPropiedad", "TipoPropiedad")
                         .WithOne("Propiedad")
                         .HasForeignKey("RealStateApp.Core.Domain.Entities.Propiedad", "TipoPropiedadId")
@@ -468,6 +480,8 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                         .HasForeignKey("RealStateApp.Core.Domain.Entities.Propiedad", "TipoVentaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Agente");
 
                     b.Navigation("TipoPropiedad");
 
@@ -501,6 +515,12 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("MejorasAplicadas")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Users.Agente", b =>
+                {
+                    b.Navigation("Propiedad")
                         .IsRequired();
                 });
 

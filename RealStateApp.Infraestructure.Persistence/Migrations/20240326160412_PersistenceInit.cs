@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RealStateApp.Infraestructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class IdentityMigration : Migration
+    public partial class PersistenceInit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -134,12 +134,13 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Identifier = table.Column<int>(type: "int", nullable: false),
                     Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Pprecio = table.Column<double>(type: "float", nullable: false),
+                    Precio = table.Column<double>(type: "float", nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumHabitaciones = table.Column<int>(type: "int", nullable: false),
                     NumAceados = table.Column<int>(type: "int", nullable: false),
                     TipoPropiedadId = table.Column<int>(type: "int", nullable: false),
                     TipoVentaId = table.Column<int>(type: "int", nullable: false),
+                    AgenteId = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LastModifiedby = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -148,6 +149,12 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Propiedades", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Propiedades_Agentes_AgenteId",
+                        column: x => x.AgenteId,
+                        principalTable: "Agentes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Propiedades_TiposPropiedad_TipoPropiedadId",
                         column: x => x.TipoPropiedadId,
@@ -277,6 +284,12 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Propiedades_AgenteId",
+                table: "Propiedades",
+                column: "AgenteId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Propiedades_TipoPropiedadId",
                 table: "Propiedades",
                 column: "TipoPropiedadId",
@@ -296,9 +309,6 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                 name: "Administradores");
 
             migrationBuilder.DropTable(
-                name: "Agentes");
-
-            migrationBuilder.DropTable(
                 name: "Favoritas");
 
             migrationBuilder.DropTable(
@@ -315,6 +325,9 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Propiedades");
+
+            migrationBuilder.DropTable(
+                name: "Agentes");
 
             migrationBuilder.DropTable(
                 name: "TiposPropiedad");

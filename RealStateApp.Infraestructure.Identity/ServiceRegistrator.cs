@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RealStateApp.Core.Application.Interfaces.IAccount;
+using RealStateApp.Core.Domain.Settings;
 using RealStateApp.Infraestructure.Identity.Context;
 using RealStateApp.Infraestructure.Identity.Entities;
 using RealStateApp.Infraestructure.Identity.Service;
@@ -29,7 +30,10 @@ namespace RealStateApp.Infraestructure.Identity
             services.AddIdentity<ApplicationUser, IdentityRole>()
              .AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
+            services.Configure<JwtSettings>(configuration.GetSection("JWTSettings"));
+
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IAccountServiceApi, AccountServiceApi>();
 
         }
     }

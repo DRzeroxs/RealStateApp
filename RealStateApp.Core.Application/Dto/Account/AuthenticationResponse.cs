@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Dto.Account
@@ -15,5 +16,8 @@ namespace RealStateApp.Core.Application.Dto.Account
         public bool IsVerified { get; set; }
         public bool HasError { get; set; }
         public string Error { get; set; }
+        public string JWToken { get; set; }
+        [JsonIgnore]
+        public string RefreshToken { get; set; }
     }
 }
