@@ -27,7 +27,8 @@ namespace RealStateApp.Infraestructure.Persistence
             #endregion
 
             #region "Services"
-            services.AddTransient(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
+            services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
+            services.AddScoped<IClientesRepository, ClienteRepository>();
             #endregion
         }
     }
