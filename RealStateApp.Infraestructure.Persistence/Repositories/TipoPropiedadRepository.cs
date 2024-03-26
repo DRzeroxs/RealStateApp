@@ -1,5 +1,5 @@
 ﻿using RealStateApp.Core.Application.Interfaces.IRepository;
-using RealStateApp.Core.Domain.Entities.Users;
+using RealStateApp.Core.Domain.Entities.Descripcion;
 using RealStateApp.Infraestructure.Persistence.Context;
 using System;
 using System.Collections.Generic;
@@ -9,11 +9,10 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Infraestructure.Persistence.Repositories
 {
-    public class ClienteRepository : GenericRepository<Cliente>, IClienteRepository
+    public class TipoPropiedadRepository : GenericRepository<TipoPropiedad>, ITipoPropiedadRepository
     {
         private readonly ApplicationContext _context;
-
-        public ClienteRepository(ApplicationContext context) : base(context)
+        public TipoPropiedadRepository(ApplicationContext context) : base(context)
         {
             _context = context;
         }

@@ -9,11 +9,10 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Infraestructure.Persistence.Repositories
 {
-    public class ClienteRepository : GenericRepository<Cliente>, IClienteRepository
+    public class AdministradorRepository : GenericRepository<Administrador>, IAdministradorRepository
     {
         private readonly ApplicationContext _context;
-
-        public ClienteRepository(ApplicationContext context) : base(context)
+        public AdministradorRepository(ApplicationContext context) : base(context)
         {
             _context = context;
         }

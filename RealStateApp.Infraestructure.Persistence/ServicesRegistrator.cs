@@ -28,7 +28,17 @@ namespace RealStateApp.Infraestructure.Persistence
 
             #region "Services"
             services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
-            services.AddScoped<IClientesRepository, ClienteRepository>();
+
+            services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<IAgenteRepository, AgenteRepository>();
+            services.AddScoped<IAdministradorRepository, AdministradorRepository>();
+
+            services.AddScoped<IPropiedadRepository, PropiedadRepository>();
+            services.AddScoped<IMejoraRepository, MejoraRepository>();
+
+            services.AddScoped<ITipoPropiedadRepository, TipoPropiedadRepository>();
+            services.AddScoped<ITipoVentaRepository, TipoVentaRepository>();
+
             #endregion
         }
     }
