@@ -7,12 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Dto\TipoDePropiedad\" />
+    <Folder Include="Features\Propiedades\Commands\DeletePropiedadById\" />
+    <Folder Include="Features\Propiedades\Commands\UpdatePropiedad\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Features\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />

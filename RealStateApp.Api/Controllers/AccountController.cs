@@ -23,8 +23,10 @@ namespace RealStateApp.Api.Controllers
         }
 
         [HttpPost("RegistroAdministrador")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [Authorize (Roles ="Admin")]
         public async Task<IActionResult> RegistroAdministrador(RegistrerRequest request)
         {
             var origin = Request.Headers["Origin"];
@@ -35,10 +37,6 @@ namespace RealStateApp.Api.Controllers
         }
 
         [HttpPost("RegistroDesarrollador")]
-        [Authorize(Roles = "Admin")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> RegistroDesarrollador(RegistrerRequest request)
         {
             var origin = Request.Headers["Origin"];

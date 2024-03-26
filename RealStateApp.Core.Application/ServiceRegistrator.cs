@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using RealStateApp.Core.Application.Interfaces.IServices;
 using RealStateApp.Core.Application.Services;
 using System;
@@ -16,7 +17,11 @@ namespace RealStateApp.Core.Application
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+
             services.AddTransient<IUserServices, UserServices>();
+
+            services.AddTransient<IPropiedadService, PropiedadService>();
         }
     }
 }

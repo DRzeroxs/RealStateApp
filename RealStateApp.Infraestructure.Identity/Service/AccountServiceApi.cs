@@ -125,7 +125,7 @@ namespace RealStateApp.Infraestructure.Identity.Service
             var result = await _userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());
+                await _userManager.AddToRoleAsync(user, Roles.Developer.ToString());
             }
             else
             {

@@ -28,8 +28,4 @@
     <ProjectReference Include="..\RealStateApp.Infraestructure.Shared\RealStateApp.Infraestructure.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\V1\" />
-  </ItemGroup>
-
 </Project>

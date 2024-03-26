@@ -18,21 +18,17 @@ namespace RealStateApp.Infraestructure.Persistence.Context
             
         }
 
-        DbSet<Cliente> Clientes { get; set; }
-        DbSet<Agente> Agentes { get; set; }
-        DbSet<Administrador> Administradores { get; set; }
-
-        DbSet<Favorita> Favoritas { get; set; }
-        DbSet<Propiedad> Propiedades { get; set; }
-        DbSet<Mejora> Mejoras { get; set; }
-        DbSet<MejorasAplicadas> MejorasAplicadas { get; set; }
-
-        DbSet<ImgPropiedad> ImgPropiedades { get; set; }
-        DbSet<TipoPropiedad> TiposPropiedad { get; set; }
-        DbSet<TipoVenta> TiposVenta { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Agente> Agentes { get; set; }
+        public DbSet<Administrador> Administradores { get; set; }
+        public DbSet<Favorita> Favoritas { get; set; }
+        public DbSet<Propiedad> Propiedades { get; set; }
+        public DbSet<Mejora> Mejoras { get; set; }
+        public DbSet<MejorasAplicadas> MejorasAplicadas { get; set; }
+        public DbSet<ImgPropiedad> ImgPropiedades { get; set; }
+        public DbSet<TipoPropiedad> TiposPropiedad { get; set; }
+        public DbSet<TipoVenta> TiposVenta { get; set; }
         
-
-
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
