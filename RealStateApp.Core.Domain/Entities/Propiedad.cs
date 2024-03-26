@@ -1,5 +1,6 @@
 ﻿using RealStateApp.Core.Domain.Commonts;
 using RealStateApp.Core.Domain.Entities.Descripcion;
+using RealStateApp.Core.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,7 +15,7 @@ namespace RealStateApp.Core.Domain.Entities
         public int Identifier { get; set; }
 
         public string Size { get; set; }
-        public double Pprecio { get; set; }
+        public double Precio { get; set; }
         public string? Descripcion { get; set; }
         public int NumHabitaciones { get; set; }
         public int NumAceados { get; set; }
@@ -26,9 +27,13 @@ namespace RealStateApp.Core.Domain.Entities
         [ForeignKey(nameof(TipoVenta))]
         public int TipoVentaId { get; set; }
 
+        [ForeignKey(nameof(Agente))]
+        public int AgenteId { get; set; }
+
         //Navegadores
         public TipoPropiedad TipoPropiedad { get; set; }
         public TipoVenta TipoVenta { get; set;}
+        public Agente Agente { get; set; }
 
         [InverseProperty(nameof(Propiedad))]
         public ImgPropiedad ImgPropiedad { get; set;}
