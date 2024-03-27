@@ -15,7 +15,7 @@ namespace RealStateApp
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddPersistenceLayer(builder.Configuration);
-            builder.Services.AddIdentityLayer(builder.Configuration);
+            builder.Services.AddIdentityLayerForWeb(builder.Configuration);
             builder.Services.AddSharedInfraestrucutre(builder.Configuration);
             builder.Services.AddApplicationLayer();
             var app = builder.Build();

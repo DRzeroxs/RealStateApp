@@ -3,6 +3,7 @@ using MediatR;
 using RealStateApp.Core.Application.Dto.Propiedades;
 using RealStateApp.Core.Application.Interfaces.IRepository;
 using RealStateApp.Core.Application.ViewModel.Propiedad;
+using RealStateApp.Core.Application.Wrappers;
 using RealStateApp.Core.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,11 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetAllPropiedad
 {
-    public class GetAllPropiedadQuery : IRequest<IList<PropiedadesDto>>
+    public class GetAllPropiedadQuery : IRequest<Response<IList<PropiedadesDto>>>
     {
     }
 
-    public class GetAllPropiedadQueryHandler : IRequestHandler<GetAllPropiedadQuery, IList<PropiedadesDto>>
+    public class GetAllPropiedadQueryHandler : IRequestHandler<GetAllPropiedadQuery, Response<IList<PropiedadesDto>>>
     {
         private readonly IPropiedadRepository _repository;
         private readonly IMapper _mapper;
@@ -26,13 +27,13 @@ namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetAllPropi
             _repository = repository;   
             _mapper = mapper;   
         }
-        public async Task<IList<PropiedadesDto>> Handle(GetAllPropiedadQuery request, CancellationToken cancellationToken)
+        public async Task<Response<IList<PropiedadesDto>>> Handle(GetAllPropiedadQuery request, CancellationToken cancellationToken)
         {
             var propiedades = await _repository.GetAllPropiedades();
 
             var propiedadesList = _mapper.Map<IList<Propiedad>, IList<PropiedadesDto>>(propiedades);
 
-            return propiedadesList;
+            return new Response<IList<PropiedadesDto>>(propiedadesList);
         }
     }
 }

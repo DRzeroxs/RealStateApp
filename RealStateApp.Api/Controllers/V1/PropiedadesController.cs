@@ -29,17 +29,10 @@ namespace RealStateApp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Get()
         {
-            try
-            {
                 var query = new GetAllPropiedadQuery();
                 var propiedades = await Mediator.Send(query);
 
                 return Ok(propiedades);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
         }
 
         [HttpGet("{id}")]
@@ -50,18 +43,10 @@ namespace RealStateApp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> GetById(int id)
         {
-            try
-            {
                 var query = new GetPropiedadByIdQuery { Id = id };
                 var propiedad = Mediator.Send(query);
 
                 return Ok(propiedad);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-
         }
 
         [HttpGet("propiedades/{code}")]
@@ -72,18 +57,10 @@ namespace RealStateApp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> GetByCode(int code)
         {
-            try
-            {
                 var query = new GetAllPropiedadesByCode { identifier = code };
                 var propiedad = Mediator.Send(query);
 
                 return Ok(propiedad);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-
         }
     }
 }

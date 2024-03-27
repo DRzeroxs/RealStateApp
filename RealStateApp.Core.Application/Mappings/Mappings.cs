@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using RealStateApp.Core.Application.Dto.Account;
 using RealStateApp.Core.Application.Dto.Propiedades;
-using RealStateApp.Core.Application.Features.Propiedades.Commands.CreatePropiedad;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Agente;
 using RealStateApp.Core.Application.ViewModel.Mejora;
 using RealStateApp.Core.Application.ViewModel.Propiedad;
