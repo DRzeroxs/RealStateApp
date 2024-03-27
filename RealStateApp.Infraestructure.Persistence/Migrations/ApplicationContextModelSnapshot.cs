@@ -51,8 +51,7 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PropieadId")
-                        .IsUnique();
+                    b.HasIndex("PropieadId");
 
                     b.ToTable("ImgPropiedades");
                 });
@@ -149,11 +148,9 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteId")
-                        .IsUnique();
+                    b.HasIndex("ClienteId");
 
-                    b.HasIndex("PropiedadId")
-                        .IsUnique();
+                    b.HasIndex("PropiedadId");
 
                     b.ToTable("Favoritas");
                 });
@@ -218,11 +215,9 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MejoraId")
-                        .IsUnique();
+                    b.HasIndex("MejoraId");
 
-                    b.HasIndex("PropiedadId")
-                        .IsUnique();
+                    b.HasIndex("PropiedadId");
 
                     b.ToTable("MejorasAplicadas");
                 });
@@ -277,14 +272,11 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AgenteId")
-                        .IsUnique();
+                    b.HasIndex("AgenteId");
 
-                    b.HasIndex("TipoPropiedadId")
-                        .IsUnique();
+                    b.HasIndex("TipoPropiedadId");
 
-                    b.HasIndex("TipoVentaId")
-                        .IsUnique();
+                    b.HasIndex("TipoVentaId");
 
                     b.ToTable("Propiedades");
                 });
@@ -363,6 +355,10 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
