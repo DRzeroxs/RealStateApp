@@ -34,13 +34,6 @@ namespace RealStateApp.Core.Application.Mappings
             #endregion
 
             #region "Propiedades"
-            CreateMap<CreateProipiedadCommand, Propiedad>()
-                .ForMember(opt => opt.CreatedBy, i => i.Ignore())
-                .ForMember(opt => opt.CreatedDate, i => i.Ignore())
-                .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
-                 .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
-                .ReverseMap();
-
             CreateMap<PropiedadViewModel, Propiedad>()
               .ForMember(opt => opt.CreatedBy, i => i.Ignore())
               .ForMember(opt => opt.CreatedDate, i => i.Ignore())

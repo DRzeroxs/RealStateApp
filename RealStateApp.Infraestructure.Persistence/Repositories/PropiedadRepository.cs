@@ -166,5 +166,7 @@ namespace RealStateApp.Infraestructure.Persistence.Repositories
             return propiedades.FirstOrDefault();
         }
         #endregion
+
+
     }
 }
