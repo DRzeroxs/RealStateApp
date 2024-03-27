@@ -34,7 +34,8 @@ namespace RealStateApp.Core.Domain.Entities
         public TipoPropiedad TipoPropiedad { get; set; }
         public TipoVenta TipoVenta { get; set;}
         public Agente Agente { get; set; }
-        public Mejora Mejora { get; set; }  
+
+        //inverse properties
 
         [InverseProperty(nameof(Propiedad))]
         public ImgPropiedad ImgPropiedad { get; set;}

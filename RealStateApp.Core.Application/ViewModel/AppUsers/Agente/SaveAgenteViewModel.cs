@@ -10,5 +10,6 @@ namespace RealStateApp.Core.Application.ViewModel.AppUsers.Agente
     public class SaveAgenteViewModel : BasePersonSaveViewModel
     {
         public string ImgUrl { get; set; }
+        public string Telefono { get; set; }
     }
 }

@@ -57,13 +57,13 @@ namespace RealStateApp.Infraestructure.Persistence.Repositories
                                                 on p4.AgenteId equals a.Id
                                                 select new Agente { Nombre = a.Nombre, Id = a.Id}).FirstOrDefault() ?? new Agente(),
 
-                                      Mejora = (from ma in _context.MejorasAplicadas
-                                                          join p5 in _context.Propiedades
-                                                          on ma.PropiedadId equals p5.Id
-                                                          join m in _context.Mejoras
-                                                          on ma.MejoraId equals m.Id
-                                                          select new Mejora
-                                                          {Nombre = m.Nombre, Descripcion = m.Descripcion}).FirstOrDefault() ?? new Mejora(),
+                                      //Mejora = (from ma in _context.MejorasAplicadas
+                                      //                    join p5 in _context.Propiedades
+                                      //                    on ma.PropiedadId equals p5.Id
+                                      //                    join m in _context.Mejoras
+                                      //                    on ma.MejoraId equals m.Id
+                                      //                    select new Mejora
+                                      //                    {Nombre = m.Nombre, Descripcion = m.Descripcion}).FirstOrDefault() ?? new Mejora(),
 
 
                                   };
@@ -105,13 +105,13 @@ namespace RealStateApp.Infraestructure.Persistence.Repositories
                                                 on p4.AgenteId equals a.Id
                                                 select new Agente { Nombre = a.Nombre, Id = a.Id }).FirstOrDefault() ?? new Agente(),
 
-                                      Mejora = (from ma in _context.MejorasAplicadas
-                                                join p5 in _context.Propiedades
-                                                on ma.PropiedadId equals p5.Id
-                                                join m in _context.Mejoras
-                                                on ma.MejoraId equals m.Id
-                                                select new Mejora
-                                                { Nombre = m.Nombre, Descripcion = m.Descripcion }).FirstOrDefault() ?? new Mejora(),
+                                      //Mejora = (from ma in _context.MejorasAplicadas
+                                      //          join p5 in _context.Propiedades
+                                      //          on ma.PropiedadId equals p5.Id
+                                      //          join m in _context.Mejoras
+                                      //          on ma.MejoraId equals m.Id
+                                      //          select new Mejora
+                                      //          { Nombre = m.Nombre, Descripcion = m.Descripcion }).FirstOrDefault() ?? new Mejora(),
 
 
                                   };
@@ -153,13 +153,13 @@ namespace RealStateApp.Infraestructure.Persistence.Repositories
                                             on p4.AgenteId equals a.Id
                                             select new Agente { Nombre = a.Nombre, Id = a.Id }).FirstOrDefault() ?? new Agente(),
 
-                                  Mejora = (from ma in _context.MejorasAplicadas
-                                            join p5 in _context.Propiedades
-                                            on ma.PropiedadId equals p5.Id
-                                            join m in _context.Mejoras
-                                            on ma.MejoraId equals m.Id
-                                            select new Mejora
-                                            { Nombre = m.Nombre, Descripcion = m.Descripcion }).FirstOrDefault() ?? new Mejora(),
+                                  //Mejora = (from ma in _context.MejorasAplicadas
+                                  //          join p5 in _context.Propiedades
+                                  //          on ma.PropiedadId equals p5.Id
+                                  //          join m in _context.Mejoras
+                                  //          on ma.MejoraId equals m.Id
+                                  //          select new Mejora
+                                  //          { Nombre = m.Nombre, Descripcion = m.Descripcion }).FirstOrDefault() ?? new Mejora(),
 
 
                               };

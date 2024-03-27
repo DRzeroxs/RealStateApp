@@ -11,6 +11,7 @@ namespace RealStateApp.Core.Domain.Entities.Users
     public class Agente : PersonBaseEntity
     {
         public string? ImgUrl { get; set; }
+        public string Telefono { get; set; }
 
         [InverseProperty(nameof(Agente))]
         public Propiedad Propiedad { get; set; }
