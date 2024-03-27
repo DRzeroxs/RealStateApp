@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Interfaces.IRepository
 {
-    public interface IPropiedadRepository : IGenericRepository<Propiedad>
+    public interface IMejorasAplicadasRepository : IGenericRepository<MejorasAplicadas>
     {
-        
-
     }
 }

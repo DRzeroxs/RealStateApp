@@ -3,6 +3,7 @@ using MediatR;
 using RealStateApp.Core.Application.Dto.Propiedades;
 using RealStateApp.Core.Application.Exceptions;
 using RealStateApp.Core.Application.Interfaces.IRepository;
+using RealStateApp.Core.Application.Interfaces.IServices;
 using RealStateApp.Core.Application.Wrappers;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using IPropiedadService = RealStateApp.Core.Application.Interfaces.IServices.IPropiedadService;
 
 namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetAllPropiedadesByCode
 {
@@ -20,11 +22,11 @@ namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetAllPropi
 
     public class GetAllPropiedadesByCodeHanlder : IRequestHandler<GetAllPropiedadesByCode, Response<PropiedadesDto>>
     {
-        private readonly IPropiedadRepository _repository;
+        private readonly IPropiedadService _service;
         private readonly IMapper _mapper;
-        public GetAllPropiedadesByCodeHanlder(IPropiedadRepository repository, IMapper mapper)
+        public GetAllPropiedadesByCodeHanlder(IPropiedadService service, IMapper mapper)
         {
-            _repository = repository;
+            _service = service;
             _mapper = mapper;   
         }
 
@@ -39,7 +41,7 @@ namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetAllPropi
 
         public async Task<Response<PropiedadesDto>> GetAllPropiedadesByCode(int identifier)
         {
-            var propiedades = await _repository.GetAllPropiedadesByCode(identifier);
+            var propiedades = await _service.GetAllPropiedadesByCode(identifier);
 
             PropiedadesDto propiedadesDto = _mapper.Map<PropiedadesDto>(propiedades);
 

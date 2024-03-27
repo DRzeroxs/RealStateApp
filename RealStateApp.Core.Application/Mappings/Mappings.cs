@@ -46,6 +46,9 @@ namespace RealStateApp.Core.Application.Mappings
              .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
               .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
              .ReverseMap();
+
+            CreateMap<PropiedadesDto, PropiedadViewModel>()
+            .ReverseMap();
             #endregion
 
             #region "Agente"
