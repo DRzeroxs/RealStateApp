@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using RealStateApp.Core.Application.Dto.Account;
 using RealStateApp.Core.Application.Interfaces.IAccount;
+using RealStateApp.Core.Application.Wrappers;
 using RealStateApp.Core.Domain.Settings;
 using RealStateApp.Infraestructure.Identity.Context;
 using RealStateApp.Infraestructure.Identity.Entities;
@@ -22,14 +23,9 @@ namespace RealStateApp.Infraestructure.Identity
 {
     public static class ServiceRegistrator
     {
-        public static void AddIdentityLayer(this IServiceCollection services, IConfiguration configuration)
+        public static void AddIdentityLayerForApi(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<IdentityContext>(options =>
-            {
-                options.EnableSensitiveDataLogging();
-                options.UseSqlServer(configuration.GetConnectionString("Identityconexion"),
-                m => m.MigrationsAssembly(typeof(IdentityContext).Assembly.FullName));
-            });
+            ContextConfiguration(services, configuration);
 
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -76,7 +72,7 @@ namespace RealStateApp.Infraestructure.Identity
                         c.HandleResponse();
                         c.Response.StatusCode = 401;
                         c.Response.ContentType = "application/json";
-                        var result = JsonConvert.SerializeObject(new JwtResponse { HasError = true, Error = "Your are not Authorized" });
+                        var result = JsonConvert.SerializeObject(new Response<string> ("Your are not Authorized" ));
                         return c.Response.WriteAsync(result);
                     },
                     OnForbidden = c =>
@@ -84,16 +80,44 @@ namespace RealStateApp.Infraestructure.Identity
 
                         c.Response.StatusCode = 403;
                         c.Response.ContentType = "application/json";
-                        var result = JsonConvert.SerializeObject(new JwtResponse { HasError = true, Error = "Your are not Authorized to acces this resourced" });
+                        var result = JsonConvert.SerializeObject(new Response<string> ("Your are not Authorized to acces this resourced"));
                         return c.Response.WriteAsync(result);
                     }
                 };
 
+               
             });
+                ServiceConfiguration(services);
+        }
 
+        public static void AddIdentityLayerForWeb(this IServiceCollection services, IConfiguration configuration)
+        {
+            ContextConfiguration(services, configuration);
+
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+             .AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
+
+            services.AddAuthentication();
+
+            ServiceConfiguration(services);
+        }
+        #region"Private Methods"
+        private static void ContextConfiguration(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddDbContext<IdentityContext>(options =>
+            {
+                options.EnableSensitiveDataLogging();
+                options.UseSqlServer(configuration.GetConnectionString("Identityconexion"),
+                m => m.MigrationsAssembly(typeof(IdentityContext).Assembly.FullName));
+            });
+        }
+
+        private static void ServiceConfiguration(this IServiceCollection services)
+        {
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IAccountServiceApi, AccountServiceApi>();
-
         }
+        #endregion
     }
 }

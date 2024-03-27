@@ -1,20 +1,23 @@
 ﻿using AutoMapper;
 using MediatR;
 using RealStateApp.Core.Application.Dto.Propiedades;
+using RealStateApp.Core.Application.Exceptions;
 using RealStateApp.Core.Application.Interfaces.IRepository;
+using RealStateApp.Core.Application.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetPropiedadById
 {
-    public class GetPropiedadByIdQuery : IRequest<PropiedadesDto>
+    public class GetPropiedadByIdQuery : IRequest<Response<PropiedadesDto>>
     {
         public int Id { get; set; } 
     }
-    public class GetPropiedadByIdQueryHandler : IRequestHandler<GetPropiedadByIdQuery, PropiedadesDto>
+    public class GetPropiedadByIdQueryHandler : IRequestHandler<GetPropiedadByIdQuery, Response<PropiedadesDto>>
     {
         private readonly IPropiedadRepository _repository;
         private readonly IMapper _mapper;
@@ -23,13 +26,13 @@ namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetPropieda
             _repository = repository;
             _mapper = mapper;   
         }
-        public async Task<PropiedadesDto> Handle(GetPropiedadByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Response<PropiedadesDto>> Handle(GetPropiedadByIdQuery request, CancellationToken cancellationToken)
         {
             var propiedad = await GetPropiedadById(request.Id);
 
-            if (propiedad == null) throw new Exception("No existe la Propiedad");
+            if (propiedad == null) throw new ApiEception("No existe una propiedad con ese Id", (int)HttpStatusCode.NotFound);
 
-            return propiedad;
+            return new Response<PropiedadesDto>(propiedad);
         }
         public async Task<PropiedadesDto> GetPropiedadById(int Id)
         {
@@ -37,7 +40,7 @@ namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetPropieda
 
             PropiedadesDto propiedadDto = _mapper.Map<PropiedadesDto>(propiedad);
 
-            return propiedadDto;
+            return  propiedadDto;
         }
 
         

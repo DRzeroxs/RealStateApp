@@ -19,7 +19,7 @@ builder.Services.AddHealthChecks();
 builder.Services.AddApiVersioningExtension();
 builder.Services.AddApiVersioning();
 builder.Services.AddPersistenceLayer(builder.Configuration);
-builder.Services.AddIdentityLayer(builder.Configuration);
+builder.Services.AddIdentityLayerForApi(builder.Configuration);
 builder.Services.AddSharedInfraestrucutre(builder.Configuration);
 builder.Services.AddApplicationLayer();
 
@@ -46,6 +46,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UserSwaggerExtension();
+app.UseErrorHandlingMidleweare();
 app.UseHealthChecks("/health");
 app.UseSession();
 

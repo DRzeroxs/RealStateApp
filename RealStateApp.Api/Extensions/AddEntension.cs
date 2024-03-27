@@ -1,4 +1,6 @@
-﻿namespace RealStateApp.Api.Extensions
+﻿using RealStateApp.Core.Application.Middleweares;
+
+namespace RealStateApp.Api.Extensions
 {
     public static class AddEntension
     {
@@ -9,6 +11,10 @@
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Api Restaurante");
             });
+        }
+        public static void UseErrorHandlingMidleweare(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<ErrorHandleMiddlewear>();
         }
     }
 }
