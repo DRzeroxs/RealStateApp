@@ -11,6 +11,7 @@ namespace RealStateApp.Core.Application.ViewModel.AppUsers.Agente
     public class AgenteViewModel : BasePersonViewModel
     {
         public string ImgUrl { get; set; }  
+        public string Telefono { get; set; }
         public List<PropiedadViewModel>? Propiedades { get; set; }  
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RealStateApp.Infraestructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class PersistenceInit : Migration
+    public partial class FixMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,6 +38,7 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Telefono = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LastModifiedby = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -256,50 +257,42 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Favoritas_ClienteId",
                 table: "Favoritas",
-                column: "ClienteId",
-                unique: true);
+                column: "ClienteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Favoritas_PropiedadId",
                 table: "Favoritas",
-                column: "PropiedadId",
-                unique: true);
+                column: "PropiedadId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ImgPropiedades_PropieadId",
                 table: "ImgPropiedades",
-                column: "PropieadId",
-                unique: true);
+                column: "PropieadId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MejorasAplicadas_MejoraId",
                 table: "MejorasAplicadas",
-                column: "MejoraId",
-                unique: true);
+                column: "MejoraId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MejorasAplicadas_PropiedadId",
                 table: "MejorasAplicadas",
-                column: "PropiedadId",
-                unique: true);
+                column: "PropiedadId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Propiedades_AgenteId",
                 table: "Propiedades",
-                column: "AgenteId",
-                unique: true);
+                column: "AgenteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Propiedades_TipoPropiedadId",
                 table: "Propiedades",
-                column: "TipoPropiedadId",
-                unique: true);
+                column: "TipoPropiedadId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Propiedades_TipoVentaId",
                 table: "Propiedades",
-                column: "TipoVentaId",
-                unique: true);
+                column: "TipoVentaId");
         }
 
         /// <inheritdoc />
