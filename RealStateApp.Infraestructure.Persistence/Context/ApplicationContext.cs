@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Infraestructure.Persistence.Context
 {
+
     public class ApplicationContext : DbContext
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
@@ -49,5 +50,21 @@ namespace RealStateApp.Infraestructure.Persistence.Context
 
             return base.SaveChangesAsync(cancellationToken);
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Configurar el comportamiento predeterminado para los índices
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                foreach (var index in entityType.GetIndexes())
+                {
+                    index.IsUnique = false; // Establecer todos los índices como no únicos
+                }
+            }
+        }
     }
+
+
 }
