@@ -11,7 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using IPropiedadService = RealStateApp.Core.Application.Interfaces.IServices.IPropiedadService;
+
 
 namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetAllPropiedadesByCode
 {
@@ -32,14 +32,14 @@ namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetAllPropi
 
         public async Task<Response<PropiedadesDto>> Handle(GetAllPropiedadesByCode request, CancellationToken cancellationToken)
         {
-            var propiedades = await GetAllPropiedadesByCode(request.identifier);
+            var propiedades = await GetAllPropiedadesByCodeAsync(request.identifier);
 
             if (propiedades is null) throw new ApiEception("No existe esa propiedad", (int)HttpStatusCode.NotFound);
 
             return propiedades;
         }
 
-        public async Task<Response<PropiedadesDto>> GetAllPropiedadesByCode(int identifier)
+        public async Task<Response<PropiedadesDto>> GetAllPropiedadesByCodeAsync(int identifier)
         {
             var propiedades = await _service.GetAllPropiedadesByCode(identifier);
 

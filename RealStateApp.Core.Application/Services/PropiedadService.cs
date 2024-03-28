@@ -30,7 +30,14 @@ namespace RealStateApp.Core.Application.Services
         private readonly ITipoVentaRepository _tipoVentaRepository;
         private readonly IMejoraRepository _mejoraRepository;
         private readonly IMejorasAplicadasRepository _mejorasAplicadasRepository;
-      
+        private List<Propiedad> _listPropiedades;
+        private List<Agente> _listAgentes;
+        private List<TipoPropiedad> _listTipoPropiedad;
+        private List<TipoVenta> _listTipoVenta;
+        private List<Mejora> _listMejoras;
+        private List<MejorasAplicadas> _listMejorasAplicadas;
+
+
         public PropiedadService(IPropiedadRepository repository, IMapper mapper, IAgenteRepository agenteRepository, ITipoPropiedadRepository tipoPropiedadRepository, ITipoVentaRepository tipoVentaRepository, IMejoraRepository mejoraRepository, IMejorasAplicadasRepository mejorasAplicadasRepository) : base(repository, mapper)
         {
              _repository = repository;
@@ -38,22 +45,29 @@ namespace RealStateApp.Core.Application.Services
             _agenteRepository = agenteRepository;   
             _tipoPropiedadRepository = tipoPropiedadRepository; 
             _tipoVentaRepository = tipoVentaRepository;
-            _mejoraRepository = mejoraRepository;   
-            _mejorasAplicadasRepository = mejorasAplicadasRepository;  
+            _mejoraRepository = mejoraRepository;
+            _mejorasAplicadasRepository = mejorasAplicadasRepository;
+           
+        }
+
+        private async Task CargarListas()
+        {
+            _listPropiedades = await _repository.GetAll();
+            _listAgentes = await _agenteRepository.GetAll();
+            _listTipoPropiedad = await _tipoPropiedadRepository.GetAll();
+            _listTipoVenta = await _tipoVentaRepository.GetAll();
+            _listMejoras = await _mejoraRepository.GetAll();
+            _listMejorasAplicadas = await _mejorasAplicadasRepository.GetAll();
         }
 
         #region"GetAllPropiedades"
         public async Task<List<PropiedadViewModel>> GetAllPropiedades()
         {
-            var ListPropiedades = await _repository.GetAll();
-            var ListAgentes =  await _agenteRepository.GetAll();  
-            var ListTipoPropiedad = await _tipoPropiedadRepository.GetAll();
-            var ListTipoVenta = await _tipoVentaRepository.GetAll();
-            var ListMejoras = await _mejoraRepository.GetAll();
-            var ListMejorasAplicadas = await _mejorasAplicadasRepository.GetAll();
 
-            var propiedadesList = from p in ListPropiedades
-                                  join a in ListAgentes
+            await CargarListas();
+
+            var propiedadesList = from p in _listPropiedades
+                                  join a in _listAgentes
                                   on p.AgenteId equals a.Id
                                   select new PropiedadViewModel
                                   {
@@ -65,27 +79,27 @@ namespace RealStateApp.Core.Application.Services
                                       NumHabitaciones = p.NumHabitaciones,
                                       Descripcion = p.Descripcion,
                                       AgenteId = p.AgenteId,
-                                      TipoPropiedad = (from p2 in ListPropiedades
-                                                       join tp in ListTipoPropiedad
+                                      TipoPropiedad = (from p2 in _listPropiedades
+                                                       join tp in _listTipoPropiedad
                                                        on p2.TipoPropiedadId equals tp.Id
                                                        select new TipoPropiedadViewModel
                                                        { Nombre = tp.Nombre, Descripcion = tp.Descripcion, Id = tp.Id }).FirstOrDefault(),
 
 
-                                      TipoVenta = (from p3 in ListPropiedades
-                                                   join tv in ListTipoVenta
+                                      TipoVenta = (from p3 in _listPropiedades
+                                                   join tv in _listTipoVenta
                                                    on p3.TipoVentaId equals tv.Id
                                                    select new TipoVentaViewModel { Nombre = tv.Nombre, Id = tv.Id, Descripcion = tv.Descripcion }).FirstOrDefault() ,
 
-                                      Agente = (from p4 in ListPropiedades
-                                                join a2 in ListAgentes
+                                      Agente = (from p4 in _listPropiedades
+                                                join a2 in _listAgentes
                                                 on p4.AgenteId equals a.Id
                                                 select new AgenteViewModel { Nombre = a.Nombre, Id = a.Id }).FirstOrDefault() ,
 
-                                      Mejoras = (from ma in ListMejorasAplicadas
-                                                join p5 in ListPropiedades
+                                      Mejoras = (from ma in _listMejorasAplicadas
+                                                join p5 in _listPropiedades
                                                 on ma.PropiedadId equals p5.Id
-                                                join m in ListMejoras
+                                                join m in _listMejoras
                                                 on ma.MejoraId equals m.Id
                                                 select new MejoraViewModel
                                                 { Nombre = m.Nombre, Descripcion = m.Descripcion }).ToList(),
@@ -99,15 +113,11 @@ namespace RealStateApp.Core.Application.Services
         #region"GetAllPropiedadById"
         public async Task<PropiedadViewModel> GetPropiedadesById(int Id)
         {
-            var ListPropiedades = await _repository.GetAll();
-            var ListAgentes = await _agenteRepository.GetAll();
-            var ListTipoPropiedad = await _tipoPropiedadRepository.GetAll();
-            var ListTipoVenta = await _tipoVentaRepository.GetAll();
-            var ListMejoras = await _mejoraRepository.GetAll();
-            var ListMejorasAplicadas = await _mejorasAplicadasRepository.GetAll();
 
-            var propiedad = from p in ListPropiedades
-                                  join a in ListAgentes
+            await CargarListas();
+
+            var propiedad = from p in _listPropiedades
+                                  join a in _listAgentes
                                   on p.AgenteId equals a.Id
                                   where p.Id == Id
                                   select new PropiedadViewModel
@@ -120,27 +130,27 @@ namespace RealStateApp.Core.Application.Services
                                       NumHabitaciones = p.NumHabitaciones,
                                       Descripcion = p.Descripcion,
                                       AgenteId = p.AgenteId,
-                                      TipoPropiedad = (from p2 in ListPropiedades
-                                                       join tp in ListTipoPropiedad
+                                      TipoPropiedad = (from p2 in _listPropiedades
+                                                       join tp in _listTipoPropiedad
                                                        on p2.TipoPropiedadId equals tp.Id
                                                        select new TipoPropiedadViewModel
                                                        { Nombre = tp.Nombre, Descripcion = tp.Descripcion, Id = tp.Id }).FirstOrDefault(),
 
 
-                                      TipoVenta = (from p3 in ListPropiedades
-                                                   join tv in ListTipoVenta
+                                      TipoVenta = (from p3 in _listPropiedades
+                                                   join tv in _listTipoVenta
                                                    on p3.TipoVentaId equals tv.Id
                                                    select new TipoVentaViewModel { Nombre = tv.Nombre, Id = tv.Id, Descripcion = tv.Descripcion }).FirstOrDefault(),
 
-                                      Agente = (from p4 in ListPropiedades
-                                                join a2 in ListAgentes
+                                      Agente = (from p4 in _listPropiedades
+                                                join a2 in _listAgentes
                                                 on p4.AgenteId equals a.Id
                                                 select new AgenteViewModel { Nombre = a.Nombre, Id = a.Id }).FirstOrDefault(),
 
-                                      Mejoras = (from ma in ListMejorasAplicadas
-                                                 join p5 in ListPropiedades
+                                      Mejoras = (from ma in _listMejorasAplicadas
+                                                 join p5 in _listPropiedades
                                                  on ma.PropiedadId equals p5.Id
-                                                 join m in ListMejoras
+                                                 join m in _listMejoras
                                                  on ma.MejoraId equals m.Id
                                                  select new MejoraViewModel
                                                  { Nombre = m.Nombre, Descripcion = m.Descripcion }).ToList(),
