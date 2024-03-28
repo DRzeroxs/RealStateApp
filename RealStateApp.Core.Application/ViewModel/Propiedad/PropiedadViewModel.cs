@@ -14,7 +14,7 @@ namespace RealStateApp.Core.Application.ViewModel.Propiedad
     public class PropiedadViewModel
     {
         public int Id { get; set; }
-        public int? Identifier { get; set; }
+        public int Identifier { get; set; }
 
         public string Size { get; set; }
 
@@ -27,7 +27,7 @@ namespace RealStateApp.Core.Application.ViewModel.Propiedad
         public int NumAceados { get; set; }
 
         public int TipoPropiedadId { get; set; }
-
+        public ImgPropiedadViewModel ImgUrl {  get; set; }
         public int TipoVentaId { get; set; }
         public int AgenteId { get; set; }
         public string NombreAgente {  get; set; }   

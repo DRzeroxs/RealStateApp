@@ -1,0 +1,82 @@
+﻿@model List<RealStateApp.Core.Application.ViewModel.Propiedad.PropiedadViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="mb-5 container p-2 ">
+    <form asp-controller="Home" asp-action="BuscarPorCodigo" method="post">
+        <h5 class="mb-2 ">Buscar por Codigo</h5>
+        <div class="d-flex">
+            <input type="text" class="form-control" name="identifier" style="width: 200px;">
+            <button class="mt-2 boton_busqueda">Buscar</button>
+        </div>
+
+    </form>
+</div>
+
+<div class="container busqueda_conjunta">
+    <div class="busqueda_conjunta__contenedor">
+        <div class="titulo__busqueda__conjunta">
+            <h2>¡Busca tu Propiedad!</h2>
+        </div>
+        <form asp-controller="Home" asp-action="BusquedaConjunta" method="post">
+        <div class="d-flex">
+            <p style="font-size: 20px;" class="fw-bold">Tipo de Propiedad: </p>
+                <input class="formulario__busqueda mt-1" name="tipoPropiedad" type="text">
+        </div>
+
+        <div class="d-flex">
+            <p style="font-size: 20px;" class="fw-bold">Precio Minimo: </p>
+                <input class="formulario__busqueda mt-1" name="precioMinimo" type="text">
+        </div>
+
+        <div class="d-flex">
+            <p style="font-size: 20px;" class="fw-bold">Precio Maximo: </p>
+                <input class="formulario__busqueda mt-1" name="precioMaximo" type="text">
+        </div>
+
+        <div class="d-flex">
+            <p style="font-size: 20px;" class="fw-bold">Numero de Habitaciones: </p>
+                <input class="formulario__busqueda mt-1" name="numeroHabitaciones" type="text">
+        </div>
+
+        <div class="d-flex">
+            <p style="font-size: 20px;" class="fw-bold">Numero de Baños: </p>
+                <input class="formulario__busqueda mt-1" name="numeroAcedados" type="text">
+        </div>
+
+        <div class="p-2" style="border-top: 3px solid;">
+            <button class="boton__busqueda__conjunta float-end mb-4 p-2">Buscar</button>
+        </div>
+        </form>
+
+    </div>
+
+
+ <section class="contenedor container">
+    @foreach (var item in Model)
+    {
+        <div class="card">
+            <img src="@item.ImgUrl.UrlImg" alt="" />
+
+            <div class="card__Contenido">
+                <p style="font-size: 18px;" class="fw-bold">@item.TipoPropiedad.Nombre</p>
+                <p>
+                    <span class="fw-bold">Codigo:</span> <br />
+                   @item.Identifier
+                </p>
+                <p>
+                    <span class="fw-bold">Venta:</span> <br />
+                    <span style="color: #AF282D;">US$ @item.Precio</span>
+                </p>
+                <div class="iconos d-flex">
+                    <div class="d-flex" style="gap:10px ;"><i class="fa-solid fa-bed"></i> @item.NumHabitaciones</div>
+                    <div class="d-flex" style="gap:10px;" ><i class="fa-solid fa-bath"></i> @item.NumAceados</div>
+                    <div class="d-flex" style="gap:10px;"><i class="fa-solid fa-tape"></i> @item.Size mt</div>
+                </div>
+            </div>
+        </div>
+    }
+      
+    </section>
+
