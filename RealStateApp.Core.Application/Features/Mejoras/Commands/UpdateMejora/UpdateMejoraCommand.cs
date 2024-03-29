@@ -1,15 +1,18 @@
 ﻿using AutoMapper;
 using MediatR;
+using RealStateApp.Core.Application.Exceptions;
 using RealStateApp.Core.Application.Interfaces.IRepository;
+using RealStateApp.Core.Application.Wrappers;
 using RealStateApp.Core.Domain.Entities;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Net;
 
 namespace RealStateApp.Core.Application.Features.Mejoras.Commands.UpdateMejora
 {
     //<summary>
     // Command para actualizar una mejora
     //</summary>
-    public class UpdateMejoraCommand : IRequest<MejoraUpdateResponse>
+    public class UpdateMejoraCommand : IRequest<Response<MejoraUpdateResponse>>
     {
         // <example>
         // 1
@@ -30,7 +33,7 @@ namespace RealStateApp.Core.Application.Features.Mejoras.Commands.UpdateMejora
         public string? Descripcion { get; set; }
     }
 
-    public class UpdateMejoraCommandHandler : IRequestHandler<UpdateMejoraCommand, MejoraUpdateResponse>
+    public class UpdateMejoraCommandHandler : IRequestHandler<UpdateMejoraCommand, Response<MejoraUpdateResponse>>
     {
         private readonly IMejoraRepository _repository;
         private readonly IMapper _mapper;
@@ -41,20 +44,20 @@ namespace RealStateApp.Core.Application.Features.Mejoras.Commands.UpdateMejora
             _mapper = mapper;
         }
 
-        public async Task<MejoraUpdateResponse> Handle(UpdateMejoraCommand command, CancellationToken cancellationToken)
+        public async Task<Response<MejoraUpdateResponse>> Handle(UpdateMejoraCommand command, CancellationToken cancellationToken)
         {
             var mejora = await _repository.GetById(command.Id);
 
             if (mejora == null)
             {
-                throw new Exception("No se encontró la mejora");
+                throw new ApiEception("No se encontró la mejora", (int)HttpStatusCode.NotFound);
             }
 
             mejora = _mapper.Map<Mejora>(command);
 
             await _repository.UpdateAsync(mejora, command.Id);
 
-            return _mapper.Map<MejoraUpdateResponse>(mejora);
+            return new Response<MejoraUpdateResponse> (_mapper.Map<MejoraUpdateResponse>(mejora));
         }
     }
 }

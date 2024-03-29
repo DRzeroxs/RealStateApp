@@ -45,6 +45,10 @@ namespace RealStateApp.Core.Application.Middleweares
                                 response.StatusCode = (int)HttpStatusCode.NotFound;
                                 break;
 
+                            case (int)HttpStatusCode.NoContent:
+                                response.StatusCode = (int)HttpStatusCode.NoContent;
+                                break;
+
                             default:
                                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
                                 break;
