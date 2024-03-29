@@ -2,13 +2,31 @@
 using MediatR;
 using RealStateApp.Core.Application.Interfaces.IRepository;
 using RealStateApp.Core.Domain.Entities;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace RealStateApp.Core.Application.Features.Mejoras.Commands.UpdateMejora
 {
+    //<summary>
+    // Command para actualizar una mejora
+    //</summary>
     public class UpdateMejoraCommand : IRequest<MejoraUpdateResponse>
     {
+        // <example>
+        // 1
+        // </example>
+        [SwaggerParameter(Description = "Identificador (int) de la mejora")]
         public int Id { get; set; }
+
+        // <example>
+        // Incluir Piscina
+        // </example>
+        [SwaggerParameter(Description = "Nombre de la mejora")]
         public string Nombre { get; set; }
+
+        // <example>
+        // Incluye el acceso a la piscina
+        // </example>
+        [SwaggerParameter(Description = "Descripcion de la mejora")]
         public string? Descripcion { get; set; }
     }
 

@@ -1,11 +1,19 @@
 ﻿using AutoMapper;
 using MediatR;
 using RealStateApp.Core.Application.Interfaces.IRepository;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace RealStateApp.Core.Application.Features.Mejoras.Commands.DeleteMejoraById
 {
+    //<summary>
+    // Command para eliminar una mejora por Id
+    //</summary>
     public class DeleteMejoraByIdCommand : IRequest<int>
     {
+        //<example>
+        // 1
+        //</example>
+        [SwaggerParameter(Description = "Identificador (int) de la mejora a eliminar")]
         public int Id { get; set; }
     }
 

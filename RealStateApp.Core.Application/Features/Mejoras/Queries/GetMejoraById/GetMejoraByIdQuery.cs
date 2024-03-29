@@ -2,6 +2,7 @@
 using MediatR;
 using RealStateApp.Core.Application.Dto.Mejora;
 using RealStateApp.Core.Application.Interfaces.IRepository;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,12 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Features.Mejoras.Queries.GetMejoraById
 {
+    //<summary>
+    //Parametros para obtener una mejora por su identificador (int)
+    //</summary>
     public class GetMejoraByIdQuery : IRequest<MejoraDto>
     {
+        [SwaggerParameter(Description = "Identificador (int) de la mejora que se quiere optener")]
         public int Id { get; set; }
     }
 

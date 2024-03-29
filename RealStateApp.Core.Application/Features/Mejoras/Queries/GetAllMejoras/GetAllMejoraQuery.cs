@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Features.Mejoras.Queries.GetAllMejoras
 {
+    //<summary>
+    //Optener todas las mejoras
+    //</summary>
     public class GetAllMejoraQuery : IRequest<IList<MejoraDto>>
     {
 
