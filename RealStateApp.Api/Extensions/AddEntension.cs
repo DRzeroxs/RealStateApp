@@ -1,4 +1,5 @@
 ﻿using RealStateApp.Core.Application.Middleweares;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace RealStateApp.Api.Extensions
 {
@@ -10,6 +11,7 @@ namespace RealStateApp.Api.Extensions
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Api Restaurante");
+                options.DefaultModelRendering(ModelRendering.Model);
             });
         }
         public static void UseErrorHandlingMidleweare(this IApplicationBuilder app)

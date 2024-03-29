@@ -27,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{2CC35F43-97F7-422C-8271-E17B818C3580}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealStateApp.Api", "RealStateApp.Api\RealStateApp.Api.csproj", "{9D19F647-B582-4F0B-98A5-FEA17C941545}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealStateApp.Api", "RealStateApp.Api\RealStateApp.Api.csproj", "{9D19F647-B582-4F0B-98A5-FEA17C941545}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
