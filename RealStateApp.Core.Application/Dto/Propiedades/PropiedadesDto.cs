@@ -34,6 +34,6 @@ namespace RealStateApp.Core.Application.Dto.Propiedades
         public TipoVentaViewModel TipoVenta { get; set; }
         public AgenteViewModel Agente { get; set; }
 
-        public List<MejoraViewModel>? Mejoras { get; set; }
+        public List<MejoraViewModel> Mejoras { get; set; }
     }
 }

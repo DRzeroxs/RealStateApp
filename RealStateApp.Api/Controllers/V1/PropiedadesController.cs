@@ -44,7 +44,7 @@ namespace RealStateApp.Api.Controllers.V1
         public async Task<IActionResult> GetById(int id)
         {
                 var query = new GetPropiedadByIdQuery { Id = id };
-                var propiedad = Mediator.Send(query);
+                var propiedad = await Mediator.Send(query);
 
                 return Ok(propiedad);
         }
@@ -57,8 +57,8 @@ namespace RealStateApp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> GetByCode(int code)
         {
-                var query = new GetAllPropiedadesByCode { identifier = code };
-                var propiedad = Mediator.Send(query);
+                var query = new GetPropiedadByCodeQuery { Identifier = code };
+                var propiedad = await Mediator.Send(query);
 
                 return Ok(propiedad);
         }

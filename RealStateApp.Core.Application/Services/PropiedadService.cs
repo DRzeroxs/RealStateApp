@@ -170,7 +170,7 @@ namespace RealStateApp.Core.Application.Services
         #endregion
 
         #region "GetAllPropiedadesByCode"
-        public async Task<List<PropiedadViewModel>> GetAllPropiedadesByCode(int identifier)
+        public async Task<PropiedadViewModel> GetAllPropiedadesByCode(int identifier)
         {
             await CargarListas();
 
@@ -218,7 +218,7 @@ namespace RealStateApp.Core.Application.Services
 
                                   };
 
-            return propiedadesList.ToList();
+            return propiedadesList.First();
         }
         #endregion
 

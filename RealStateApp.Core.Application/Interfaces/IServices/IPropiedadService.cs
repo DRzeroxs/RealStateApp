@@ -14,7 +14,7 @@ namespace RealStateApp.Core.Application.Interfaces.IServices
         #region"Consultas"
         Task<List<PropiedadViewModel>> GetAllPropiedades();
         Task<PropiedadViewModel> GetPropiedadesById(int Id);
-        Task<List<PropiedadViewModel>> GetAllPropiedadesByCode(int identifier);
+        Task<PropiedadViewModel> GetAllPropiedadesByCode(int identifier);
         Task<List<PropiedadViewModel>> GetPropiedadesPorEspecificaciones(string tipoPropiedad,
             int numeroHabitaciones, int numeroAcedados, int precioMinimo, int precioMaximo);
         Task<List<PropiedadViewModel>> GetPropiedadesPorTipoPropiedad(string tipoPropiedad);

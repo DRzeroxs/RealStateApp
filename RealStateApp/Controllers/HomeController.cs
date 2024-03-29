@@ -28,7 +28,11 @@ namespace RealStateApp.Controllers
         {
             var propiedades = await _propiedadesService.GetAllPropiedadesByCode(identifier);
 
-            return View("Index", propiedades);
+            List<PropiedadViewModel> propiedadesList = new List<PropiedadViewModel>();
+
+            propiedadesList.Add(propiedades);
+
+            return View("Index", propiedadesList);
         }
 
         [HttpPost]
