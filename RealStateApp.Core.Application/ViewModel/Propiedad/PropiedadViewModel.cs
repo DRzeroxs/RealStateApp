@@ -28,6 +28,7 @@ namespace RealStateApp.Core.Application.ViewModel.Propiedad
 
         public int TipoPropiedadId { get; set; }
         public ImgPropiedadViewModel ImgUrl {  get; set; }
+        public List<ImgPropiedadViewModel> ImgUrlList { get; set; }
         public int TipoVentaId { get; set; }
         public int AgenteId { get; set; }
         public string NombreAgente {  get; set; }   

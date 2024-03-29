@@ -41,7 +41,13 @@ namespace RealStateApp.Controllers
             numeroHabitaciones,numeroAcedados,precioMinimo,precioMaximo);
 
             return View("Index", propiedades);
+        }
 
+        public async Task<IActionResult> Detalles(int Id)
+        {
+            var propiedad = await _propiedadesService.GetPropiedadesById(Id); 
+
+            return View(propiedad);
         }
     }
 }

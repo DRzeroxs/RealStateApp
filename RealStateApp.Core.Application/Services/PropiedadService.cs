@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Services
 {
-    public class PropiedadService : GenericServices<PropiedadViewModel, SavePropiedadViewModel, Propiedad>, Interfaces.IServices.IPropiedadService
+    public class PropiedadService : GenericServices<PropiedadViewModel, SavePropiedadViewModel, Propiedad>, IPropiedadService
     {
         private readonly IPropiedadRepository _repository;
         private readonly IMapper _mapper;
@@ -122,48 +122,50 @@ namespace RealStateApp.Core.Application.Services
 
             await CargarListas();
 
-            var propiedad = from p in _listPropiedades
-                            join a in _listAgentes
-                            on p.AgenteId equals a.Id
-                            where p.Id == Id
-                            select new PropiedadViewModel
-                            {
-                                Id = p.Id,
-                                Identifier = p.Identifier,
-                                Precio = p.Precio,
-                                Size = p.Size,
-                                NumAceados = p.NumAceados,
-                                NumHabitaciones = p.NumHabitaciones,
-                                Descripcion = p.Descripcion,
-                                AgenteId = p.AgenteId,
-                                TipoPropiedad = (from p2 in _listPropiedades
-                                                 join tp in _listTipoPropiedad
-                                                 on p2.TipoPropiedadId equals tp.Id
-                                                 select new TipoPropiedadViewModel
-                                                 { Nombre = tp.Nombre, Descripcion = tp.Descripcion, Id = tp.Id }).FirstOrDefault(),
+            var propiedadesList = from p in _listPropiedades
+                                  join a in _listAgentes
+                                  on p.AgenteId equals a.Id
+                                  where p.Id == Id
+                                  select new PropiedadViewModel
+                                  {
+                                      Id = p.Id,
+                                      Identifier = p.Identifier,
+                                      Precio = p.Precio,
+                                      Size = p.Size,
+                                      NumAceados = p.NumAceados,
+                                      NumHabitaciones = p.NumHabitaciones,
+                                      Descripcion = p.Descripcion,
+                                      AgenteId = p.AgenteId,
+                                      TipoPropiedad = (from tp in _listTipoPropiedad
+                                                       where tp.Id == p.TipoPropiedadId
+                                                       select new TipoPropiedadViewModel
+                                                       { Nombre = tp.Nombre, Descripcion = tp.Descripcion, Id = tp.Id }).First(),
 
 
-                                TipoVenta = (from p3 in _listPropiedades
-                                             join tv in _listTipoVenta
-                                             on p3.TipoVentaId equals tv.Id
-                                             select new TipoVentaViewModel { Nombre = tv.Nombre, Id = tv.Id, Descripcion = tv.Descripcion }).FirstOrDefault(),
+                                      TipoVenta = (from p3 in _listPropiedades
+                                                   join tv in _listTipoVenta
+                                                   on p3.TipoVentaId equals tv.Id
+                                                   select new TipoVentaViewModel { Nombre = tv.Nombre, Id = tv.Id, Descripcion = tv.Descripcion }).First(),
 
-                                Agente = (from p4 in _listPropiedades
-                                          join a2 in _listAgentes
-                                          on p4.AgenteId equals a.Id
-                                          select new AgenteViewModel { Nombre = a.Nombre, Id = a.Id }).FirstOrDefault(),
+                                      Agente = (from p4 in _listPropiedades
+                                                join a2 in _listAgentes
+                                                on p4.AgenteId equals a.Id
+                                                select new AgenteViewModel { Nombre = a.Nombre, Id = a.Id, ImgUrl = a2.ImgUrl, Telefono = a2.Telefono }).First(),
 
-                                Mejoras = (from ma in _listMejorasAplicadas
-                                           join p5 in _listPropiedades
-                                           on ma.PropiedadId equals p5.Id
-                                           join m in _listMejoras
-                                           on ma.MejoraId equals m.Id
-                                           select new MejoraViewModel
-                                           { Nombre = m.Nombre, Descripcion = m.Descripcion }).ToList(),
+                                      Mejoras = (from ma in _listMejorasAplicadas
+                                                 join m in _listMejoras
+                                                 on ma.MejoraId equals m.Id
+                                                 where ma.PropiedadId == p.Id
+                                                 select new MejoraViewModel
+                                                 { Nombre = m.Nombre, Descripcion = m.Descripcion }).ToList(),
+
+                                      ImgUrlList = (from Img in _listImgPropiedades
+                                                where Img.PropieadId == p.Id
+                                                select new ImgPropiedadViewModel { UrlImg = Img.UrlImg }).ToList(),
 
 
-                            };
-            return propiedad.FirstOrDefault();
+                                  };
+            return propiedadesList.First();
         }
         #endregion
 
@@ -731,6 +733,8 @@ namespace RealStateApp.Core.Application.Services
 
             return propiedades.ToList();
         }
+
+        
         #endregion
 
     }

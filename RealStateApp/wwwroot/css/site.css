@@ -100,3 +100,24 @@ body {
     background-color: rebeccapurple;
     border-top: 3px solid;
 }
+
+
+.carousel {
+    width: 652px;
+}
+
+    .carousel img {
+        height: 400px;
+    }
+
+.codigo__propiedad {
+    padding: 3px;
+    border: 1px solid;
+    width: 120px;
+}
+
+.foto__agente {
+    border-radius: 50%;
+    width: 200px;
+    margin-top: 20px;
+}
