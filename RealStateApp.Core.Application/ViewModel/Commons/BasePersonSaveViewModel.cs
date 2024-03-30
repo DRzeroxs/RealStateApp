@@ -12,6 +12,10 @@ namespace RealStateApp.Core.Application.ViewModel.Commons
         public int Id { get; set; }
         public string IdentityId { get; set; }
 
+        [Required(ErrorMessage = "El campo Correo es requerido")]
+        [DataType(DataType.EmailAddress)]
+        public string Correo { get; set; }
+
         [Required(ErrorMessage = "El campo Nombre es requerido")]
         [DataType(DataType.Text)]
         public string Nombre { get; set; }

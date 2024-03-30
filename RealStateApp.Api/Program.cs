@@ -4,6 +4,7 @@ using RealStateApp.Infraestructure.Identity;
 using RealStateApp.Infraestructure.Identity.Seeds;
 using RealStateApp.Infraestructure.Shared;
 using RealStateApp.Core.Application;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,14 @@ builder.Services.AddApiVersioning();
 builder.Services.AddPersistenceLayer(builder.Configuration);
 builder.Services.AddIdentityLayerForApi(builder.Configuration);
 builder.Services.AddSharedInfraestrucutre(builder.Configuration);
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(new ProducesAttribute("application/json"));
+}).ConfigureApiBehaviorOptions(options =>
+{
+    options.SuppressInferBindingSourcesForParameters = true;
+    options.SuppressMapClientErrors = true;
+});
 builder.Services.AddApplicationLayer();
 
 builder.Services.AddDistributedMemoryCache();

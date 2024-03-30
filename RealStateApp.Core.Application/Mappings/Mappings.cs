@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using RealStateApp.Core.Application.Dto.Account;
+using RealStateApp.Core.Application.Dto.Mejora;
 using RealStateApp.Core.Application.Dto.Propiedades;
 using RealStateApp.Core.Application.Features.TipoPropiedades.Commands.CreateTipoPropiedad;
 using RealStateApp.Core.Application.Features.TipoPropiedades.Commands.UpdateTipoPropiedad;
 using RealStateApp.Core.Application.Features.TipoVentas.Commands.CreateTipoVenta;
 using RealStateApp.Core.Application.Features.TipoVentas.Commands.UpdateTipoVenta;
+using RealStateApp.Core.Application.Features.Mejoras.Commands.CreateMejora;
+using RealStateApp.Core.Application.Features.Mejoras.Commands.UpdateMejora;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Agente;
 using RealStateApp.Core.Application.ViewModel.Mejora;
 using RealStateApp.Core.Application.ViewModel.Propiedad;
@@ -149,12 +152,67 @@ namespace RealStateApp.Core.Application.Mappings
             #endregion
 
             #region "Mejoras"
+
+            #region ViewModel
+
             CreateMap<MejoraViewModel, Mejora>()
             .ForMember(opt => opt.CreatedBy, i => i.Ignore())
             .ForMember(opt => opt.CreatedDate, i => i.Ignore())
             .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
             .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
             .ReverseMap();
+
+            CreateMap<SaveMejoraViewModel, Mejora>()
+            .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+            .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+            .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+            .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+            .ReverseMap();
+
+            #endregion
+
+            #region Dto
+
+            CreateMap<MejoraDto, Mejora>()
+           .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+           .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+           .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+           .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+           .ReverseMap();
+
+            CreateMap<DtoCreateMejora, Mejora>()
+            .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+            .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+            .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+            .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+            .ReverseMap();
+
+            #endregion
+
+            #region Commands
+
+            CreateMap<CreateMejoraCommand, Mejora>()
+           .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+           .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+           .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+           .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+           .ReverseMap();
+
+            CreateMap<UpdateMejoraCommand, Mejora>()
+           .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+           .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+           .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+           .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+           .ReverseMap();
+
+            CreateMap<MejoraUpdateResponse, Mejora>()
+           .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+           .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+           .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+           .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+           .ReverseMap();
+
+            #endregion
 
             #endregion
         }
