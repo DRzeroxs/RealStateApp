@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using RealStateApp.Core.Application.Dto.Account;
 using RealStateApp.Core.Application.Dto.Propiedades;
+using RealStateApp.Core.Application.Features.TipoPropiedades.Commands.CreateTipoPropiedad;
+using RealStateApp.Core.Application.Features.TipoPropiedades.Commands.UpdateTipoPropiedad;
+using RealStateApp.Core.Application.Features.TipoVentas.Commands.CreateTipoVenta;
+using RealStateApp.Core.Application.Features.TipoVentas.Commands.UpdateTipoVenta;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Agente;
 using RealStateApp.Core.Application.ViewModel.Mejora;
 using RealStateApp.Core.Application.ViewModel.Propiedad;
@@ -53,50 +57,95 @@ namespace RealStateApp.Core.Application.Mappings
 
             #region "Agente"
             CreateMap<AgenteViewModel, Agente>()
-            .ForMember(opt => opt.CreatedBy, i => i.Ignore())
-            .ForMember(opt => opt.CreatedDate, i => i.Ignore())
-            .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
-             .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
-            .ReverseMap();
+                .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+                .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+                .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+                .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+                .ReverseMap();
 
             CreateMap<SaveAgenteViewModel, Agente>()
-           .ForMember(opt => opt.CreatedBy, i => i.Ignore())
-           .ForMember(opt => opt.CreatedDate, i => i.Ignore())
-           .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
-            .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
-           .ReverseMap();
+                .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+                .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+                .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+                .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+                .ReverseMap();
+
             #endregion
 
             #region"Tipo de Venta"
             CreateMap<TipoVentaViewModel, TipoVenta>()
-           .ForMember(opt => opt.CreatedBy, i => i.Ignore())
-           .ForMember(opt => opt.CreatedDate, i => i.Ignore())
-           .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
-            .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
-           .ReverseMap();
+                .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+                .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+                .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+                .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+                .ReverseMap();
 
             CreateMap<SaveTipoVentaViewModel, TipoVenta>()
-           .ForMember(opt => opt.CreatedBy, i => i.Ignore())
-           .ForMember(opt => opt.CreatedDate, i => i.Ignore())
-           .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
-            .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
-           .ReverseMap();
+                .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+                .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+                .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+                .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+                .ReverseMap();
+
+            CreateMap<CreateTipoVentaCommand, TipoVenta>()
+                .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+                .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+                .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+                .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+                .ReverseMap();
+
+            CreateMap<UpdateTipoVentaCommand, TipoVenta>()
+                .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+                .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+                .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+                .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+                .ReverseMap();
+
+            CreateMap<UpdateTipoVentaResponse, TipoVenta>()
+               .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+               .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+               .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+               .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+               .ReverseMap();
             #endregion
 
             #region "Tipo de Propiedades"
             CreateMap<TipoPropiedadViewModel, TipoPropiedad>()
-           .ForMember(opt => opt.CreatedBy, i => i.Ignore())
-           .ForMember(opt => opt.CreatedDate, i => i.Ignore())
-           .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
-            .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
-           .ReverseMap();
+               .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+               .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+               .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+               .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+               .ReverseMap();
 
             CreateMap<SaveTipoPropiedadViewModel, TipoPropiedad>()
-          .ForMember(opt => opt.CreatedBy, i => i.Ignore())
-          .ForMember(opt => opt.CreatedDate, i => i.Ignore())
-          .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
-           .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
-          .ReverseMap();
+              .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+              .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+              .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+              .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+              .ReverseMap();
+
+            CreateMap<CreateTipoPropiedadCommand,  TipoPropiedad>()
+              .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+              .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+              .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+              .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+              .ReverseMap();
+
+            CreateMap<UpdateTipoPropiedadCommand, TipoPropiedad>()
+              .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+              .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+              .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+              .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+              .ReverseMap();
+
+            CreateMap<UpdateTipoPropiedadResponse, TipoPropiedad>()
+             .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+             .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+             .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+             .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+             .ReverseMap();
+
+
             #endregion
 
             #region "Mejoras"
