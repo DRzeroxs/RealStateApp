@@ -40,7 +40,7 @@ namespace RealStateApp.Infraestructure.Persistence.Repositories
 
         public virtual async Task<List<Entity>> GetAll()
         {
-            return await _context.Set<Entity>().ToListAsync();
+                return await _context.Set<Entity>().ToListAsync();
         }
         public virtual async Task<Entity> GetById(int id)
         {

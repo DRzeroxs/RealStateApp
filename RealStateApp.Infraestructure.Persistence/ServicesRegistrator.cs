@@ -38,6 +38,8 @@ namespace RealStateApp.Infraestructure.Persistence
 
             services.AddScoped<ITipoPropiedadRepository, TipoPropiedadRepository>();
             services.AddScoped<ITipoVentaRepository, TipoVentaRepository>();
+
+            services.AddTransient<IMejorasAplicadasRepository, MejoreasAplicadasRepository>();
             #endregion
         }
     }

@@ -11,7 +11,7 @@
 	</PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Dto\TipoDePropiedad\" />
+    <Folder Include="Features\Agentes\Commands\" />
     <Folder Include="Features\Propiedades\Commands\CreatePropiedad\" />
     <Folder Include="Features\Propiedades\Commands\DeletePropiedadById\" />
     <Folder Include="Features\Propiedades\Commands\UpdatePropiedad\" />

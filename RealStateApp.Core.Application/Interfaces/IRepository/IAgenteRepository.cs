@@ -9,5 +9,8 @@ namespace RealStateApp.Core.Application.Interfaces.IRepository
 {
     public interface IAgenteRepository : IGenericRepository<Agente>
     {
+        Task<int> GetCantidadPropiedadAgenteById(int id);
+        Task<int> GetCantidadPropiedadAgente();
+        Task<Agente> GetPropiedadByAgenteId(int id);
     }
 }
