@@ -10,6 +10,8 @@ namespace RealStateApp.Core.Domain.Commonts
     public class PersonBaseEntity : AuditableBaseEntity
     {
         public string IdentityId { get; set; }
+
+        public string Correo { get; set; }
         public string? Nombre { get; set; }
         public string? Apellido { get; set; }
 
