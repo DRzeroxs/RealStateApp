@@ -1,19 +1,25 @@
 ﻿using AutoMapper;
 using MediatR;
 using RealStateApp.Core.Application.Dto.Agente;
+using RealStateApp.Core.Application.Exceptions;
 using RealStateApp.Core.Application.Interfaces.IRepository;
+using RealStateApp.Core.Application.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Features.Agentes.Queries.GetAllAgentes
 {
-    public class GetAllAgentesQuery : IRequest<IList<AgenteDto>>
+    // <summary>
+    // Obtener todos los agentes
+    // </summary>
+    public class GetAllAgentesQuery : IRequest<Response<IList<AgenteDto>>>
     {
     }
-    public class GetAllAgentesQueryHandler : IRequestHandler<GetAllAgentesQuery, IList<AgenteDto>>
+    public class GetAllAgentesQueryHandler : IRequestHandler<GetAllAgentesQuery, Response<IList<AgenteDto>>>
     {
         private readonly IAgenteRepository _agenteRepository;
         public GetAllAgentesQueryHandler(IAgenteRepository agenteRepository)
@@ -21,11 +27,11 @@ namespace RealStateApp.Core.Application.Features.Agentes.Queries.GetAllAgentes
             _agenteRepository = agenteRepository;
         }
 
-        public async Task<IList<AgenteDto>> Handle(GetAllAgentesQuery request, CancellationToken cancellationToken)
+        public async Task<Response<IList<AgenteDto>>> Handle(GetAllAgentesQuery request, CancellationToken cancellationToken)
         {
             var agentes = await GetAllAgentes();
-            if (agentes == null || agentes.Count == 0) throw new Exception("There is not agentes");
-            return agentes;
+            if (agentes == null || agentes.Count == 0) throw new ApiExeption("No se encontrarons los agentes", (int)HttpStatusCode.NotFound);
+            return new Response<IList<AgenteDto>>(agentes);
         }
 
         private async Task<List<AgenteDto>> GetAllAgentes()
@@ -38,6 +44,7 @@ namespace RealStateApp.Core.Application.Features.Agentes.Queries.GetAllAgentes
                 Nombre = agente.Nombre,
                 Apellido = agente.Apellido,
                 Telefono = agente.Telefono,
+                Correo = agente.Correo,
                 CantidadPropiedades = agenteCantidadPropiedad,
 
             }).ToList();

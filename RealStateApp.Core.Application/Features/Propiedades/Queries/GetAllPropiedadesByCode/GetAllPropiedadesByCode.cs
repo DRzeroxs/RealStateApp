@@ -5,6 +5,7 @@ using RealStateApp.Core.Application.Exceptions;
 using RealStateApp.Core.Application.Interfaces.IRepository;
 using RealStateApp.Core.Application.Interfaces.IServices;
 using RealStateApp.Core.Application.Wrappers;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +16,12 @@ using IPropiedadService = RealStateApp.Core.Application.Interfaces.IServices.IPr
 
 namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetAllPropiedadesByCode
 {
+    // <summary>
+    // Obtener una propiedad por el codigo de dicha propiedad
+    // </summary>
     public class GetAllPropiedadesByCode : IRequest<Response<PropiedadesDto>>
     {
+        [SwaggerParameter(Description = "Identificador de la propiedad que desea obtener")]
         public int identifier { get; set; } 
     }
 
@@ -34,7 +39,7 @@ namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetAllPropi
         {
             var propiedades = await GetAllPropiedadesByCode(request.identifier);
 
-            if (propiedades is null) throw new ApiEception("No existe esa propiedad", (int)HttpStatusCode.NotFound);
+            if (propiedades is null) throw new ApiExeption("No existe esa propiedad", (int)HttpStatusCode.NotFound);
 
             return propiedades;
         }

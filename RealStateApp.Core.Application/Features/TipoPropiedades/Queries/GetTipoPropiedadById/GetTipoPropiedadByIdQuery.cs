@@ -1,21 +1,29 @@
 ﻿using AutoMapper;
 using MediatR;
 using RealStateApp.Core.Application.Dto.TipoDePropiedad;
+using RealStateApp.Core.Application.Exceptions;
 using RealStateApp.Core.Application.Interfaces.IRepository;
+using RealStateApp.Core.Application.Wrappers;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Features.TipoPropiedades.Queries.GetTipoPropiedadById
 {
-    public class GetTipoPropiedadByIdQuery : IRequest<TipoPropiedadDto>
+    // <summary>
+    // Parametros para obtener un tipo de propiedad por id
+    // </summary>
+    public class GetTipoPropiedadByIdQuery : IRequest<Response<TipoPropiedadDto>>
     {
+        [SwaggerParameter(Description = "Id del tipo de propiedad que desea obtener")]
         public int Id { get; set; }
     }
 
-    public class GetTipoPropiedadByIdQueryHandler : IRequestHandler<GetTipoPropiedadByIdQuery, TipoPropiedadDto>
+    public class GetTipoPropiedadByIdQueryHandler : IRequestHandler<GetTipoPropiedadByIdQuery, Response<TipoPropiedadDto>>
     {
         private readonly ITipoPropiedadRepository _tipoPropiedadRepository;
         private readonly IMapper _mapper;
@@ -24,24 +32,12 @@ namespace RealStateApp.Core.Application.Features.TipoPropiedades.Queries.GetTipo
             _tipoPropiedadRepository = tipoPropiedadRepository;
             _mapper = mapper;
         }
-        public async Task<TipoPropiedadDto> Handle(GetTipoPropiedadByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Response<TipoPropiedadDto>> Handle(GetTipoPropiedadByIdQuery request, CancellationToken cancellationToken)
         {
-            var tipoPropiedad = await GetTipoPropiedadById(request.Id);
-            if (tipoPropiedad == null) throw new Exception("Tipo propiedad not found");
-            return tipoPropiedad;
+            var tipoPropiedad = await _tipoPropiedadRepository.GetById(request.Id);
+            if (tipoPropiedad == null) throw new ApiExeption("No se encontro un tipo de propiedad por ese id", (int)HttpStatusCode.NotFound);
+            return new Response<TipoPropiedadDto>(_mapper.Map<TipoPropiedadDto>(tipoPropiedad));
         }
 
-        public async Task<TipoPropiedadDto> GetTipoPropiedadById(int id)
-        {
-            var tipoPropiedad = await _tipoPropiedadRepository.GetById(id);
-            TipoPropiedadDto tipoPropiedadDto = new TipoPropiedadDto()
-            {
-                Id = tipoPropiedad.Id,
-                Nombre = tipoPropiedad.Nombre,
-                Descripcion = tipoPropiedad.Descripcion
-            };
-
-            return tipoPropiedadDto;
-        }
     }
 }

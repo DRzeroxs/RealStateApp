@@ -22,6 +22,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RealStateApp.Core.Application.Dto.TipoDePropiedad;
+using RealStateApp.Core.Application.Dto.TipoVenta;
+using RealStateApp.Core.Application.Dto.Agente;
 
 namespace RealStateApp.Core.Application.Mappings
 {
@@ -73,6 +76,13 @@ namespace RealStateApp.Core.Application.Mappings
                 .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
                 .ReverseMap();
 
+            CreateMap<AgenteDto, Agente>()
+            .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+            .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+            .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+            .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+            .ReverseMap();
+
             #endregion
 
             #region"Tipo de Venta"
@@ -110,6 +120,13 @@ namespace RealStateApp.Core.Application.Mappings
                .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
                .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
                .ReverseMap();
+
+            CreateMap<TipoVentaDto, TipoVenta>()
+            .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+            .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+            .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+            .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+            .ReverseMap();
             #endregion
 
             #region "Tipo de Propiedades"
@@ -148,7 +165,12 @@ namespace RealStateApp.Core.Application.Mappings
              .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
              .ReverseMap();
 
-
+            CreateMap<TipoPropiedadDto, TipoPropiedad>()
+             .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+             .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+             .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+             .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+             .ReverseMap();
             #endregion
 
             #region "Mejoras"

@@ -4,6 +4,7 @@ using RealStateApp.Core.Application.Dto.Propiedades;
 using RealStateApp.Core.Application.Exceptions;
 using RealStateApp.Core.Application.Interfaces.IServices;
 using RealStateApp.Core.Application.Wrappers;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,12 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetPropiedadById
 {
+    // <summary>
+    // Parametros para obtener una propiedad por el id
+    // </summary>
     public class GetPropiedadByIdQuery : IRequest<Response<PropiedadesDto>>
     {
+        [SwaggerParameter(Description = "Id de la propiedad que desea obtener")]
         public int Id { get; set; } 
     }
     public class GetPropiedadByIdQueryHandler : IRequestHandler<GetPropiedadByIdQuery, Response<PropiedadesDto>>
@@ -31,7 +36,7 @@ namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetPropieda
         {
             var propiedad = await GetPropiedadById(request.Id);
 
-            if (propiedad == null) throw new ApiEception("No existe una propiedad con ese Id", (int)HttpStatusCode.NotFound);
+            if (propiedad == null) throw new ApiExeption("No existe una propiedad con ese Id", (int)HttpStatusCode.NotFound);
 
             return new Response<PropiedadesDto>(propiedad);
         }

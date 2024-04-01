@@ -36,7 +36,6 @@ namespace RealStateApp.Api.Controllers.V1
         }
 
         [Authorize(Roles = "Admin, Developer")]
-        [HttpGet("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IList<MejoraDto>))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

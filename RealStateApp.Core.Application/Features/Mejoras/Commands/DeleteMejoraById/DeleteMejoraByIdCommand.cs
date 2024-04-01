@@ -37,7 +37,7 @@ namespace RealStateApp.Core.Application.Features.Mejoras.Commands.DeleteMejoraBy
 
             if (mejora == null)
             {
-                throw new ApiEception("No se encontró la mejora",(int)HttpStatusCode.NotFound);
+                throw new ApiExeption("No se encontró la mejora",(int)HttpStatusCode.NotFound);
             }
 
             await _repository.DeleteAsync(mejora);
