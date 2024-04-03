@@ -52,34 +52,51 @@
 
     </div>
 
+    <section class="contenedor container">
+        @foreach(var item in Model)
+        {
+        <div class="card">
+            <img class="card__img" src="@item.ImgUrl.UrlImg" alt="" />
+            <h2 class="card__tipo-propiedad">@item.TipoPropiedad.Nombre</h2>
+            <div class="card__contenido">
+                <p class="card__precio">$@item.Precio</p>
+                <p class="card__titulo">#@item.Identifier</p>
+                <p class="card__calle">
+                    <i style="color: #00b98e"
+                       class="fa fa-map-marker-alt text-primary me-2"></i>
+                    123 Street, New Yor, USA
+                </p>
+            </div>
 
- <section class="contenedor container">
-    @foreach (var item in Model)
-    {
-        <a asp-controller="Home" asp-route-Id="@item.Id" asp-action="Detalles" style="list-style: none; text-decoration: none; color: inherit;">
-                <div class="card">
-                    <img src="@item.ImgUrl.UrlImg" alt="" />
-
-                    <div class="card__Contenido">
-                        <p style="font-size: 18px;" class="fw-bold">@item.TipoPropiedad.Nombre</p>
-                        <p>
-                            <span class="fw-bold">Codigo:</span> <br />
-                            @item.Identifier
-                        </p>
-                        <p>
-                            <span class="fw-bold">Venta:</span> <br />
-                            <span style="color: #AF282D;">US$ @item.Precio</span>
-                        </p>
-                        <div class="iconos d-flex">
-                            <div class="d-flex" style="gap:10px ;"><i class="fa-solid fa-bed"></i> @item.NumHabitaciones</div>
-                            <div class="d-flex" style="gap:10px;"><i class="fa-solid fa-bath"></i> @item.NumAceados</div>
-                            <div class="d-flex" style="gap:10px;"><i class="fa-solid fa-tape"></i> @item.Size mt</div>
-                        </div>
-                    </div>
+            <div class="contendor__iconos--Card">
+                <div>
+                    <p class="card__iconos--medida">
+                        <i style="color: #00b98e; font-size: 18px"
+                           class="fa fa-ruler-combined text-primary me-2"></i>
+                        @item.Size mt
+                    </p>
                 </div>
-        </a>
-        
-    }
-      
-    </section>
 
+                <div>
+                    <p class="card__iconos--habitaciones">
+                        <i style="color: #00b98e; font-size: 18px"
+                           class="fa fa-bed text-primary me-2"></i>
+                        @item.NumHabitaciones Bed
+                    </p>
+                </div>
+
+                <div>
+                    <p class="card__iconos--baños">
+                        <i style="color: #00b98e; font-size: 18px"
+                           class="fa fa-bath text-primary me-2"></i>
+                        @item.NumAceados Bath
+                    </p>
+                </div>
+
+                    
+            </div>
+        </div>
+        
+       
+        }
+   </section>
