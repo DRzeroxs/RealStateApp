@@ -10,11 +10,11 @@ namespace RealStateApp.Core.Application.Wrappers
     {
         public bool Suceded { get; set; }
         public string? Message { get; set; }
-        public List<string> Errors { get; set; }
+        public List<string>? Errors { get; set; }
         public T Data { get; set; }
 
         public Response() { }
-        public Response(T data, string message = null)
+        public Response(T data, string? message = null)
         {
             Suceded = true;
             Message = message ?? "";

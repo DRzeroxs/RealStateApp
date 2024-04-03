@@ -10,7 +10,7 @@ namespace RealStateApp.Core.Application.Interfaces.IServices
     {
         Task<SaveViewModel> AddAsync(SaveViewModel vm);
         Task<List<ViewModel>> GetAllAsync();
-        Task<SaveViewModel> GetByIdAsync(int Id);
+        Task<ViewModel> GetByIdAsync(int Id);
         Task RemoveAsync(int Id);
         Task UpdateAsync(SaveViewModel vm, int ID);
     }

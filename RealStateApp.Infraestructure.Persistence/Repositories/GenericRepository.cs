@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace RealStateApp.Infraestructure.Persistence.Repositories
 {
@@ -40,7 +41,9 @@ namespace RealStateApp.Infraestructure.Persistence.Repositories
 
         public virtual async Task<List<Entity>> GetAll()
         {
-            return await _context.Set<Entity>().ToListAsync();
+               var result = await _context.Set<Entity>().ToListAsync();
+
+            return result;
         }
         public virtual async Task<Entity> GetById(int id)
         {

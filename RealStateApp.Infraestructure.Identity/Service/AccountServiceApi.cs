@@ -266,6 +266,5 @@ namespace RealStateApp.Infraestructure.Identity.Service
 
             return BitConverter.ToString(ramdomBytes).Replace("-", "");
         }
-
     }
 }

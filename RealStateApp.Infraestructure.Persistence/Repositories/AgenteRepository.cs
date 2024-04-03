@@ -1,4 +1,6 @@
-﻿using RealStateApp.Core.Application.Interfaces.IRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using RealStateApp.Core.Application.Dto.Agente;
+using RealStateApp.Core.Application.Interfaces.IRepository;
 using RealStateApp.Core.Domain.Entities.Users;
 using RealStateApp.Infraestructure.Persistence.Context;
 using System;
@@ -16,5 +18,34 @@ namespace RealStateApp.Infraestructure.Persistence.Repositories
         {
             _context = context;
         }
+
+        public override async Task<Agente> GetById(int id)
+        {
+            var agente = await _context.Set<Agente>().Include(x => x.Propiedad).ToListAsync();
+            return agente.FirstOrDefault(x => x.Id == id);
+        }
+
+        public async Task<Agente> GetPropiedadByAgenteId(int id)
+        {
+            var agente = await _context.Set<Agente>()
+                .Include(x => x.Propiedad)
+                .Include(x => x.Propiedad.TipoPropiedad)
+                .Include(x => x.Propiedad.TipoVenta)
+                .ToListAsync();
+            return agente.FirstOrDefault(x => x.Id == id);
+        }
+
+        public async Task<int> GetCantidadPropiedadAgenteById(int id)
+        {
+            var agente = await _context.Set<Agente>().Where(x => x.Id == id).Include(x => x.Propiedad).CountAsync();
+            return agente;
+        }
+
+        public async Task<int> GetCantidadPropiedadAgente()
+        {
+            var agente = await _context.Set<Agente>().Include(x => x.Propiedad).CountAsync();
+            return agente;
+        }
+
     }
 }

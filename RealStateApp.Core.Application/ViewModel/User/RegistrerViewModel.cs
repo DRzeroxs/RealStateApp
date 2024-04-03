@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,9 +22,7 @@ namespace RealStateApp.Core.Application.ViewModel.User
         [Required(ErrorMessage = "El Tipo de Usuario es un Campo Requerido.")]
         [DataType(DataType.Text)]
         public string TypeOfUser { get; set; }
-      
-        [DataType(DataType.Text)]
-        public string ImgUrl { get; set; }
+        public string? ImgUrl { get; set; }
         [Required(ErrorMessage = "El Nombre de Usuario es un Campo Requerido.")]
         [DataType(DataType.Text)]
         public string UserName { get; set; }
@@ -37,6 +36,7 @@ namespace RealStateApp.Core.Application.ViewModel.User
         public string ConfirnPassword { get; set; }
         [Required(ErrorMessage = "El Email es Requerido.")]
         [DataType(DataType.EmailAddress)]
+        public IFormFile file { get; set; }
         public string Email { get; set; }
         public bool HasError { get; set; }
         public string? Error { get; set; }
