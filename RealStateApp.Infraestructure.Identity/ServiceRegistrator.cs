@@ -118,6 +118,7 @@ namespace RealStateApp.Infraestructure.Identity
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IAccountServiceApi, AccountServiceApi>();
         }
+       
         #endregion
     }
 }

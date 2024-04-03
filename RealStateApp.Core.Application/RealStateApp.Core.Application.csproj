@@ -15,7 +15,6 @@
     <Folder Include="Features\Propiedades\Commands\CreatePropiedad\" />
     <Folder Include="Features\Propiedades\Commands\DeletePropiedadById\" />
     <Folder Include="Features\Propiedades\Commands\UpdatePropiedad\" />
-    <Folder Include="Helpers\" />
   </ItemGroup>
 
   <ItemGroup>

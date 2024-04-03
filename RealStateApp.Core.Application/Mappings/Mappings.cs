@@ -20,6 +20,7 @@ using RealStateApp.Core.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -45,7 +46,9 @@ namespace RealStateApp.Core.Application.Mappings
               .ForMember(opt => opt.CreatedDate, i => i.Ignore())
               .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
                .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
-              .ReverseMap();
+              .ReverseMap()
+              .ForMember(opt => opt.ImgUrl, i => i.Ignore())
+                .ForMember(opt => opt.ImgUrlList, i => i.Ignore());
 
             CreateMap<PropiedadesDto, Propiedad>()
              .ForMember(opt => opt.CreatedBy, i => i.Ignore())
@@ -55,7 +58,16 @@ namespace RealStateApp.Core.Application.Mappings
              .ReverseMap();
 
             CreateMap<PropiedadesDto, PropiedadViewModel>()
+                .ForMember(opt => opt.ImgUrl, i => i.Ignore())
+                .ForMember(opt => opt.ImgUrlList, i => i.Ignore())
             .ReverseMap();
+
+            CreateMap<ImgPropiedadViewModel,ImgPropiedad >()
+              .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+             .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+             .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+              .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+             .ReverseMap();
             #endregion
 
             #region "Agente"

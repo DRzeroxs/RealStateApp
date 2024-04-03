@@ -4,13 +4,13 @@
 }
 
 <div class="d-flex align-items-center justify-content-center">
-    <form class="d-flex flex-column w-25 m-2 formulario__registro" asp-controller="User" asp-action="Registrer">
+    <form enctype="multipart/form-data" class="d-flex flex-column w-25 m-2 formulario__registro" asp-controller="User" asp-action="Registrer">
         <h2 class="text-center mb-4 h1">Registrate</h2>
 
         <input type="text" asp-for="FirstName" placeholder="Nombre" class="fw-bold" />
         <input type="text" asp-for=LastName placeholder="Apellido" class="fw-bold mt-4" />
         <input type="text" asp-for="PhoneNumber" placeholder="Telefono" class="fw-bold mt-4" />
-        <input type="text" asp-for="ImgUrl" placeholder="Foto de Usuario" class="fw-bold mt-4" />
+        <input type="file" asp-for="file">
         <input type="text"
                placeholder="Nombre de Usuario" asp-for="UserName"
                class="fw-bold mt-4" />

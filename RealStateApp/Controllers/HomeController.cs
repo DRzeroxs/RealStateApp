@@ -1,32 +1,57 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RealStateApp.Models;
-using System.Diagnostics;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using RealStateApp.Core.Application.Features.Propiedades.Queries.GetAllPropiedad;
+using RealStateApp.Core.Application.Interfaces.IServices;
+using RealStateApp.Core.Application.Services;
+using RealStateApp.Core.Application.ViewModel.Propiedad;
+using RealStateApp.Core.Domain.Entities;
 
 namespace RealStateApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IPropiedadService _propiedadesService;
+        private readonly IBusquedaPersonalizada _busqueda;
+        public HomeController(IPropiedadService propieadadesService, IBusquedaPersonalizada busqueda)
         {
-            _logger = logger;
+            _propiedadesService = propieadadesService;
+            _busqueda = busqueda;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var propiedades = await _propiedadesService.GetAllPropiedades();
+
+            return View(propiedades);
+        }
+        [HttpPost]
+        public async Task<IActionResult> BuscarPorCodigo(int identifier)
+        {
+            var propiedades = await _propiedadesService.GetAllPropiedadesByCode(identifier);
+
+            List<PropiedadViewModel> propiedadesList = new List<PropiedadViewModel>();
+
+            propiedadesList.Add(propiedades);
+
+            return View("Index", propiedadesList);
         }
 
-        public IActionResult Index()
+        [HttpPost]
+        public async Task<IActionResult> BusquedaConjunta(string tipoPropiedad,
+            int numeroHabitaciones, int numeroAcedados, int precioMinimo, int precioMaximo)
         {
-            return View();
+            var propiedades = new List<PropiedadViewModel>();
+
+            propiedades = await _busqueda.BuscarPropiedad(tipoPropiedad,
+            numeroHabitaciones,numeroAcedados,precioMinimo,precioMaximo);
+
+            return View("Index", propiedades);
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Detalles(int Id)
         {
-            return View();
-        }
+            var propiedad = await _propiedadesService.GetPropiedadesById(Id); 
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(propiedad);
         }
     }
 }
