@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
@@ -113,6 +114,7 @@ public class AccountService : IAccountService
             TypeOfUser = request.TypeOfUser,
             IsActive = false,
             ImgUrl = "",
+            PhoneNumber = request.PhoneNumber,
               
         };
 
@@ -157,7 +159,7 @@ public class AccountService : IAccountService
         {
             Email = user.Email,
             FirstName = user.FirstName, LastName = user.LastName,
-            PhoneNumber = user.PhoneNumber, UserId = user.Id
+            PhoneNumber = user.PhoneNumber, UserId = user.Id, ImgUrl = user.ImgUrl,
         };
 
         return userVm;
@@ -276,6 +278,21 @@ public class AccountService : IAccountService
         {
             return $"An Error ocurred while confirming {user.Email}";
         }
+    }
+    public async Task EditUser(EditUserViewModel vm)
+    {
+        var user = await _userManager.FindByIdAsync(vm.Id);
+        
+        if (user != null) 
+        {
+            user.FirstName = vm.FirstName;  
+            user.LastName = vm.LastName;    
+            user.PhoneNumber = vm.PhoneNumber;  
+            user.ImgUrl = user.ImgUrl = UploadFile(vm.file, user.Id);
+
+         var result = await _userManager.UpdateAsync(user);
+        }
+
     }
     private string UploadFile(IFormFile file, string Id, bool isEditMode = false, string imageURL = "")
     {
