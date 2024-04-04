@@ -61,7 +61,7 @@ namespace RealStateApp.Api.Controllers.V1
         [SwaggerOperation(Summary = "Propiedad por codigo", Description = "Obtiene una propiedad por el codigo del mismo")]
         public async Task<IActionResult> GetByCode(int code)
         {
-                var query = new GetAllPropiedadesByCode { identifier = code };
+                var query = new GetAllPropiedadesByCodeQuery { identifier = code };
                 var propiedad = Mediator.Send(query);
 
                 return Ok(propiedad);

@@ -12,13 +12,13 @@ namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetAllPropi
     // <summary>
     // Obtener una propiedad por el codigo de dicha propiedad
     // </summary>
-    public class GetAllPropiedadesByCode : IRequest<Response<PropiedadesDto>>
+    public class GetAllPropiedadesByCodeQuery : IRequest<Response<PropiedadesDto>>
     {
         [SwaggerParameter(Description = "Identificador de la propiedad que desea obtener")]
         public int identifier { get; set; } 
     }
 
-    public class GetAllPropiedadesByCodeHanlder : IRequestHandler<GetAllPropiedadesByCode, Response<PropiedadesDto>>
+    public class GetAllPropiedadesByCodeHanlder : IRequestHandler<GetAllPropiedadesByCodeQuery, Response<PropiedadesDto>>
     {
         private readonly IPropiedadService _service;
         private readonly IMapper _mapper;
@@ -28,7 +28,7 @@ namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetAllPropi
             _mapper = mapper;   
         }
 
-        public async Task<Response<PropiedadesDto>> Handle(GetAllPropiedadesByCode request, CancellationToken cancellationToken)
+        public async Task<Response<PropiedadesDto>> Handle(GetAllPropiedadesByCodeQuery request, CancellationToken cancellationToken)
         {
             var propiedades = await GetAllPropiedadesByCode(request.identifier);
 
