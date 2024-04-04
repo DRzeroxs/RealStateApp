@@ -37,7 +37,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Registrer">Registro</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Registro</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
                         </li>
 
                         @if(isCliente is not false)
@@ -60,7 +60,7 @@
 
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-route-userId="@user.Id" asp-controller="User" asp-action="EditUser">Mis Propiedades</a>
+                                <a class="nav-link text-dark" asp-area="" asp-route-userId="@user.Id" asp-controller="User" asp-action="EditUser">Editar Usuario</a>
                             </li>
 
                         }
