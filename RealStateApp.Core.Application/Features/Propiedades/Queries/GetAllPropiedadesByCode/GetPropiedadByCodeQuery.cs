@@ -3,15 +3,8 @@ using MediatR;
 using RealStateApp.Core.Application.Dto.Propiedades;
 using RealStateApp.Core.Application.Exceptions;
 using RealStateApp.Core.Application.Interfaces.IServices;
-using RealStateApp.Core.Application.ViewModel.Propiedad;
 using RealStateApp.Core.Application.Wrappers;
-using RealStateApp.Core.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetAllPropiedadesByCode
 {
