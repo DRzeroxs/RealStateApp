@@ -13,8 +13,7 @@ namespace RealStateApp.Core.Application.Dto.Agente
         public string? Apellido { get; set; }
         public string Telefono { get; set; }
         public string Correo { get; set; }
-
-        public int CantidadPropiedades;
+        public int CantidadPropiedades { get; set; }
 
 
     }

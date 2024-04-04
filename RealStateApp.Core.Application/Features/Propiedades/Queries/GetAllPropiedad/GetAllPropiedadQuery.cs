@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetAllPropiedad
 {
+    // <summary>
+    // Obtener todas las propiedades
+    // </summary>
     public class GetAllPropiedadQuery : IRequest<Response<IList<PropiedadesDto>>>
     {
     }

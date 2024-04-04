@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
 using RealStateApp.Core.Application.Interfaces.IRepository;
+using RealStateApp.Core.Application.Wrappers;
 using RealStateApp.Core.Domain.Entities.Descripcion;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +12,27 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Features.TipoPropiedades.Commands.CreateTipoPropiedad
 {
-    public class CreateTipoPropiedadCommand : IRequest<int>
+    // <summary>
+    // Parametros para crear una tipo de propiedad
+    // </summary>
+    public class CreateTipoPropiedadCommand : IRequest<Response<int>>
     {
-        public int Id { get; set; }
+        // <summary>
+        // Condominio / Apartamentos
+        // </summary>
+
+        [SwaggerParameter(Description = "Nombre del tipo de propiedad")]
         public string Nombre { get; set; }
+
+        // <summary>
+        // Son viviendas ubicadas en edificios con multiples pisos
+        // </summary>
+
+        [SwaggerParameter(Description = "Descripcion del tipo de propiedad")]
         public string Descripcion { get; set; }
     }
 
-    public class CreateTipoPropiedadCommandHandler : IRequestHandler<CreateTipoPropiedadCommand, int>
+    public class CreateTipoPropiedadCommandHandler : IRequestHandler<CreateTipoPropiedadCommand, Response<int>>
     {
         private readonly ITipoPropiedadRepository _tipoPropiedadRepository;
         private readonly IMapper _mapper;
@@ -27,12 +42,11 @@ namespace RealStateApp.Core.Application.Features.TipoPropiedades.Commands.Create
             _mapper = mapper;
         }
 
-        public async Task<int> Handle(CreateTipoPropiedadCommand command, CancellationToken cancellationToken)
+        public async Task<Response<int>> Handle(CreateTipoPropiedadCommand command, CancellationToken cancellationToken)
         {
             var tipoPropiedad = _mapper.Map<TipoPropiedad>(command);
-            if (tipoPropiedad == null) throw new Exception("Tipo de propiedad not found");
             tipoPropiedad = await _tipoPropiedadRepository.AddAsync(tipoPropiedad);
-            return tipoPropiedad.Id;
+            return new Response<int>(tipoPropiedad.Id);
         }
     }
 }
