@@ -149,11 +149,11 @@ public class AccountService : IAccountService
         response.userId = userId.Id;
         return response;
     }
-    public async Task<UserViewModel> GetById(string userId)
+    public async Task<UserPostViewModel> GetById(string userId)
     {
        var user = await _userManager.FindByIdAsync(userId);
 
-        UserViewModel userVm = new UserViewModel
+        UserPostViewModel userVm = new UserPostViewModel
         {
             Email = user.Email,
             FirstName = user.FirstName, LastName = user.LastName,

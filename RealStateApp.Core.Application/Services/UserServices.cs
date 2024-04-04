@@ -61,7 +61,7 @@ namespace RealStateApp.Core.Application.Services
         }
 
         // Metodo para Buscar Usuario Por el Id tipo String
-        public async Task<UserViewModel> GetUserById(string userId)
+        public async Task<UserPostViewModel> GetUserById(string userId)
         {
             var user = await _accountServices.GetById(userId);
 

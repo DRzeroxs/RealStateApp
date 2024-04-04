@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.ViewModel.User
 {
-    public class UserViewModel
+    public class UserPostViewModel
     {
         public string UserId { get; set; }  
         public string FirstName { get; set; }
