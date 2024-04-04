@@ -1,21 +1,27 @@
 ﻿using AutoMapper;
 using MediatR;
 using RealStateApp.Core.Application.Dto.TipoVenta;
+using RealStateApp.Core.Application.Exceptions;
 using RealStateApp.Core.Application.Interfaces.IRepository;
+using RealStateApp.Core.Application.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Features.TipoVentas.Queries.GetAllTiposVenta
 {
-    public class GetAllTiposVentaQuery : IRequest<IList<TipoVentaDto>>
+    // <summary>
+    // Obtener todos los tipos de ventas
+    // </summary>
+    public class GetAllTiposVentaQuery : IRequest<Response<IList<TipoVentaDto>>>
     {
 
     }
 
-    public class GetAllTiposVentaQueryHandler : IRequestHandler<GetAllTiposVentaQuery, IList<TipoVentaDto>>
+    public class GetAllTiposVentaQueryHandler : IRequestHandler<GetAllTiposVentaQuery, Response<IList<TipoVentaDto>>>
     {
         private readonly ITipoVentaRepository _tipoVentasRepository;
         private readonly IMapper _mapper;
@@ -25,23 +31,12 @@ namespace RealStateApp.Core.Application.Features.TipoVentas.Queries.GetAllTiposV
             _mapper = mapper;
         }
 
-        public async Task<IList<TipoVentaDto>> Handle(GetAllTiposVentaQuery request, CancellationToken cancellationToken)
+        public async Task<Response<IList<TipoVentaDto>>> Handle(GetAllTiposVentaQuery request, CancellationToken cancellationToken)
         {
-            var tiposVenta = await GetAllTiposVentas();
-            if (tiposVenta == null || tiposVenta.Count == 0) throw new Exception("There is not Tipos de Ventas");
-            return tiposVenta;
+            var tiposVenta = await _tipoVentasRepository.GetAll();
+            if (tiposVenta == null || tiposVenta.Count == 0) throw new ApiExeption("No se encontrarons tipos de ventas", (int)HttpStatusCode.NotFound);
+            return new Response<IList<TipoVentaDto>>(_mapper.Map<IList<TipoVentaDto>>(tiposVenta));
 
-        }
-
-        private async Task<List<TipoVentaDto>> GetAllTiposVentas()
-        {
-            var tipoVentas = await _tipoVentasRepository.GetAll();
-            return tipoVentas.Select(tipoVenta => new TipoVentaDto
-            {
-                Id = tipoVenta.Id,
-                Nombre = tipoVenta.Nombre,
-                Descripcion = tipoVenta.Descripcion,
-            }).ToList();
         }
     }
 }

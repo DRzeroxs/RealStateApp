@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using RealStateApp.Core.Application.Dto.Account;
 using RealStateApp.Core.Application.Enum;
 using RealStateApp.Core.Application.Interfaces.IAccount;
+using RealStateApp.Core.Application.ViewModel.User;
 using RealStateApp.Core.Domain.Settings;
 using RealStateApp.Infraestructure.Identity.Entities;
 using System;
@@ -265,6 +266,47 @@ namespace RealStateApp.Infraestructure.Identity.Service
             rgnCrytoServiceProvider.GetBytes(ramdomBytes);
 
             return BitConverter.ToString(ramdomBytes).Replace("-", "");
+        }
+
+        public async Task<bool> ActiveAccountAsync(string userId)
+        {
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            user.IsActive = true;
+
+            var result = await _userManager.UpdateAsync(user);
+            return user.IsActive;
+        }
+
+        public async Task<bool> InactiveAccountAsync(string userId)
+        {
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            user.IsActive = false;
+
+            var result = await _userManager.UpdateAsync(user);
+            return user.IsActive;
+        }
+
+        public async Task<UserPostViewModel> GetById(string Id)
+        {
+            var u = await _userManager.FindByIdAsync(Id);
+
+            UserPostViewModel UserVm = new()
+            {
+                UserId = u.Id,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                UserName = u.UserName,
+                ImgUrl = u.ImgUrl,
+                PhoneNumber = u.PhoneNumber,
+                TypeOfUser = u.TypeOfUser,
+                Email = u.Email,
+                IsActived = u.IsActive
+            };
+            return UserVm;
         }
     }
 }

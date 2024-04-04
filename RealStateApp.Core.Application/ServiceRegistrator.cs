@@ -23,6 +23,10 @@ namespace RealStateApp.Core.Application
 
             services.AddTransient<IPropiedadService, PropiedadService>();
             services.AddTransient<IBusquedaPersonalizada, BusquedaPersonalizada>();
+
+            services.AddTransient<IPropiedadFavoritaService, PropiedadFavoritaService>();
+            services.AddTransient<IClienteService, ClienteService>();
+
         }
     }
 }

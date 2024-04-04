@@ -15,7 +15,7 @@ namespace RealStateApp.Api.Extensions
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "Api Restaurante",
+                    Title = "Api Real State",
                     Description = "This Api will be responsible for overall data distribution",
                     Contact = new OpenApiContact
                     {

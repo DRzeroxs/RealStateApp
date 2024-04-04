@@ -6,15 +6,18 @@ using RealStateApp.Core.Application.Interfaces.IServices;
 using RealStateApp.Core.Application.Services;
 using RealStateApp.Core.Application.ViewModel.User;
 using RealStateApp.Core.Application.Helpers;
+using RealStateApp.Core.Application.ViewModel.AppUsers.Cliente;
 
 namespace RealStateApp.Controllers
 {
     public class UserController : Controller
     {
         private readonly IUserServices _userServices;
-        public UserController(IUserServices userServices)
+        private readonly IClienteService _clienteService;
+        public UserController(IUserServices userServices, IClienteService clienteService)
         {
             _userServices = userServices;
+            _clienteService = clienteService;
         }
         public IActionResult Index()
         {
@@ -50,6 +53,16 @@ namespace RealStateApp.Controllers
             else if(vm.TypeOfUser == "Cliente")
             {
               RegistrerResponse response =  await _userServices.RegisterClienteAsync(vm, origin);
+
+                var user = await _userServices.GetUserById(response.userId);
+
+                SaveClienteViewModel clienteVm = new();
+                clienteVm.IdentityId = user.UserId;
+                clienteVm.Nombre = user.FirstName;
+                clienteVm.Apellido = user.LastName; 
+                clienteVm.Correo = user.Email;
+
+                await _clienteService.AddAsync(clienteVm);
 
                 if (response.HasError)
                 {
@@ -101,6 +114,13 @@ namespace RealStateApp.Controllers
             string response = await _userServices.ConfirmEmailAsync(userId, token);
 
             return View("ConfirmEmail", response);
+        }
+        public async Task<IActionResult> CerrarSesion()
+        {
+            await _userServices.SignOutAsync();
+            HttpContext.Session.Remove("User");
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
