@@ -26,6 +26,8 @@ using System.Threading.Tasks;
 using RealStateApp.Core.Application.Dto.TipoDePropiedad;
 using RealStateApp.Core.Application.Dto.TipoVenta;
 using RealStateApp.Core.Application.Dto.Agente;
+using RealStateApp.Core.Application.ViewModel.Favorita;
+using RealStateApp.Core.Application.ViewModel.AppUsers.Cliente;
 
 namespace RealStateApp.Core.Application.Mappings
 {
@@ -248,6 +250,38 @@ namespace RealStateApp.Core.Application.Mappings
 
             #endregion
 
+            #endregion
+
+            #region "Favorita"
+           CreateMap<FavoritaViewModel, Favorita>()
+          .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+          .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+          .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+          .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+          .ReverseMap();
+
+            CreateMap<SaveFavoritaViewModel, Favorita>()
+         .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+         .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+         .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+         .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+         .ReverseMap();
+            #endregion
+
+            #region"Clientes"
+            CreateMap<ClienteViewModel, Cliente>()
+         .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+         .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+         .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+         .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+         .ReverseMap();
+
+            CreateMap<SaveClienteViewModel, Cliente>()
+        .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+        .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+        .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+        .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+        .ReverseMap();
             #endregion
         }
     }

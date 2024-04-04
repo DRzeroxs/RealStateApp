@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using RealStateApp.Core.Application.Helpers;
+@using RealStateApp.Core.Application.Dto.Account;
+@inject IHttpContextAccessor httpContext;
+@{
+    var user = httpContext.HttpContext.Session.get<AuthenticationResponse>("User");
+    var isCliente = user != null ? user.Roles.Any(r => r == "Cliente") : false;
+    var isBasic = user != null ? user.Roles.Any(r => r == "Basic") : false;
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -31,6 +39,25 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Registro</a>
                         </li>
+
+                        @if(isCliente is not false)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Agentes</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Mis Propiedades</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CerrarSesion">Cerrar Sesion</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

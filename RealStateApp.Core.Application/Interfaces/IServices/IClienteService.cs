@@ -10,5 +10,6 @@ namespace RealStateApp.Core.Application.Interfaces.IServices
 {
     public interface IClienteService : IGenericServices<ClienteViewModel, SaveClienteViewModel, Cliente>
     {
+        Task<ClienteViewModel> GetClientePorIdentityId(string Identity);
     }
 }
