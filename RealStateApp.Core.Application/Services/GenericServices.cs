@@ -52,11 +52,11 @@ namespace RealStateApp.Core.Application.Services
             return _mapper.Map<List<ViewModel>>(Lista);
         }
 
-        public async Task<SaveViewModel> GetByIdAsync(int Id)
+        public async Task<ViewModel> GetByIdAsync(int Id)
         {
             Entity entity = await _repository.GetById(Id);
 
-            SaveViewModel postVm = _mapper.Map<SaveViewModel>(entity);
+            ViewModel postVm = _mapper.Map<ViewModel>(entity);
 
             return postVm;
         }

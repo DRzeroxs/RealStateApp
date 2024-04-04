@@ -53,6 +53,11 @@ namespace RealStateApp.Core.Application.Services
         {
             await _accountServices.SingOutAsync();
         }
+        // Metodo para Confirmar usuario por Correo
+        public async Task<string> ConfirmEmailAsync(string userId, string token)
+        {
 
+            return await _accountServices.ConfirmAccountAsync(userId, token);
+        }
     }
 }

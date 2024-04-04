@@ -1,0 +1,83 @@
+﻿@model RealStateApp.Core.Application.ViewModel.Propiedad.PropiedadViewModel;
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<section class="container d-flex" style="gap: 40px">
+    <div id="carouselExampleAutoplaying"
+         class="carousel slide"
+         data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @foreach(var item in Model.ImgUrlList)
+            {
+            <div class="carousel-item active">
+               
+                    <img src="@item.UrlImg"
+                         class="d-block w-100"
+                         alt="..." />
+                
+                
+                <p class="mt-3 codigo__propiedad">
+                    <span class="fw-bold">Codigo: </span>@Model.Identifier
+                </p>
+                <h2>@Model.TipoPropiedad.Nombre</h2>
+
+                <div style="border-top: 1px solid">
+                    <p class="fw-bold mt-3 h5">Venta</p>
+                    <p class="fw-bold" style="color: red">US$@Model.Precio</p>
+
+                    <div class="iconos d-flex">
+                        <div class="d-flex" style="gap: 10px">
+                            <i class="fa-solid fa-bed"></i> @Model.NumHabitaciones
+                        </div>
+                        <div class="d-flex" style="gap: 10px">
+                            <i class="fa-solid fa-bath"></i> @Model.NumHabitaciones
+                        </div>
+                        <div class="d-flex" style="gap: 10px">
+                            <i class="fa-solid fa-tape"></i> @Model.Size mt
+                        </div>
+                    </div>
+
+                    <div style="border-top: 1px solid">
+                        <h3 class="mt-3">Descripcion</h3>
+                        <p>
+                            @Model.Descripcion
+                        </p>
+                    </div>
+                </div>
+            </div>
+            }
+           
+            </div>
+        </div>
+        <button class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExampleAutoplaying"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExampleAutoplaying"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div>
+        <h2>Esta interesado? solicita asesoria</h2>
+
+        <div class="d-flex" style="gap: 30px">
+            <img class="foto__agente"
+                 src="@Model.Agente.ImgUrl"
+                 alt="" />
+            <p class="mt-5 fw-bold">@Model.Agente.Nombre</p>
+        </div>
+
+        <p class="p-2 fw-bold mt-3">Celular: <span>@Model.Agente.Telefono</span></p>
+
+        <p class="p-2 fw-bold mt-3">Email: <span>Agente@gmail.com</span></p>
+    </div>
+</section>

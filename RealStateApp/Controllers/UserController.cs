@@ -1,8 +1,11 @@
 ﻿using Azure;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RealStateApp.Core.Application.Dto.Account;
 using RealStateApp.Core.Application.Interfaces.IServices;
+using RealStateApp.Core.Application.Services;
 using RealStateApp.Core.Application.ViewModel.User;
+using RealStateApp.Core.Application.Helpers;
 
 namespace RealStateApp.Controllers
 {
@@ -58,6 +61,46 @@ namespace RealStateApp.Controllers
 
             return View();    
 
+        }
+        public async Task<IActionResult> Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+
+            AuthenticationResponse userAuthenticate = await _userServices.LoginAsync(vm);
+
+            if (userAuthenticate != null && userAuthenticate.HasError != true)
+            {
+                HttpContext.Session.set<AuthenticationResponse>("User", userAuthenticate);
+
+                var userRole = userAuthenticate.Roles[0];
+
+                if (userRole == "Cliente")
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+               
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
+            }
+            else
+            {
+                vm.HasError = userAuthenticate.HasError;
+                vm.Error = userAuthenticate.Error;
+                return View(vm);
+            }
+        }
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            string response = await _userServices.ConfirmEmailAsync(userId, token);
+
+            return View("ConfirmEmail", response);
         }
     }
 }

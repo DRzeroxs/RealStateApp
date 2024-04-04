@@ -3,6 +3,7 @@ using RealStateApp.Infraestructure.Identity;
 using RealStateApp.Infraestructure.Identity.Seeds;
 using RealStateApp.Infraestructure.Shared;
 using RealStateApp.Core.Application;
+using RealStateApp.Middlewares;
 
 namespace RealStateApp
 {
@@ -18,6 +19,9 @@ namespace RealStateApp
             builder.Services.AddIdentityLayerForWeb(builder.Configuration);
             builder.Services.AddSharedInfraestrucutre(builder.Configuration);
             builder.Services.AddApplicationLayer();
+            builder.Services.AddTransient<ValidateUserSession, ValidateUserSession>();
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddSession();
             var app = builder.Build();
 
             await app.Services.AddIdentitySeedsConfiguration();
@@ -32,8 +36,10 @@ namespace RealStateApp
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

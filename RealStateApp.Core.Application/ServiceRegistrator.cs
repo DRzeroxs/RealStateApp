@@ -22,6 +22,7 @@ namespace RealStateApp.Core.Application
             services.AddTransient<IUserServices, UserServices>();
 
             services.AddTransient<IPropiedadService, PropiedadService>();
+            services.AddTransient<IBusquedaPersonalizada, BusquedaPersonalizada>();
         }
     }
 }
