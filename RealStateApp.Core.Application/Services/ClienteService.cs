@@ -20,5 +20,16 @@ namespace RealStateApp.Core.Application.Services
              _repository = repository;
             _mapper = mapper;   
         }
+
+        public async Task<ClienteViewModel> GetClientePorIdentityId(string Identity)
+        {
+            var clientesList = await _repository.GetAll();
+
+            var cliente = clientesList.FirstOrDefault(c => c.IdentityId == Identity);
+
+            ClienteViewModel clienteVm = _mapper.Map<ClienteViewModel>(cliente);
+
+            return clienteVm;   
+        }
     }
 }

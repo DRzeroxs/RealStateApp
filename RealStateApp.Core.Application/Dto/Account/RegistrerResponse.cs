@@ -10,5 +10,6 @@ namespace RealStateApp.Core.Application.Dto.Account
     {
         public bool HasError { get; set; }
         public string Error { get; set; }
+        public string userId { get; set; }  
     }
 }

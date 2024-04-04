@@ -7,6 +7,7 @@ using RealStateApp.Core.Application.Dto.Email;
 using RealStateApp.Core.Application.Enum;
 using RealStateApp.Core.Application.Interfaces.IAccount;
 using RealStateApp.Core.Application.Interfaces.IEmail;
+using RealStateApp.Core.Application.ViewModel.User;
 using RealStateApp.Infraestructure.Identity.Entities;
 using System;
 using System.Collections.Generic;
@@ -111,7 +112,7 @@ public class AccountService : IAccountService
             UserName = request.UserName,
             TypeOfUser = request.TypeOfUser,
             IsActive = false,
-            ImgUrl = ""
+            ImgUrl = "",
               
         };
 
@@ -122,6 +123,8 @@ public class AccountService : IAccountService
             user.ImgUrl = UploadFile(request.file, user.Id);
             await _userManager.UpdateAsync(user);
         }
+
+        var userId = await _userManager.FindByEmailAsync(request.Email);
 
         if (result.Succeeded)
         {
@@ -140,13 +143,25 @@ public class AccountService : IAccountService
         {
             response.HasError = true;
             response.Error = $"An Error ocurred trying to register the user";
-
+         
             return response;
         }
-
+        response.userId = userId.Id;
         return response;
     }
+    public async Task<UserViewModel> GetById(string userId)
+    {
+       var user = await _userManager.FindByIdAsync(userId);
 
+        UserViewModel userVm = new UserViewModel
+        {
+            Email = user.Email,
+            FirstName = user.FirstName, LastName = user.LastName,
+            PhoneNumber = user.PhoneNumber, UserId = user.Id
+        };
+
+        return userVm;
+    }
     public async Task<RegistrerResponse> RegistrerAgenteUserAsync(RegistrerRequest request, string origin)
     {
         RegistrerResponse response = new()
@@ -186,6 +201,13 @@ public class AccountService : IAccountService
         };
 
         var result = await _userManager.CreateAsync(user, request.Password);
+
+        if (user != null && user.Id != null)
+        {
+            user.ImgUrl = UploadFile(request.file, user.Id);
+            await _userManager.UpdateAsync(user);
+        }
+
         if (result.Succeeded)
         {
             await _userManager.AddToRoleAsync(user, Roles.Agente.ToString());

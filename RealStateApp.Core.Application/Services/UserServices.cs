@@ -59,5 +59,13 @@ namespace RealStateApp.Core.Application.Services
 
             return await _accountServices.ConfirmAccountAsync(userId, token);
         }
+
+        // Metodo para Buscar Usuario Por el Id tipo String
+        public async Task<UserViewModel> GetUserById(string userId)
+        {
+            var user = await _accountServices.GetById(userId);
+
+            return user;    
+        }
     }
 }
