@@ -67,5 +67,13 @@ namespace RealStateApp.Core.Application.Services
 
             return user;    
         }
+
+        // Metodo para Editar Usuarios
+        public async Task<EditUserViewModel> EditUser(EditUserViewModel vm)
+        {
+            await _accountServices.EditUser(vm);
+
+            return vm;  
+        }
     }
 }

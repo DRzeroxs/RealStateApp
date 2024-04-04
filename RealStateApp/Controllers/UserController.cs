@@ -122,5 +122,30 @@ namespace RealStateApp.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+        public async Task <IActionResult> EditUser(string userId)
+        {
+            var user = await _userServices.GetUserById(userId);
+
+            EditUserViewModel editVm = new();
+            editVm.PhoneNumber = user.PhoneNumber;
+            editVm.FirstName = user.FirstName;  
+            editVm.LastName = user.LastName;
+            editVm.ImgUrl = user.ImgUrl;
+            editVm.Id = userId;
+
+            return View(editVm);  
+        }
+        [HttpPost]
+        public async Task <IActionResult> EditUser(EditUserViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+
+            await _userServices.EditUser(vm);
+
+            return View(vm);
+        }
     }
 }

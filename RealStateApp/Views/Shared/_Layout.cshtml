@@ -51,12 +51,18 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Mis Propiedades</a>
+                                <a class="nav-link text-dark" asp-area="" asp-route-userId="@user.Id" asp-controller="Cliente" asp-action="PropiedadesFavoritas">Mis Propiedades</a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CerrarSesion">Cerrar Sesion</a>
                             </li>
+
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-route-userId="@user.Id" asp-controller="User" asp-action="EditUser">Mis Propiedades</a>
+                            </li>
+
                         }
                     </ul>
                 </div>
