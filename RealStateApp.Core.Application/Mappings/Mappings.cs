@@ -17,12 +17,6 @@ using RealStateApp.Core.Application.ViewModel.User;
 using RealStateApp.Core.Domain.Entities;
 using RealStateApp.Core.Domain.Entities.Descripcion;
 using RealStateApp.Core.Domain.Entities.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using RealStateApp.Core.Application.ViewModel.Favorita;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Cliente;
 
