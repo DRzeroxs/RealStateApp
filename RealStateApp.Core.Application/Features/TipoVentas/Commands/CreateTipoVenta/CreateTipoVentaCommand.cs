@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
 using RealStateApp.Core.Application.Interfaces.IRepository;
+using RealStateApp.Core.Application.Wrappers;
 using RealStateApp.Core.Domain.Entities.Descripcion;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +12,28 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Features.TipoVentas.Commands.CreateTipoVenta
 {
-    public class CreateTipoVentaCommand : IRequest<int>
+    // <summary>
+    // Parametros para crear un tipo de venta
+    // </summary>
+    public class CreateTipoVentaCommand : IRequest<Response<int>>
     {
-        public int Id { get; set; }
+
+        // <summary>
+        // Ventas de propiedades en remate
+        // </summary>
+
+        [SwaggerParameter(Description = "Nombre del tipo de venta")]
         public string Nombre { get; set; }
+
+        // <summary>
+        // Propiedades que se venden para pagar una deuda hipotecaria
+        // </summary>
+
+        [SwaggerParameter(Description = "Descripcion del tipo de venta")]
         public string? Descripcion { get; set; }
     }
 
-    public class CreateTipoVentaCommandHandler : IRequestHandler<CreateTipoVentaCommand, int>
+    public class CreateTipoVentaCommandHandler : IRequestHandler<CreateTipoVentaCommand, Response<int>>
     {
         private readonly ITipoVentaRepository _tipoVentaRepository;
         private readonly IMapper _mapper;
@@ -27,12 +43,11 @@ namespace RealStateApp.Core.Application.Features.TipoVentas.Commands.CreateTipoV
             _mapper = mapper;
         }
         
-        public async Task<int> Handle(CreateTipoVentaCommand command, CancellationToken cancellationToken)
+        public async Task<Response<int>> Handle(CreateTipoVentaCommand command, CancellationToken cancellationToken)
         {
             var tipoVenta = _mapper.Map<TipoVenta>(command);
-            if (tipoVenta == null) throw new Exception("Tipo de propiedad not found");
             tipoVenta = await _tipoVentaRepository.AddAsync(tipoVenta);
-            return tipoVenta.Id;
+            return new Response<int>(tipoVenta.Id);
         }
     }
 }

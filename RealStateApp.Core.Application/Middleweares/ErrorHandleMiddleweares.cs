@@ -34,7 +34,7 @@ namespace RealStateApp.Core.Application.Middleweares
 
                 switch (error)
                 {
-                    case ApiEception e:
+                    case ApiExeption e:
                         switch (e.ErrorCode)
                         {
                             case (int)HttpStatusCode.BadRequest:

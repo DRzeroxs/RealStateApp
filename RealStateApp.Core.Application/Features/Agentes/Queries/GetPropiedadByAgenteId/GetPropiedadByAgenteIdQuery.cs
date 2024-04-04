@@ -1,33 +1,41 @@
 ﻿using MediatR;
 using RealStateApp.Core.Application.Dto.Agente;
+using RealStateApp.Core.Application.Exceptions;
 using RealStateApp.Core.Application.Interfaces.IRepository;
 using RealStateApp.Core.Application.ViewModel.TipoPropiedad;
 using RealStateApp.Core.Application.ViewModel.TipoVenta;
+using RealStateApp.Core.Application.Wrappers;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Features.Agentes.Queries.GetPropiedadByAgenteId
 {
-    public class GetPropiedadByAgenteIdQuery : IRequest<PropiedadByAgenteDto>
+    // <summary>
+    // Obtener una propiedad del agente por el id
+    // </summary>
+    public class GetPropiedadByAgenteIdQuery : IRequest<Response<PropiedadByAgenteDto>>
     {
+        [SwaggerParameter(Description = "Id del agente que desea obtener")]
         public int Id { get; set; }
     }
 
-    public class GetPropiedadByAgenteIdQueryHandler : IRequestHandler<GetPropiedadByAgenteIdQuery, PropiedadByAgenteDto>
+    public class GetPropiedadByAgenteIdQueryHandler : IRequestHandler<GetPropiedadByAgenteIdQuery, Response<PropiedadByAgenteDto>>
     {
         private readonly IAgenteRepository _agenteRepository;
         public GetPropiedadByAgenteIdQueryHandler(IAgenteRepository agenteRepository)
         {
             _agenteRepository = agenteRepository;
         }
-        public async Task<PropiedadByAgenteDto> Handle(GetPropiedadByAgenteIdQuery request, CancellationToken cancellationToken)
+        public async Task<Response<PropiedadByAgenteDto>> Handle(GetPropiedadByAgenteIdQuery request, CancellationToken cancellationToken)
         {
             var propiedadByAgente = await GetPropiedadByAgenteId(request.Id);
-            if (propiedadByAgente == null) throw new Exception("Agente doesn't have propiedad");
-            return propiedadByAgente;
+            if (propiedadByAgente == null) throw new ApiExeption("Ese agente no tiene propiedad", (int)HttpStatusCode.NotFound);
+            return new Response<PropiedadByAgenteDto>(propiedadByAgente);
         }
 
         private async Task<PropiedadByAgenteDto> GetPropiedadByAgenteId(int id)

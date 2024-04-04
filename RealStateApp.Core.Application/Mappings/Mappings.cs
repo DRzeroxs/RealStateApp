@@ -29,7 +29,6 @@ using RealStateApp.Core.Application.Dto.Agente;
 using RealStateApp.Core.Application.ViewModel.Favorita;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Cliente;
 
-
 namespace RealStateApp.Core.Application.Mappings
 {
     public class Mappings : Profile
@@ -91,6 +90,13 @@ namespace RealStateApp.Core.Application.Mappings
                 .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
                 .ReverseMap();
 
+            CreateMap<AgenteDto, Agente>()
+            .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+            .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+            .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+            .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+            .ReverseMap();
+
             #endregion
 
             #region"Tipo de Venta"
@@ -128,6 +134,13 @@ namespace RealStateApp.Core.Application.Mappings
                .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
                .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
                .ReverseMap();
+
+            CreateMap<TipoVentaDto, TipoVenta>()
+            .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+            .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+            .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+            .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+            .ReverseMap();
             #endregion
 
             #region "Tipo de Propiedades"
@@ -166,7 +179,12 @@ namespace RealStateApp.Core.Application.Mappings
              .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
              .ReverseMap();
 
-
+            CreateMap<TipoPropiedadDto, TipoPropiedad>()
+             .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+             .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+             .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+             .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+             .ReverseMap();
             #endregion
 
             #region "Mejoras"

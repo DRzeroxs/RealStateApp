@@ -7,24 +7,24 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Exceptions
 {
-    public class ApiEception : Exception
+    public class ApiExeption : Exception
     {
         public int ErrorCode { get; set; }
-        public ApiEception() : base()
+        public ApiExeption() : base()
         {
 
         }
 
-        public ApiEception(string message) : base(message)
+        public ApiExeption(string message) : base(message)
         {
 
         }
-        public ApiEception(string message, int errorCode) : base(message)
+        public ApiExeption(string message, int errorCode) : base(message)
         {
             ErrorCode = errorCode;
         }
 
-        public ApiEception(string message, params object[] args) : base(string.Format(CultureInfo.CurrentCulture, message, args))
+        public ApiExeption(string message, params object[] args) : base(string.Format(CultureInfo.CurrentCulture, message, args))
         {
 
         }

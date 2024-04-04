@@ -38,7 +38,7 @@ namespace RealStateApp.Core.Application.Features.Mejoras.Queries.GetAllMejoras
 
             if (mejoras == null || mejoras.Count == 0)
             {
-                throw new ApiEception("No se encontro ninguna mejora", (int)HttpStatusCode.NoContent);
+                throw new ApiExeption("No se encontro ninguna mejora", (int)HttpStatusCode.NoContent);
             }
 
             return new Response<IList<MejoraDto>>(_mapper.Map<IList<MejoraDto>>(mejoras));

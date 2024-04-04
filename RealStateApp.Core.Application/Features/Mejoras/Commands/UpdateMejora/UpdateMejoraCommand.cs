@@ -50,7 +50,7 @@ namespace RealStateApp.Core.Application.Features.Mejoras.Commands.UpdateMejora
 
             if (mejora == null)
             {
-                throw new ApiEception("No se encontró la mejora", (int)HttpStatusCode.NotFound);
+                throw new ApiExeption("No se encontró la mejora", (int)HttpStatusCode.NotFound);
             }
 
             mejora = _mapper.Map<Mejora>(command);
