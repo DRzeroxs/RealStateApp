@@ -1,0 +1,109 @@
+﻿@model List<RealStateApp.Core.Application.ViewModel.Propiedad.PropiedadViewModel>
+@using RealStateApp.Core.Application.Helpers;
+@using RealStateApp.Core.Application.Dto.Account;
+@inject IHttpContextAccessor httpContext;
+@{
+    ViewData["Title"] = "PropiedadesFavoritas";
+
+    var user = httpContext.HttpContext.Session.get<AuthenticationResponse>("User");
+
+    var isCliente = user != null ? user.Roles.Any(r => r == "Cliente") : false;
+}
+
+<div class="mb-5 container p-2 ">
+    <form asp-controller="Home" asp-action="BuscarPorCodigo" method="post">
+        <h5 class="mb-2 ">Buscar por Codigo</h5>
+        <div class="d-flex">
+            <input type="text" class="form-control" name="identifier" style="width: 200px;">
+            <button class="mt-2 boton_busqueda">Buscar</button>
+        </div>
+
+    </form>
+</div>
+
+<div class="container busqueda_conjunta">
+    <div class="busqueda_conjunta__contenedor">
+        <div class="titulo__busqueda__conjunta">
+            <h2>¡Busca tu Propiedad!</h2>
+        </div>
+        <form asp-controller="Home" asp-action="BusquedaConjunta" method="post">
+            <div class="d-flex">
+                <p style="font-size: 20px;" class="fw-bold">Tipo de Propiedad: </p>
+                <input class="formulario__busqueda mt-1" name="tipoPropiedad" type="text">
+            </div>
+
+            <div class="d-flex">
+                <p style="font-size: 20px;" class="fw-bold">Precio Minimo: </p>
+                <input class="formulario__busqueda mt-1" name="precioMinimo" type="text">
+            </div>
+
+            <div class="d-flex">
+                <p style="font-size: 20px;" class="fw-bold">Precio Maximo: </p>
+                <input class="formulario__busqueda mt-1" name="precioMaximo" type="text">
+            </div>
+
+            <div class="d-flex">
+                <p style="font-size: 20px;" class="fw-bold">Numero de Habitaciones: </p>
+                <input class="formulario__busqueda mt-1" name="numeroHabitaciones" type="text">
+            </div>
+
+            <div class="d-flex">
+                <p style="font-size: 20px;" class="fw-bold">Numero de Baños: </p>
+                <input class="formulario__busqueda mt-1" name="numeroAcedados" type="text">
+            </div>
+
+            <div class="p-2" style="border-top: 3px solid;">
+                <button class="boton__busqueda__conjunta float-end mb-4 p-2">Buscar</button>
+            </div>
+        </form>
+
+    </div>
+
+    <section class="contenedor container">
+        @foreach (var item in Model)
+        {
+            <div class="card">
+                <img class="card__img" src="@item.ImgUrl.UrlImg" alt="" />
+                <h2 class="card__tipo-propiedad">@item.TipoPropiedad.Nombre</h2>
+                <div class="card__contenido">
+                    <p class="card__precio">$@item.Precio</p>
+                    <p class="card__titulo">#@item.Identifier</p>
+                    <p class="card__calle">
+                        <i style="color: #00b98e"
+                           class="fa fa-map-marker-alt text-primary me-2"></i>
+                        123 Street, New Yor, USA
+                    </p>
+                </div>
+
+                <div class="contendor__iconos--Card">
+                    <div>
+                        <p class="card__iconos--medida">
+                            <i style="color: #00b98e; font-size: 18px"
+                               class="fa fa-ruler-combined text-primary me-2"></i>
+                            @item.Size mt
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="card__iconos--habitaciones">
+                            <i style="color: #00b98e; font-size: 18px"
+                               class="fa fa-bed text-primary me-2"></i>
+                            @item.NumHabitaciones Bed
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="card__iconos--baños">
+                            <i style="color: #00b98e; font-size: 18px"
+                               class="fa fa-bath text-primary me-2"></i>
+                            @item.NumAceados Bath
+                        </p>
+                    </div>
+
+                    
+                </div>
+            </div>
+
+
+        }
+    </section>
