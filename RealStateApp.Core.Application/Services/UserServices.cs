@@ -75,5 +75,51 @@ namespace RealStateApp.Core.Application.Services
 
             return vm;  
         }
+
+        // Metodo para Contar Agentes Activos
+        public async Task<int> ContarAgentesActivos()
+        {
+            var count = await _accountServices.CountAgentesActivos();
+
+            return count;
+        }
+
+        // Metodo para Contar Agentes Inactivos
+        public async Task<int> ContarAgentesInactivos()
+        {
+            var count = await _accountServices.CountAgentesInactivos();
+
+            return count;
+        }
+
+        // Metodo para Contar Clientes Activos
+        public async Task<int> ContarClientesActivos()
+        {
+            var count = await _accountServices.CountClientesActivos();
+
+            return count;
+        }
+        // Metodo para Contar Clientes Inactivos
+        public async Task<int> ContarClientesInactivos()
+        {
+            var count = await _accountServices.CountClientesInactivos();
+
+            return count;
+        }
+
+        // Metodo para Contar Desarrolladores Inactivos
+        public async Task<int> ContarDesarrolladoresInactivos()
+        {
+            var count = await _accountServices.CountDesarrolladoresInactivos();
+
+            return count;
+        }
+        // Metodo para Contar Desarrolladores Activos
+        public async Task<int> ContarDesarrolladoresActivos()
+        {
+            var count = await _accountServices.CountDesarrolladoresActivos();
+
+            return count;
+        }
     }
 }

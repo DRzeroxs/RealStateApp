@@ -798,5 +798,15 @@ namespace RealStateApp.Core.Application.Services
         }
         #endregion
 
+        #region"Contar Propieadades"
+        public async Task <int> ContarPropieades()
+        {
+            var propiedades = await _propiedadFavoritaRepository.GetAll();  
+            var count = propiedades.ToList().Count();
+
+            return count;
+        }
+        #endregion
+
     }
 }

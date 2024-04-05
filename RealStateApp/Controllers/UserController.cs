@@ -99,7 +99,12 @@ namespace RealStateApp.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-               
+                
+                else if(userRole == "Admin")
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+
                 return RedirectToRoute(new { controller = "Home", action = "Index" });
             }
             else

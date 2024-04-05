@@ -3,6 +3,7 @@ using Azure.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using RealStateApp.Core.Application.Dto.Account;
 using RealStateApp.Core.Application.Dto.Email;
 using RealStateApp.Core.Application.Enum;
@@ -150,6 +151,50 @@ public class AccountService : IAccountService
         }
         response.userId = userId.Id;
         return response;
+    }
+    public async Task<int> CountAgentesActivos()
+    {
+        var users = await _userManager.Users.ToListAsync();
+        var count = users.Where(u => u.EmailConfirmed == true && u.TypeOfUser == "Agente").Count();
+
+        return count;
+
+    }
+    public async Task<int> CountAgentesInactivos()
+    {
+        var users = await _userManager.Users.ToListAsync();
+        var count = users.Where(u => u.EmailConfirmed == false && u.TypeOfUser == "Agente").Count();
+
+        return count;
+
+    }
+    public async Task<int> CountClientesActivos()
+    {
+        var users = await _userManager.Users.ToListAsync();
+        var count = users.Where(u => u.EmailConfirmed == true && u.TypeOfUser == "Cliente").Count();
+
+        return count;
+    }
+    public async Task<int> CountClientesInactivos()
+    {
+        var users = await _userManager.Users.ToListAsync();
+        var count = users.Where(u => u.EmailConfirmed == false && u.TypeOfUser == "Cliente").Count();
+
+        return count;
+    }
+    public async Task<int> CountDesarrolladoresActivos()
+    {
+        var users = await _userManager.Users.ToListAsync();
+        var count = users.Where(u => u.EmailConfirmed == true && u.TypeOfUser == "Developer").Count();
+
+        return count;
+    }
+    public async Task<int> CountDesarrolladoresInactivos()
+    {
+        var users = await _userManager.Users.ToListAsync();
+        var count = users.Where(u => u.EmailConfirmed == false && u.TypeOfUser == "Developer").Count();
+
+        return count;
     }
     public async Task<UserPostViewModel> GetById(string userId)
     {
