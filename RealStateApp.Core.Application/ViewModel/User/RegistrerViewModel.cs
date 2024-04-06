@@ -29,12 +29,13 @@ namespace RealStateApp.Core.Application.ViewModel.User
         [Required(ErrorMessage = "La Contraseña es Campo Requerida.")]
         [DataType(DataType.Text)]
         public string Password { get; set; }
+        public string? Cedula { get; set; }
 
         [Required(ErrorMessage = "Confirmar Contraseña es Campo Requerida.")]
         [DataType(DataType.Password)]
         [Compare(nameof(Password), ErrorMessage = "The  Password must be the same")]
         public string ConfirnPassword { get; set; }
-        [Required(ErrorMessage = "El Email es Requerido.")]
+        [Required(ErrorMessage = "La Imagen es Requerida.")]
         [DataType(DataType.EmailAddress)]
         public IFormFile file { get; set; }
         public string Email { get; set; }

@@ -31,6 +31,8 @@ namespace RealStateApp.Infraestructure.Identity.Seeds
 
             defaultUser.TypeOfUser = "Agente";
 
+            defaultUser.Cedula = "40226271827";
+
             defaultUser.IsActive = true;
 
             defaultUser.PhoneNumberConfirmed = true;

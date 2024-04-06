@@ -16,5 +16,6 @@ namespace RealStateApp.Core.Application.ViewModel.Commons
         public string? Nombre { get; set; }
         public string? Apellido { get; set; }
         public string? Cedula { get; set; }
+        public bool? IsActive { get; set; }   
     }
 }

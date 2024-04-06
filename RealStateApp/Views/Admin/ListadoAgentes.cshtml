@@ -1,0 +1,47 @@
+﻿@model List<RealStateApp.Core.Application.ViewModel.AppUsers.Agente.AgenteViewModel>  
+@{
+    ViewData["Title"] = "ListadoAgentes";
+}
+
+ <section class="mt-4">
+        <table class="table table-active text-center">
+            <thead>
+                <tr>
+                    <th>Nombre del Agente</th>
+                    <th>Apellido del Agente</th>
+                    <th>Cantidad de Propiedades</th>
+                    <th>Correo de Agente</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Nombre</td>
+                        <td>@item.Apellido</td>
+                        <td>@item.Propiedades.Count()</td>
+                        <td>@item.Correo</td>
+                        <td>     
+                        <div style="gap: 20px"
+                             class="d-flex mt-2 align-content-center justify-content-center p-1">
+                            @if(item.IsActive == false)
+                            {
+                                <a asp-controller="Agente" asp-action="ActivarAgente" asp-route-userId="@item.IdentityId" class="btn btn-primary"> <i class="fa-solid fa-toggle-off"></i> </a>
+                            }
+                           
+                            @if(item.IsActive == true)
+                            {
+                                <a asp-controller="Agente" asp-action="InactivarAgente" asp-route-userId="@item.IdentityId" class="btn btn-primary"> <i class="fa-solid fa-toggle-on"></i> </a>
+                            }
+                            <a asp-route-userId="@item.IdentityId" asp-controller="Agente" asp-action="EliminarAgente" class="btn btn-danger">Eliminar</a>
+
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </section>
+

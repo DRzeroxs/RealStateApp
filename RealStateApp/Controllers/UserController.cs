@@ -7,6 +7,7 @@ using RealStateApp.Core.Application.Services;
 using RealStateApp.Core.Application.ViewModel.User;
 using RealStateApp.Core.Application.Helpers;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Cliente;
+using RealStateApp.Core.Application.ViewModel.AppUsers.Agente;
 using Microsoft.AspNetCore.Authorization;
 
 namespace RealStateApp.Controllers
@@ -16,10 +17,12 @@ namespace RealStateApp.Controllers
     {
         private readonly IUserServices _userServices;
         private readonly IClienteService _clienteService;
-        public UserController(IUserServices userServices, IClienteService clienteService)
+        private readonly IAgenteService _agenteService;
+        public UserController(IUserServices userServices, IClienteService clienteService, IAgenteService agenteService)
         {
             _userServices = userServices;
             _clienteService = clienteService;
+            _agenteService = agenteService;
         }
         public IActionResult Index()
         {
@@ -49,7 +52,29 @@ namespace RealStateApp.Controllers
                 {
                     vm.HasError = response.HasError;
                     vm.Error = response.Error;
-                    return View(User);
+                    ModelState.AddModelError("Repuesta", $"{vm.Error}");
+                    return View(vm);
+                }
+
+                var user = await _userServices.GetUserById(response.userId);
+
+                SaveAgenteViewModel agenteVm = new();
+                agenteVm.ImgUrl = user.ImgUrl;
+                agenteVm.Telefono = user.PhoneNumber;
+                agenteVm.IdentityId = user.UserId;
+                agenteVm.Nombre = user.FirstName;
+                agenteVm.Apellido = user.LastName;  
+                agenteVm.Correo = user.Email;
+                agenteVm.IsActive = false;
+
+                await _agenteService.AddAsync(agenteVm);    
+
+                if (response.HasError)
+                {
+                    vm.HasError = response.HasError;
+                    vm.Error = response.Error;
+                    ModelState.AddModelError("Repuesta", $"{vm.Error}");
+                    return View(vm);
                 }
             }
             else if(vm.TypeOfUser == "Cliente")
@@ -63,6 +88,7 @@ namespace RealStateApp.Controllers
                 clienteVm.Nombre = user.FirstName;
                 clienteVm.Apellido = user.LastName; 
                 clienteVm.Correo = user.Email;
+                clienteVm.IsActive = false;
 
                 await _clienteService.AddAsync(clienteVm);
 
@@ -101,7 +127,12 @@ namespace RealStateApp.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-               
+                
+                else if(userRole == "Admin")
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+
                 return RedirectToRoute(new { controller = "Home", action = "Index" });
             }
             else

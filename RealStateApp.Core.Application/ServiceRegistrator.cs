@@ -26,6 +26,8 @@ namespace RealStateApp.Core.Application
 
             services.AddTransient<IPropiedadFavoritaService, PropiedadFavoritaService>();
             services.AddTransient<IClienteService, ClienteService>();
+            services.AddTransient<IAgenteService, AgenteService>();
+            services.AddTransient<IAdministradorService, AdministradorService>();
 
         }
     }

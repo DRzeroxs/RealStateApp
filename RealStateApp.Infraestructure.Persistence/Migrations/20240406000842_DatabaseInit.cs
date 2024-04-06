@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RealStateApp.Infraestructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class FixMigration : Migration
+    public partial class DatabaseInit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,9 +22,11 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                     LastModifiedby = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IdentityId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Correo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Apellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Cedula = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true)
+                    Cedula = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,9 +46,11 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                     LastModifiedby = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IdentityId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Correo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Apellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Cedula = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true)
+                    Cedula = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,9 +68,11 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                     LastModifiedby = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IdentityId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Correo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Apellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Cedula = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true)
+                    Cedula = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -4,7 +4,7 @@
 @{
     var user = httpContext.HttpContext.Session.get<AuthenticationResponse>("User");
     var isCliente = user != null ? user.Roles.Any(r => r == "Cliente") : false;
-    var isBasic = user != null ? user.Roles.Any(r => r == "Basic") : false;
+    var isAdmin = user != null ? user.Roles.Any(r => r == "Admin") : false;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -26,19 +26,20 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Registrer">Registro</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
-                        </li>
+                        @if(user == null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Registrer">Registro</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
+                            </li>
+                        }
 
                         @if(isCliente is not false)
                         {
@@ -61,6 +62,42 @@
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-route-userId="@user.Id" asp-controller="User" asp-action="EditUser">Editar Usuario</a>
+                            </li>
+
+                        }
+
+                        @if(isAdmin is not false)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Home Administrador</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListadoAgentes">Listado de los Agentes</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-route-userId="@user.Id" asp-controller="Admin" asp-action="ListadoAdministradores">Mantenimiento de Administradores</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CerrarSesion">Mantenimiento de Desarrolladores</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CerrarSesion">Mantenimiento de Tipos de Propiedades</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CerrarSesion">Mantenimiento de Tipos de Ventas</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CerrarSesion">Mantenimiento de Mejoras</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CerrarSesion">Cerrar Sesion</a>
                             </li>
 
                         }
