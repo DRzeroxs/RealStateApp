@@ -8,9 +8,11 @@ using RealStateApp.Core.Application.ViewModel.User;
 using RealStateApp.Core.Application.Helpers;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Cliente;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Agente;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RealStateApp.Controllers
 {
+    
     public class UserController : Controller
     {
         private readonly IUserServices _userServices;
