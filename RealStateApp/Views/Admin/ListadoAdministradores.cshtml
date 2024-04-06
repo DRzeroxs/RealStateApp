@@ -1,0 +1,62 @@
+﻿@model List<RealStateApp.Core.Application.ViewModel.User.UserPostViewModel>
+@using RealStateApp.Core.Application.Helpers;
+@using RealStateApp.Core.Application.Dto.Account;
+@inject IHttpContextAccessor httpContext;
+@{
+    ViewData["Title"] = "ListadoAdministradores";
+    var user = httpContext.HttpContext.Session.get<AuthenticationResponse>("User");
+}
+
+<a asp-controller="Admin" asp-action="CrearAdministrador" class="btn btn-info">Crear Administrador</a>
+
+<section class="mt-4">
+    <table class="table table-active text-center">
+        <thead>
+            <tr>
+                <th>Nombre del Administrador</th>
+                <th>Apellido del Administrador</th>
+                <th>Nombre de Usuario Adminstrador</th>
+                <th>Cedula del Administrador</th>
+                <th>Correo del Administrador</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.UserName</td>
+                    <td>@item.Cedula</td>
+                    <td>@item.Email</td>
+                    <td>
+                        <div style="gap: 20px"
+                             class="d-flex mt-2 align-content-center justify-content-center p-1">
+                             
+                            @if (user.Id != item.UserId)
+                            {
+                                @if (item.IsActived == false)
+                                {
+                                    <a asp-controller="Admin" asp-action="ActivarAdmin" asp-route-userId="@item.UserId" class="btn btn-primary"> <i class="fa-solid fa-toggle-off"></i> </a>
+                                }
+
+                                @if (item.IsActived == true)
+                                {
+                                    <a asp-controller="Admin" asp-action="InactivarAdmin" asp-route-userId="@item.UserId" class="btn btn-primary"> <i class="fa-solid fa-toggle-on"></i> </a>
+                                }
+
+                                <a asp-controller="Admin" asp-action="EditarAdmin" asp-route-userId="@item.UserId" class="btn btn-primary">Editar</a>
+                            }
+
+                   
+
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</section>
+

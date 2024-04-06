@@ -10,5 +10,7 @@ namespace RealStateApp.Core.Application.Interfaces.IServices
 {
     public interface IAgenteService : IGenericServices<AgenteViewModel, SaveAgenteViewModel, Agente>
     {
+        Task<List<AgenteViewModel>> GetAgenteConPropiedades();
+        Task<AgenteViewModel> GetByIdentityId(string IdentityId);
     }
 }

@@ -28,6 +28,7 @@ using RealStateApp.Core.Application.Dto.TipoVenta;
 using RealStateApp.Core.Application.Dto.Agente;
 using RealStateApp.Core.Application.ViewModel.Favorita;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Cliente;
+using System.Runtime.CompilerServices;
 
 namespace RealStateApp.Core.Application.Mappings
 {
@@ -89,6 +90,9 @@ namespace RealStateApp.Core.Application.Mappings
                 .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
                 .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
                 .ReverseMap();
+
+            CreateMap<SaveAgenteViewModel, AgenteViewModel>()
+               .ReverseMap();
 
             CreateMap<AgenteDto, Agente>()
             .ForMember(opt => opt.CreatedBy, i => i.Ignore())
@@ -282,6 +286,10 @@ namespace RealStateApp.Core.Application.Mappings
         .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
         .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
         .ReverseMap();
+            #endregion
+
+            #region"Registrer"
+            CreateMap<RegistrerViewModel, UserPostViewModel>().ReverseMap();    
             #endregion
         }
     }

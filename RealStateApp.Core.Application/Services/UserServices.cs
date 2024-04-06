@@ -2,7 +2,9 @@
 using RealStateApp.Core.Application.Dto.Account;
 using RealStateApp.Core.Application.Interfaces.IAccount;
 using RealStateApp.Core.Application.Interfaces.IServices;
+using RealStateApp.Core.Application.ViewModel.AppUsers.Agente;
 using RealStateApp.Core.Application.ViewModel.User;
+using RealStateApp.Core.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +17,12 @@ namespace RealStateApp.Core.Application.Services
     {
         private readonly IAccountService _accountServices;
         private readonly IMapper _mapper;
-
-        public UserServices(IAccountService accountServices, IMapper mapper)
+        private readonly IAgenteService _agenteService;
+        public UserServices(IAccountService accountServices, IMapper mapper, IAgenteService agenteService)
         {
             _accountServices = accountServices;
             _mapper = mapper;
+            _agenteService = agenteService;
         }
 
         // Metodo de logueo
@@ -46,6 +49,14 @@ namespace RealStateApp.Core.Application.Services
 
 
             return await _accountServices.RegistrerAgenteUserAsync(registerRequest, origin);
+        }
+        public async Task<RegistrerResponse> RegisterAdminAsync(RegistrerViewModel vm, string origin)
+        {
+
+            RegistrerRequest registerRequest = _mapper.Map<RegistrerRequest>(vm);
+
+
+            return await _accountServices.RegistrerAdminUserAsync(registerRequest, origin);
         }
 
         // Metodo de deslogueo
@@ -120,6 +131,69 @@ namespace RealStateApp.Core.Application.Services
             var count = await _accountServices.CountDesarrolladoresActivos();
 
             return count;
+        }
+
+        // Metodo Para Eliminar Agentes
+        public async Task EliminarAgente(string userId)
+        {
+            var agenteVm = await _agenteService.GetByIdentityId(userId);
+
+            await _agenteService.RemoveAsync(agenteVm.Id);
+
+            await _accountServices.EliminarAgente(userId);
+        }
+
+        // Metodo Para traer Lista de Usuarios Administradores
+        public async Task<List<UserPostViewModel>> GetUsuariosAdministradores()
+        {
+            var users = await _accountServices.GetUsuariosAdministrador();
+
+            return users;
+        }
+
+        // Metodo para Activar Agente
+        public async Task ActivarAgente(string userId)
+        {
+            var agente = await _agenteService.GetByIdentityId(userId);
+            SaveAgenteViewModel agenteSave = _mapper.Map<SaveAgenteViewModel>(agente);
+
+            agenteSave.IsActive = true;
+
+            await _agenteService.UpdateAsync(agenteSave, agenteSave.Id);
+
+            await _accountServices.ActivarAgente(userId);
+
+        }
+
+        // Metodo para Inactivar Agente
+        public async Task InactivarAgente(string userId)
+        {
+            var agente = await _agenteService.GetByIdentityId(userId);
+            SaveAgenteViewModel agenteSave = _mapper.Map<SaveAgenteViewModel>(agente);
+
+            agenteSave.IsActive = false;
+
+            await _agenteService.UpdateAsync(agenteSave, agenteSave.Id);
+
+            await _accountServices.IanctivarAgente(userId);
+        }
+
+        // Metodo para Activar Usuario Administrador
+        public async Task ActivarAdmin(string userId)
+        {
+            await _accountServices.ActivarAdmin(userId);    
+        }
+
+        // Metodo para Inactivar Usuario Administrador
+        public async Task InactivarAdmin(string userId)
+        {
+            await _accountServices.InactivarAdmin(userId);
+        }
+
+        // Metodo para Editar Usuario Administrador
+        public async Task EditarUsuarioAdmin(UserPostViewModel vm)
+        {
+            await _accountServices.EditarAdmin(vm);
         }
     }
 }

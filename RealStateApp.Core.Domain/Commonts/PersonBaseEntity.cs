@@ -18,5 +18,6 @@ namespace RealStateApp.Core.Domain.Commonts
         [MaxLength(11)]
         public string? Cedula { get; set; }
 
+        public bool IsActive { get; set; }
     }
 }

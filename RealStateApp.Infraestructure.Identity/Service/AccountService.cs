@@ -9,6 +9,9 @@ using RealStateApp.Core.Application.Dto.Email;
 using RealStateApp.Core.Application.Enum;
 using RealStateApp.Core.Application.Interfaces.IAccount;
 using RealStateApp.Core.Application.Interfaces.IEmail;
+using RealStateApp.Core.Application.Interfaces.IServices;
+using RealStateApp.Core.Application.ViewModel.AppUsers.Administrador;
+using RealStateApp.Core.Application.ViewModel.AppUsers.Agente;
 using RealStateApp.Core.Application.ViewModel.User;
 using RealStateApp.Infraestructure.Identity.Entities;
 using System;
@@ -24,14 +27,18 @@ public class AccountService : IAccountService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IEmailService _emailService;
+    private readonly IAgenteService _agenteService;
+    private readonly IAdministradorService _adminService;
 
     private readonly IMapper _mapper;
-    public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,IEmailService emailService ,IMapper mapper)
+    public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,IEmailService emailService ,IMapper mapper, IAgenteService agenteService, IAdministradorService administradorService)
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _emailService = emailService;
         _mapper = mapper;
+        _adminService = administradorService;   
+        _agenteService = agenteService; 
     }
     public async Task<AuthenticationResponse> AuthenticateASYNC(AuthenticationRequest requuest)
     {
@@ -116,7 +123,7 @@ public class AccountService : IAccountService
             IsActive = false,
             ImgUrl = "",
             PhoneNumber = request.PhoneNumber,
-              
+            Cedula = ""
         };
 
         var result = await _userManager.CreateAsync(user, request.Password);
@@ -157,8 +164,52 @@ public class AccountService : IAccountService
         var users = await _userManager.Users.ToListAsync();
         var count = users.Where(u => u.EmailConfirmed == true && u.TypeOfUser == "Agente").Count();
 
+        await AddAgentesEsquemaDb();
+
         return count;
 
+    }
+    private async Task AddAgentesEsquemaDb()
+    {
+        var users = await _userManager.Users.ToListAsync();
+        var agentes = users.Where(u => u.TypeOfUser == "Agente");
+
+        List<SaveAgenteViewModel> agenteSave = new();
+
+        foreach(var item in agentes)
+        {
+            agenteSave.Add(new SaveAgenteViewModel
+            {
+                Apellido = item.LastName,
+                Nombre = item.FirstName,
+                Telefono = item.PhoneNumber,
+                ImgUrl = item.ImgUrl,
+                IdentityId = item.Id,
+                Cedula = item.Cedula,
+                Correo = item.Email,
+                IsActive = item.EmailConfirmed
+            });
+
+            foreach(var item2 in agenteSave)
+            {
+                var agentesdb = await _agenteService.GetAllAsync();
+               var confirn = agentesdb.Where(a => a.IdentityId == item2.IdentityId).FirstOrDefault();
+
+                if(confirn == null)
+                {
+                    await _agenteService.AddAsync(item2);  
+                }
+                 
+            }
+        }
+    }
+   
+
+    public async Task EliminarAgente(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+
+        var result = await _userManager.DeleteAsync(user);   
     }
     public async Task<int> CountAgentesInactivos()
     {
@@ -205,11 +256,105 @@ public class AccountService : IAccountService
             Email = user.Email,
             FirstName = user.FirstName, LastName = user.LastName,
             PhoneNumber = user.PhoneNumber, UserId = user.Id, ImgUrl = user.ImgUrl,
+            Cedula = user.Cedula,   
+            UserName = user.UserName
         };
 
         return userVm;
     }
+    public async Task<List<UserPostViewModel>> GetUsuariosAdministrador()
+    {
+        var users = _userManager.Users.ToList();
+        var listaAdministradores = users.Where(u => u.TypeOfUser == "Admin").ToList();
+
+        List<UserPostViewModel> userList = new();
+
+        foreach(var item in listaAdministradores)
+        {
+            userList.Add(new UserPostViewModel
+            {
+                FirstName = item.FirstName,
+                LastName = item.LastName,
+                Cedula = item.Cedula,
+                Email = item.Email,
+                UserId = item.Id,
+                UserName = item.UserName,
+                IsActived = item.EmailConfirmed
+            });
+        }
+
+        return userList;
+    }
     public async Task<RegistrerResponse> RegistrerAgenteUserAsync(RegistrerRequest request, string origin)
+    {
+        RegistrerResponse response = new()
+        {
+            HasError = false
+        };
+
+        var userWithSameUserName = await _userManager.FindByNameAsync(request.UserName);
+        if (userWithSameUserName != null)
+        {
+            response.HasError = true;
+            response.Error = $"El Nombre de Usuario ${request.UserName} ya esta registrado";
+
+            return response;
+        }
+
+
+        var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
+        if (userWithSameEmail != null)
+        {
+            response.HasError = true;
+            response.Error = $"El Email ${request.Email} ya esta registrado";
+
+            return response;
+        }
+
+        var user = new ApplicationUser
+        {
+            EmailConfirmed = false,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            Email = request.Email,
+            UserName = request.UserName,
+            TypeOfUser = request.TypeOfUser,
+            IsActive = false,
+            ImgUrl = "",
+            PhoneNumber = request.PhoneNumber,
+            Cedula = ""
+        };
+
+        var result = await _userManager.CreateAsync(user, request.Password);
+
+        if (request.file is not null)
+        {
+            if (user != null && user.Id != null)
+            {
+                user.ImgUrl = UploadFile(request.file, user.Id);
+                await _userManager.UpdateAsync(user);
+            }
+        }
+        
+
+        var userId = await _userManager.FindByEmailAsync(request.Email);
+
+        if (result.Succeeded)
+        {
+            await _userManager.AddToRoleAsync(user, Roles.Agente.ToString());
+        }
+        else
+        {
+            response.HasError = true;
+            response.Error = $"An Error ocurred trying to register the user";
+
+            return response;
+        }
+        response.userId = userId.Id;
+        return response;
+    }
+
+    public async Task<RegistrerResponse> RegistrerAdminUserAsync(RegistrerRequest request, string origin)
     {
         RegistrerResponse response = new()
         {
@@ -237,27 +382,34 @@ public class AccountService : IAccountService
 
         var user = new ApplicationUser
         {
-            EmailConfirmed = false,
+            EmailConfirmed = true,
             FirstName = request.FirstName,
             LastName = request.LastName,
             Email = request.Email,
             UserName = request.UserName,
             TypeOfUser = request.TypeOfUser,
-            IsActive = false,
-            ImgUrl = request.ImgUrl,    
+            IsActive = true,
+            ImgUrl = "",
+            PhoneNumber = request.PhoneNumber,
+            Cedula = request.Cedula
         };
 
         var result = await _userManager.CreateAsync(user, request.Password);
 
-        if (user != null && user.Id != null)
+        if (request.file is not null)
         {
-            user.ImgUrl = UploadFile(request.file, user.Id);
-            await _userManager.UpdateAsync(user);
+            if (user != null && user.Id != null)
+            {
+                user.ImgUrl = UploadFile(request.file, user.Id);
+                await _userManager.UpdateAsync(user);
+            }
         }
+
+        var userId = await _userManager.FindByEmailAsync(request.Email);
 
         if (result.Succeeded)
         {
-            await _userManager.AddToRoleAsync(user, Roles.Agente.ToString());
+            await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());
         }
         else
         {
@@ -266,11 +418,53 @@ public class AccountService : IAccountService
 
             return response;
         }
-
+        response.userId = userId.Id;
         return response;
     }
+    public async Task EditarAdmin(UserPostViewModel vm)
+    {
+        var user = await _userManager.FindByIdAsync(vm.UserId);
 
+        user.FirstName = vm.FirstName;
+        user.LastName = vm.LastName;    
+        user.Email = vm.Email;
+        user.UserName = vm.UserName;
+        user.PasswordHash = await UpdatePassword(vm.UserId, vm.Password);
 
+      var result = await _userManager.UpdateAsync(user);   
+    }
+    public async Task ActivarAgente(string userId)
+    {
+        var agente = await _userManager.FindByIdAsync(userId); 
+        
+        agente.EmailConfirmed = true;
+
+        var result = await _userManager.UpdateAsync(agente);
+    }
+    public async Task ActivarAdmin(string userId)
+    {
+        var admin = await _userManager.FindByIdAsync(userId);
+
+        admin.EmailConfirmed = true;
+
+        var result = await _userManager.UpdateAsync(admin);
+    }
+    public async Task InactivarAdmin(string userId)
+    {
+        var admin = await _userManager.FindByIdAsync(userId);
+
+        admin.EmailConfirmed = false;
+
+        var result = await _userManager.UpdateAsync(admin);
+    }
+    public async Task IanctivarAgente(string userId)
+    {
+        var agente = await _userManager.FindByIdAsync(userId);
+
+        agente.EmailConfirmed = false;
+
+        var result = await _userManager.UpdateAsync(agente);
+    }
     public async Task ConfirmAccountAsync(string userId)
     {
 
