@@ -16,8 +16,6 @@ namespace RealStateApp.Core.Application.Interfaces.IServices
         Task<int> ContarDesarrolladoresInactivos();
         Task<EditUserViewModel> EditUser(EditUserViewModel vm);
         Task EliminarAgente(string userId);
-        Task<UserPostViewModel> GetUserById(string userId);
-        Task<List<UserPostViewModel>> GetUsuariosAdministradores();
         Task InactivarAgente(string userId);
         Task<AuthenticationResponse> LoginAsync(LoginViewModel loginVm);
         Task<RegistrerResponse> RegisterAdminAsync(RegistrerViewModel vm, string origin);
@@ -26,5 +24,11 @@ namespace RealStateApp.Core.Application.Interfaces.IServices
         Task SignOutAsync();
         Task ActivarAdmin(string userId);
         Task EditarUsuarioAdmin(UserPostViewModel vm);
+        Task<UserViewModel> GetUserById(string userId);
+        Task<List<UserViewModel>> GetUsuariosAdministradores();
+        Task<List<UserViewModel>> GetUsuariosDesarrolladores();
+        Task<RegistrerResponse> RegisterDesarrolladorAsync(RegistrerViewModel vm);
+        Task InactivarDesarrollador(string userId);
+        Task ActivarDesarrollador(string userId);
     }
 }

@@ -72,7 +72,7 @@ namespace RealStateApp.Core.Application.Services
         }
 
         // Metodo para Buscar Usuario Por el Id tipo String
-        public async Task<UserPostViewModel> GetUserById(string userId)
+        public async Task<UserViewModel> GetUserById(string userId)
         {
             var user = await _accountServices.GetById(userId);
 
@@ -144,9 +144,16 @@ namespace RealStateApp.Core.Application.Services
         }
 
         // Metodo Para traer Lista de Usuarios Administradores
-        public async Task<List<UserPostViewModel>> GetUsuariosAdministradores()
+        public async Task<List<UserViewModel>> GetUsuariosAdministradores()
         {
             var users = await _accountServices.GetUsuariosAdministrador();
+
+            return users;
+        }
+        // Metodo Para traer Lista de Usuarios Desarrolladores
+        public async Task<List<UserViewModel>> GetUsuariosDesarrolladores()
+        {
+            var users = await _accountServices.GetUsuariosDesarrollador();
 
             return users;
         }
@@ -194,6 +201,28 @@ namespace RealStateApp.Core.Application.Services
         public async Task EditarUsuarioAdmin(UserPostViewModel vm)
         {
             await _accountServices.EditarAdmin(vm);
+        }
+
+        // Metodo para Crear Usuario Desarrollador
+        public async Task<RegistrerResponse> RegisterDesarrolladorAsync(RegistrerViewModel vm)
+        {
+
+            RegistrerRequest registerRequest = _mapper.Map<RegistrerRequest>(vm);
+
+
+            return await _accountServices.RegistrerDesarrolladorAsync(registerRequest);
+        }
+
+        // Metodo para Inactivar Desarrollador
+        public async Task InactivarDesarrollador(string userId)
+        {
+            await _accountServices.InactivarDesarrollador(userId);
+        }
+
+        // Metodo para Activar Desarrollador
+        public async Task ActivarDesarrollador(string userId)
+        {
+            await _accountServices.ActivarDesarrollador(userId);
         }
     }
 }

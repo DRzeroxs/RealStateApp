@@ -41,6 +41,12 @@ namespace RealStateApp.Controllers
 
             return View(administradores);   
         }
+        public async Task<IActionResult> ListadoDesarrolladores()
+        {
+            var desarrolladores = await _userServices.GetUsuariosDesarrolladores();
+
+            return View(desarrolladores);
+        }
         public async Task<IActionResult> CrearAdministrador()
         {
             UserPostViewModel userPost = new();
@@ -61,8 +67,6 @@ namespace RealStateApp.Controllers
             registrerVm.TypeOfUser = "Admin";
 
             RegistrerResponse response = await _userServices.RegisterAdminAsync(registrerVm, origin);
-
-            var user = await _userServices.GetUserById(response.userId);
           
             return View();  
         }

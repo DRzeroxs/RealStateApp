@@ -289,7 +289,8 @@ namespace RealStateApp.Core.Application.Mappings
             #endregion
 
             #region"Registrer"
-            CreateMap<RegistrerViewModel, UserPostViewModel>().ReverseMap();    
+            CreateMap<RegistrerViewModel, UserPostViewModel>().ReverseMap();
+            CreateMap<RegistrerViewModel, UserViewModel>().ReverseMap();
             #endregion
         }
     }

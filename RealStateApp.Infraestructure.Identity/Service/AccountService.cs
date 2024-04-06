@@ -86,6 +86,81 @@ public class AccountService : IAccountService
         await _signInManager.SignOutAsync();
     }
 
+    public async Task<RegistrerResponse> RegistrerDesarrolladorAsync(RegistrerRequest request)
+    {
+        RegistrerResponse response = new()
+        {
+            HasError = false
+        };
+
+        var userWithSameUserName = await _userManager.FindByNameAsync(request.UserName);
+        if (userWithSameUserName != null)
+        {
+            response.HasError = true;
+            response.Error = $"username {request.UserName} is already Taken";
+
+            return response;
+        }
+
+        var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
+        if (userWithSameEmail != null)
+        {
+            response.HasError = true;
+            response.Error = $"username {request.Email} is already registrer";
+
+            return response;
+        }
+
+        var user = new ApplicationUser
+        {
+            EmailConfirmed = true,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            Email = request.Email,
+            UserName = request.UserName,
+            TypeOfUser = "Developer",
+            IsActive = true,
+            ImgUrl = "",
+            PhoneNumber = request.PhoneNumber,
+            Cedula = request.Cedula
+        };
+
+        var result = await _userManager.CreateAsync(user, request.Password);
+
+        var userId = await _userManager.FindByEmailAsync(request.Email);
+
+        if (result.Succeeded)
+        {
+            await _userManager.AddToRoleAsync(user, Roles.Cliente.ToString());
+        }
+        else
+        {
+            response.HasError = true;
+            response.Error = $"An Error ocurred trying to register the user";
+
+            return response;
+        }
+        response.userId = userId.Id;
+        return response;
+    }
+    public async Task InactivarDesarrollador(string userId)
+    {
+       var desarrollador = await _userManager.FindByIdAsync(userId);
+
+        desarrollador.EmailConfirmed = false;
+        desarrollador.IsActive = false;
+
+        var result = await _userManager.UpdateAsync(desarrollador);
+    }
+    public async Task ActivarDesarrollador(string userId)
+    {
+        var desarrollador = await _userManager.FindByIdAsync(userId);
+
+        desarrollador.EmailConfirmed = true;
+        desarrollador.IsActive = true;
+
+        var result = await _userManager.UpdateAsync(desarrollador);
+    }
     public async Task<RegistrerResponse> RegistrerClienteUserAsync(RegistrerRequest request, string origin)
     {
         RegistrerResponse response = new()
@@ -247,11 +322,11 @@ public class AccountService : IAccountService
 
         return count;
     }
-    public async Task<UserPostViewModel> GetById(string userId)
+    public async Task<UserViewModel> GetById(string userId)
     {
        var user = await _userManager.FindByIdAsync(userId);
 
-        UserPostViewModel userVm = new UserPostViewModel
+        UserViewModel userVm = new UserViewModel
         {
             Email = user.Email,
             FirstName = user.FirstName, LastName = user.LastName,
@@ -262,16 +337,39 @@ public class AccountService : IAccountService
 
         return userVm;
     }
-    public async Task<List<UserPostViewModel>> GetUsuariosAdministrador()
+    public async Task<List<UserViewModel>> GetUsuariosAdministrador()
     {
         var users = _userManager.Users.ToList();
         var listaAdministradores = users.Where(u => u.TypeOfUser == "Admin").ToList();
 
-        List<UserPostViewModel> userList = new();
+        List<UserViewModel> userList = new();
 
         foreach(var item in listaAdministradores)
         {
-            userList.Add(new UserPostViewModel
+            userList.Add(new UserViewModel
+            {
+                FirstName = item.FirstName,
+                LastName = item.LastName,
+                Cedula = item.Cedula,
+                Email = item.Email,
+                UserId = item.Id,
+                UserName = item.UserName,
+                IsActived = item.EmailConfirmed
+            });
+        }
+
+        return userList;
+    }
+    public async Task<List<UserViewModel>> GetUsuariosDesarrollador()
+    {
+        var users = _userManager.Users.ToList();
+        var listaAdministradores = users.Where(u => u.TypeOfUser == "Developer").ToList();
+
+        List<UserViewModel> userList = new();
+
+        foreach (var item in listaAdministradores)
+        {
+            userList.Add(new UserViewModel
             {
                 FirstName = item.FirstName,
                 LastName = item.LastName,
