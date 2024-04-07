@@ -56,6 +56,7 @@ namespace RealStateApp.Core.Application.Mappings
               .ForMember(opt => opt.ImgUrl, i => i.Ignore())
                 .ForMember(opt => opt.ImgUrlList, i => i.Ignore());
 
+
             CreateMap<PropiedadesDto, Propiedad>()
              .ForMember(opt => opt.CreatedBy, i => i.Ignore())
              .ForMember(opt => opt.CreatedDate, i => i.Ignore())
