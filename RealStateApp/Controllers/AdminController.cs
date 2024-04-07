@@ -47,6 +47,7 @@ namespace RealStateApp.Controllers
 
             return View(desarrolladores);
         }
+      
         public async Task<IActionResult> CrearAdministrador()
         {
             UserPostViewModel userPost = new();

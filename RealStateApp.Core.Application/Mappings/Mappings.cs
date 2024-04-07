@@ -118,6 +118,9 @@ namespace RealStateApp.Core.Application.Mappings
                 .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
                 .ReverseMap();
 
+            CreateMap<SaveTipoVentaViewModel, TipoVentaViewModel>()
+              .ReverseMap();
+
             CreateMap<CreateTipoVentaCommand, TipoVenta>()
                 .ForMember(opt => opt.CreatedBy, i => i.Ignore())
                 .ForMember(opt => opt.CreatedDate, i => i.Ignore())
@@ -160,6 +163,9 @@ namespace RealStateApp.Core.Application.Mappings
               .ForMember(opt => opt.CreatedDate, i => i.Ignore())
               .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
               .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+              .ReverseMap();
+
+            CreateMap<SaveTipoPropiedadViewModel, TipoPropiedadViewModel>()
               .ReverseMap();
 
             CreateMap<CreateTipoPropiedadCommand,  TipoPropiedad>()
@@ -207,6 +213,9 @@ namespace RealStateApp.Core.Application.Mappings
             .ForMember(opt => opt.CreatedDate, i => i.Ignore())
             .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
             .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+            .ReverseMap();
+
+            CreateMap<SaveMejoraViewModel, MejoraViewModel>()
             .ReverseMap();
 
             #endregion
