@@ -19,7 +19,7 @@ namespace RealStateApp.Controllers
         {
             return View();
         }
-       
+
         public async Task<IActionResult> CrearDesarrollador()
         {
             UserPostViewModel userPost = new();
@@ -30,17 +30,17 @@ namespace RealStateApp.Controllers
         [HttpPost]
         public async Task<IActionResult> CrearDesarrollador(UserPostViewModel vm)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(vm);
             }
 
-            RegistrerViewModel registrerVm = _mapper.Map<RegistrerViewModel>(vm);   
+            RegistrerViewModel registrerVm = _mapper.Map<RegistrerViewModel>(vm);
 
-            var response =  await _userService.RegisterDesarrolladorAsync(registrerVm);
+            var response = await _userService.RegisterDesarrolladorAsync(registrerVm);
             response.userId = "";
 
-            if(response.HasError == true)
+            if (response.HasError == true)
             {
                 ModelState.AddModelError("Error de Respuesta", $"{response.Error}");
             }
@@ -54,7 +54,7 @@ namespace RealStateApp.Controllers
         [HttpPost]
         public async Task<IActionResult> InactivarDesarrolladorPost(string userId)
         {
-            await _userService.InactivarDesarrollador(userId);
+            await _userService.InactivarUsuario(userId);
 
             return RedirectToAction("ListadoDesarrolladores", "Admin");
         }
@@ -65,7 +65,21 @@ namespace RealStateApp.Controllers
         [HttpPost]
         public async Task<IActionResult> ActivarDesarrolladorPost(string userId)
         {
-            await _userService.ActivarDesarrollador(userId);
+            await _userService.ActivarUsuario(userId);
+
+            return RedirectToAction("ListadoDesarrolladores", "Admin");
+        }
+        public async Task<IActionResult> EditarDesarrollador(string userId)
+        {
+            var user = await _userService.GetUserById(userId);
+            UserPostViewModel userPost = _mapper.Map<UserPostViewModel>(user);
+
+            return View("CrearDesarrollador", userPost);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditarDesarrolladorPost(UserPostViewModel vm)
+        {
+            await _userService.EditarUsuario(vm);
 
             return RedirectToAction("ListadoDesarrolladores", "Admin");
         }

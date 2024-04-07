@@ -143,23 +143,43 @@ public class AccountService : IAccountService
         response.userId = userId.Id;
         return response;
     }
-    public async Task InactivarDesarrollador(string userId)
+    public async Task InactivarUsuario(string userId)
     {
-       var desarrollador = await _userManager.FindByIdAsync(userId);
+       var usuario = await _userManager.FindByIdAsync(userId);
 
-        desarrollador.EmailConfirmed = false;
-        desarrollador.IsActive = false;
+        if(usuario.TypeOfUser == "Agente")
+        {
+            var agente =  await _agenteService.GetByIdentityId(usuario.Id);
+            agente.IsActive = false;
 
-        var result = await _userManager.UpdateAsync(desarrollador);
+            SaveAgenteViewModel saveAgente = _mapper.Map<SaveAgenteViewModel>(agente);
+
+            await _agenteService.UpdateAsync(saveAgente, agente.Id);
+        }    
+
+        usuario.EmailConfirmed = false;
+        usuario.IsActive = false;
+
+        var result = await _userManager.UpdateAsync(usuario);
     }
-    public async Task ActivarDesarrollador(string userId)
+    public async Task ActivarUsuario(string userId)
     {
-        var desarrollador = await _userManager.FindByIdAsync(userId);
+        var usuario = await _userManager.FindByIdAsync(userId);
 
-        desarrollador.EmailConfirmed = true;
-        desarrollador.IsActive = true;
+        if (usuario.TypeOfUser == "Agente")
+        {
+            var agente = await _agenteService.GetByIdentityId(usuario.Id);
+            agente.IsActive = true;
 
-        var result = await _userManager.UpdateAsync(desarrollador);
+            SaveAgenteViewModel saveAgente = _mapper.Map<SaveAgenteViewModel>(agente);
+
+            await _agenteService.UpdateAsync(saveAgente, agente.Id);
+        }
+
+        usuario.EmailConfirmed = true;
+        usuario.IsActive = true;
+
+        var result = await _userManager.UpdateAsync(usuario);
     }
     public async Task<RegistrerResponse> RegistrerClienteUserAsync(RegistrerRequest request, string origin)
     {
@@ -278,7 +298,6 @@ public class AccountService : IAccountService
             }
         }
     }
-   
 
     public async Task EliminarAgente(string userId)
     {
@@ -519,7 +538,7 @@ public class AccountService : IAccountService
         response.userId = userId.Id;
         return response;
     }
-    public async Task EditarAdmin(UserPostViewModel vm)
+    public async Task EditarUsuario(UserPostViewModel vm)
     {
         var user = await _userManager.FindByIdAsync(vm.UserId);
 
@@ -527,42 +546,14 @@ public class AccountService : IAccountService
         user.LastName = vm.LastName;    
         user.Email = vm.Email;
         user.UserName = vm.UserName;
+        user.Cedula = vm.Cedula;
         user.PasswordHash = await UpdatePassword(vm.UserId, vm.Password);
 
       var result = await _userManager.UpdateAsync(user);   
     }
-    public async Task ActivarAgente(string userId)
-    {
-        var agente = await _userManager.FindByIdAsync(userId); 
-        
-        agente.EmailConfirmed = true;
-
-        var result = await _userManager.UpdateAsync(agente);
-    }
-    public async Task ActivarAdmin(string userId)
-    {
-        var admin = await _userManager.FindByIdAsync(userId);
-
-        admin.EmailConfirmed = true;
-
-        var result = await _userManager.UpdateAsync(admin);
-    }
-    public async Task InactivarAdmin(string userId)
-    {
-        var admin = await _userManager.FindByIdAsync(userId);
-
-        admin.EmailConfirmed = false;
-
-        var result = await _userManager.UpdateAsync(admin);
-    }
-    public async Task IanctivarAgente(string userId)
-    {
-        var agente = await _userManager.FindByIdAsync(userId);
-
-        agente.EmailConfirmed = false;
-
-        var result = await _userManager.UpdateAsync(agente);
-    }
+    
+    
+ 
     public async Task ConfirmAccountAsync(string userId)
     {
 

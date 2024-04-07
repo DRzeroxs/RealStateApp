@@ -5,8 +5,6 @@ namespace RealStateApp.Core.Application.Interfaces.IServices
 {
     public interface IUserServices
     {
-        Task InactivarAdmin(string userId);
-        Task ActivarAgente(string userId);
         Task<string> ConfirmEmailAsync(string userId, string token);
         Task<int> ContarAgentesActivos();
         Task<int> ContarAgentesInactivos();
@@ -16,19 +14,17 @@ namespace RealStateApp.Core.Application.Interfaces.IServices
         Task<int> ContarDesarrolladoresInactivos();
         Task<EditUserViewModel> EditUser(EditUserViewModel vm);
         Task EliminarAgente(string userId);
-        Task InactivarAgente(string userId);
         Task<AuthenticationResponse> LoginAsync(LoginViewModel loginVm);
         Task<RegistrerResponse> RegisterAdminAsync(RegistrerViewModel vm, string origin);
         Task<RegistrerResponse> RegisterAgenteAsync(RegistrerViewModel vm, string origin);
         Task<RegistrerResponse> RegisterClienteAsync(RegistrerViewModel vm, string origin);
         Task SignOutAsync();
-        Task ActivarAdmin(string userId);
-        Task EditarUsuarioAdmin(UserPostViewModel vm);
+        Task EditarUsuario(UserPostViewModel vm);
         Task<UserViewModel> GetUserById(string userId);
         Task<List<UserViewModel>> GetUsuariosAdministradores();
         Task<List<UserViewModel>> GetUsuariosDesarrolladores();
         Task<RegistrerResponse> RegisterDesarrolladorAsync(RegistrerViewModel vm);
-        Task InactivarDesarrollador(string userId);
-        Task ActivarDesarrollador(string userId);
+        Task InactivarUsuario(string userId);
+        Task ActivarUsuario(string userId);
     }
 }

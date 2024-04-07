@@ -158,49 +158,10 @@ namespace RealStateApp.Core.Application.Services
             return users;
         }
 
-        // Metodo para Activar Agente
-        public async Task ActivarAgente(string userId)
-        {
-            var agente = await _agenteService.GetByIdentityId(userId);
-            SaveAgenteViewModel agenteSave = _mapper.Map<SaveAgenteViewModel>(agente);
-
-            agenteSave.IsActive = true;
-
-            await _agenteService.UpdateAsync(agenteSave, agenteSave.Id);
-
-            await _accountServices.ActivarAgente(userId);
-
-        }
-
-        // Metodo para Inactivar Agente
-        public async Task InactivarAgente(string userId)
-        {
-            var agente = await _agenteService.GetByIdentityId(userId);
-            SaveAgenteViewModel agenteSave = _mapper.Map<SaveAgenteViewModel>(agente);
-
-            agenteSave.IsActive = false;
-
-            await _agenteService.UpdateAsync(agenteSave, agenteSave.Id);
-
-            await _accountServices.IanctivarAgente(userId);
-        }
-
-        // Metodo para Activar Usuario Administrador
-        public async Task ActivarAdmin(string userId)
-        {
-            await _accountServices.ActivarAdmin(userId);    
-        }
-
-        // Metodo para Inactivar Usuario Administrador
-        public async Task InactivarAdmin(string userId)
-        {
-            await _accountServices.InactivarAdmin(userId);
-        }
-
         // Metodo para Editar Usuario Administrador
-        public async Task EditarUsuarioAdmin(UserPostViewModel vm)
+        public async Task EditarUsuario(UserPostViewModel vm)
         {
-            await _accountServices.EditarAdmin(vm);
+            await _accountServices.EditarUsuario(vm);
         }
 
         // Metodo para Crear Usuario Desarrollador
@@ -214,15 +175,15 @@ namespace RealStateApp.Core.Application.Services
         }
 
         // Metodo para Inactivar Desarrollador
-        public async Task InactivarDesarrollador(string userId)
+        public async Task InactivarUsuario(string userId)
         {
-            await _accountServices.InactivarDesarrollador(userId);
+            await _accountServices.InactivarUsuario(userId);
         }
 
         // Metodo para Activar Desarrollador
-        public async Task ActivarDesarrollador(string userId)
+        public async Task ActivarUsuario(string userId)
         {
-            await _accountServices.ActivarDesarrollador(userId);
+            await _accountServices.ActivarUsuario(userId);
         }
     }
 }

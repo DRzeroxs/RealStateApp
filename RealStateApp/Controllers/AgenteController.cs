@@ -24,13 +24,13 @@ namespace RealStateApp.Controllers
         }
         public async Task<IActionResult> ActivarAgente(string userId)
         {
-            await _userServices.ActivarAgente(userId);
+            await _userServices.ActivarUsuario(userId);
 
             return RedirectToAction("Index", "Admin");
         }
         public async Task<IActionResult> InactivarAgente(string userId)
         {
-            await _userServices.InactivarAgente(userId);
+            await _userServices.InactivarUsuario(userId);
 
             return RedirectToAction("Index", "Admin");
         }
