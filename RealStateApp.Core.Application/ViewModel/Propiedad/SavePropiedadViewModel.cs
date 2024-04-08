@@ -11,7 +11,7 @@ namespace RealStateApp.Core.Application.ViewModel.Propiedad
     public class SavePropiedadViewModel 
     {
         public int Id { get; set; }
-        public string? Identifier { get; set; }
+        public int Identifier { get; set; }
 
         [Required(ErrorMessage = "Este campo es requerido")]
         [DataType(DataType.Text)]

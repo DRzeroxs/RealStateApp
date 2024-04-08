@@ -20,7 +20,7 @@ namespace RealStateApp.Core.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<SaveViewModel> AddAsync(SaveViewModel vm)
+        public virtual async Task<SaveViewModel> AddAsync(SaveViewModel vm)
         {
             Entity entity = _mapper.Map<Entity>(vm);
 
@@ -38,7 +38,7 @@ namespace RealStateApp.Core.Application.Services
             await _repository.UpdateAsync(entity, ID);
         }
 
-        public async Task RemoveAsync(int Id)
+        public virtual async Task RemoveAsync(int Id)
         {
             Entity entity = await _repository.GetById(Id);
 
@@ -52,7 +52,7 @@ namespace RealStateApp.Core.Application.Services
             return _mapper.Map<List<ViewModel>>(Lista);
         }
 
-        public async Task<ViewModel> GetByIdAsync(int Id)
+        public virtual async Task<ViewModel> GetByIdAsync(int Id)
         {
             Entity entity = await _repository.GetById(Id);
 

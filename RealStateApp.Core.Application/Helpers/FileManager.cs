@@ -66,5 +66,22 @@ namespace RealStateApp.Core.Application.Helpers
 
             return uploadedFilePaths;
         }
+
+        public static void DeletePropertyImages(List<string> imageUrls)
+        {
+            foreach (var imageUrl in imageUrls)
+            {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imageUrl.TrimStart('/'));
+
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+                else
+                {
+                    Console.WriteLine($"El archivo '{path}' no existe.");
+                }
+            }
+        }
     }
 }
