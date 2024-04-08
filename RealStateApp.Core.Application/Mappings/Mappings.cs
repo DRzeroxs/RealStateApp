@@ -47,6 +47,15 @@ namespace RealStateApp.Core.Application.Mappings
             #endregion
 
             #region "Propiedades"
+            CreateMap<SavePropiedadViewModel, Propiedad>()
+              .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+              .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+              .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+               .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+              .ReverseMap()
+              .ForMember(opt => opt.Files, i => i.Ignore())
+                .ForMember(opt => opt.ImgUrls, i => i.Ignore());
+
             CreateMap<PropiedadViewModel, Propiedad>()
               .ForMember(opt => opt.CreatedBy, i => i.Ignore())
               .ForMember(opt => opt.CreatedDate, i => i.Ignore())
@@ -55,6 +64,7 @@ namespace RealStateApp.Core.Application.Mappings
               .ReverseMap()
               .ForMember(opt => opt.ImgUrl, i => i.Ignore())
                 .ForMember(opt => opt.ImgUrlList, i => i.Ignore());
+
 
             CreateMap<PropiedadesDto, Propiedad>()
              .ForMember(opt => opt.CreatedBy, i => i.Ignore())

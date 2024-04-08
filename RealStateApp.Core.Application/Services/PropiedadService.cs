@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.VisualBasic;
 using RealStateApp.Core.Application.Dto.Propiedades;
+using RealStateApp.Core.Application.Helpers;
 using RealStateApp.Core.Application.Interfaces.IRepository;
 using RealStateApp.Core.Application.Interfaces.IServices;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Agente;
@@ -66,6 +67,95 @@ namespace RealStateApp.Core.Application.Services
             _listMejorasAplicadas = await _mejorasAplicadasRepository.GetAll();
             _listImgPropiedades = await _imgPropiedadRepository.GetAll();
         }
+
+        public override async Task<SavePropiedadViewModel> AddAsync(SavePropiedadViewModel vm)
+        {
+            Propiedad propiedad = _mapper.Map<Propiedad>(vm);
+
+            propiedad = await _repository.AddAsync(propiedad);
+
+            List<string> rutaImg = FileManager.UploadFiles(vm.Files, propiedad.Id);
+
+            foreach (var url in rutaImg)
+            {
+                ImgPropiedad imgPropiedad = new ImgPropiedad
+                {
+                    PropieadId = propiedad.Id,
+                    UrlImg = url
+                };
+
+                await _imgPropiedadRepository.AddAsync(imgPropiedad);
+            }
+
+            SavePropiedadViewModel propiedadVm = _mapper.Map<SavePropiedadViewModel>(propiedad);
+            propiedadVm.ImgUrls = rutaImg;
+    
+            return propiedadVm;
+        }
+
+        public override async Task UpdateAsync(SavePropiedadViewModel vm, int ID)
+        {
+            Propiedad propiedad = _mapper.Map<Propiedad>(vm);
+
+            await _repository.UpdateAsync(propiedad, ID);
+
+            List<string> rutaImg = FileManager.UploadFiles(vm.Files, propiedad.Id);
+
+            List<ImgPropiedad> ImgAntiguas = await _imgPropiedadRepository.GetImgPropiedadByPropiedadId(propiedad.Id);
+
+            foreach (var item in ImgAntiguas)
+            {
+                await _imgPropiedadRepository.DeleteAsync(item);
+            }
+
+            foreach (var url in rutaImg)
+            {
+                ImgPropiedad imgPropiedad = new ImgPropiedad
+                {
+                    PropieadId = propiedad.Id,
+                    UrlImg = url
+                };
+
+                await _imgPropiedadRepository.AddAsync(imgPropiedad);
+            }
+        }   
+
+        public override async Task<PropiedadViewModel> GetByIdAsync(int Id)
+        {
+            Propiedad propiedad = await _repository.GetById(Id);
+
+            PropiedadViewModel propiedadVm = _mapper.Map<PropiedadViewModel>(propiedad);
+
+            //Revisar si existen los registros en el automapper
+            propiedadVm.TipoPropiedad = _mapper.Map<TipoPropiedadViewModel>( await _tipoPropiedadRepository.GetById(propiedadVm.TipoPropiedadId));
+            propiedadVm.TipoVenta = _mapper.Map<TipoVentaViewModel>(await _tipoVentaRepository.GetById(propiedadVm.TipoVentaId));
+            propiedadVm.Agente = _mapper.Map<AgenteViewModel>(await _agenteRepository.GetById(propiedadVm.AgenteId));
+
+            propiedadVm.Mejoras = _mapper.Map<List<MejoraViewModel>>( await _mejorasAplicadasRepository.GetMejorasAplicadasByPropiedadId(propiedadVm.Id));
+            propiedadVm.ImgUrlList = _mapper.Map<List<ImgPropiedadViewModel>>( await _imgPropiedadRepository.GetImgPropiedadByPropiedadId(propiedadVm.Id));
+
+            return propiedadVm;
+        }
+
+        public override async Task RemoveAsync(int Id)
+        {
+            Propiedad propiedad = await _repository.GetById(Id);
+
+            await _repository.DeleteAsync(propiedad);
+
+            PropiedadViewModel vm = await GetByIdAsync(Id);
+
+            List<string> urlsImgPropiedades = new();
+
+            foreach (var item in vm.ImgUrlList)
+            {
+                urlsImgPropiedades.Add(item.UrlImg);
+            }
+
+            FileManager.DeletePropertyImages(urlsImgPropiedades);
+        }
+
+
 
         #region"GetAllPropiedades"
         public async Task<List<PropiedadViewModel>> GetAllPropiedades()
@@ -807,6 +897,8 @@ namespace RealStateApp.Core.Application.Services
             return count;
         }
         #endregion
+
+        
 
     }
 }
