@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RealStateApp.Core.Application.Helpers;
 using RealStateApp.Core.Application.Interfaces.IServices;
+using RealStateApp.Core.Application.ViewModel.AppUsers.Agente;
 using RealStateApp.Core.Application.ViewModel.Propiedad;
 
 namespace RealStateApp.Controllers
@@ -48,13 +49,24 @@ namespace RealStateApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CrearPropiedad(SavePropiedadViewModel savePropiedadViewModel)
+        public async Task<IActionResult> CrearPropiedad(SavePropiedadViewModel savePropiedadViewModel, string userId)
         {
             if (!ModelState.IsValid)
             {
                 await CargarViewBags();
                 return View(savePropiedadViewModel);
             }
+
+            AgenteViewModel agente = await _agenteService.GetByIdentityId(userId);
+
+            if (agente == null)
+            {
+                await CargarViewBags();
+                // Agregar mensaje de error en la vista "No se encontro al agente"
+                return View(savePropiedadViewModel);
+            }
+
+            savePropiedadViewModel.AgenteId = agente.Id;
 
             SavePropiedadViewModel savedVm = await _propiedadService.AddAsync(savePropiedadViewModel);
 
