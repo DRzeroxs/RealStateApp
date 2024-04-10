@@ -41,6 +41,13 @@ namespace RealStateApp.Controllers
 
             return View(administradores);   
         }
+        public async Task<IActionResult> ListadoDesarrolladores()
+        {
+            var desarrolladores = await _userServices.GetUsuariosDesarrolladores();
+
+            return View(desarrolladores);
+        }
+      
         public async Task<IActionResult> CrearAdministrador()
         {
             UserPostViewModel userPost = new();
@@ -61,8 +68,6 @@ namespace RealStateApp.Controllers
             registrerVm.TypeOfUser = "Admin";
 
             RegistrerResponse response = await _userServices.RegisterAdminAsync(registrerVm, origin);
-
-            var user = await _userServices.GetUserById(response.userId);
           
             return View();  
         }
@@ -73,7 +78,7 @@ namespace RealStateApp.Controllers
         [HttpPost]
         public async Task<IActionResult> ActivarAdminPost(string userId)
         {
-            await _userServices.ActivarAdmin(userId);
+            await _userServices.ActivarUsuario(userId);
             
             return RedirectToAction("ListadoAdministradores");
         }
@@ -84,7 +89,7 @@ namespace RealStateApp.Controllers
         [HttpPost]
         public async Task<IActionResult> InactivarAdminPost(string userId)
         {
-            await _userServices.InactivarAdmin(userId);
+            await _userServices.InactivarUsuario(userId);
 
             return RedirectToAction("ListadoAdministradores");
         }
@@ -95,9 +100,10 @@ namespace RealStateApp.Controllers
 
             return View("CrearAdministrador", user);
         }
+        [HttpPost]
         public async Task<IActionResult> EditarAdminPost(UserPostViewModel vm)
         {
-            await _userServices.EditarUsuarioAdmin(vm);
+            await _userServices.EditarUsuario(vm);
 
             return RedirectToAction("ListadoAdministradores");
         }

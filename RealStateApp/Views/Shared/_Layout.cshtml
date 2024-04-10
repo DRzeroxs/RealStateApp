@@ -5,6 +5,7 @@
     var user = httpContext.HttpContext.Session.get<AuthenticationResponse>("User");
     var isCliente = user != null ? user.Roles.Any(r => r == "Cliente") : false;
     var isAdmin = user != null ? user.Roles.Any(r => r == "Admin") : false;
+    var isAgente = user != null ? user.Roles.Any(r => r == "Agente") : false;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -59,11 +60,13 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CerrarSesion">Cerrar Sesion</a>
                             </li>
 
+                        }
 
+                        @if (isAgente is not false)
+                        {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-route-userId="@user.Id" asp-controller="User" asp-action="EditUser">Editar Usuario</a>
                             </li>
-
                         }
 
                         @if(isAdmin is not false)
@@ -81,19 +84,19 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CerrarSesion">Mantenimiento de Desarrolladores</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListadoDesarrolladores">Mantenimiento de Desarrolladores</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CerrarSesion">Mantenimiento de Tipos de Propiedades</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="TiposPropiedades" asp-action="ListadoTipoPropiedades">Mantenimiento de Tipos de Propiedades</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CerrarSesion">Mantenimiento de Tipos de Ventas</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="TipoVentas" asp-action="ListadoTipoVentas">Mantenimiento de Tipos de Ventas</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CerrarSesion">Mantenimiento de Mejoras</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Mejora" asp-action="ListadoMejoras">Mantenimiento de Mejoras</a>
                             </li>
 
                             <li class="nav-item">

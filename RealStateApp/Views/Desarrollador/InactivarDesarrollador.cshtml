@@ -1,0 +1,16 @@
+﻿@model string;
+@{
+    ViewData["Title"] = "InactivarDesarrollador";
+}
+<form asp-controller="Desarrollador" asp-action="InactivarDesarrolladorPost" method="post" style="margin-bottom:500px ;">
+    <h2 class="text-black  fw-bold text-center mt-3">
+        ¿Está seguro que desea Inactivar este Usuario?
+    </h2>
+    <div style="gap: 20px;" class="d-flex justify-content-center align-content-between mt-3 ">
+        <input type="hidden" name="userId" value="@Model" />
+        <button class="btn btn-danger " type="submit">Inactivar</button>
+        <a asp-controller="Admin" class="btn btn-info text-white" asp-action="ListadoAgentes">Cancelar</a>
+    </div>
+
+</form>
+

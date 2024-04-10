@@ -72,7 +72,7 @@ namespace RealStateApp.Core.Application.Services
         }
 
         // Metodo para Buscar Usuario Por el Id tipo String
-        public async Task<UserPostViewModel> GetUserById(string userId)
+        public async Task<UserViewModel> GetUserById(string userId)
         {
             var user = await _accountServices.GetById(userId);
 
@@ -144,56 +144,46 @@ namespace RealStateApp.Core.Application.Services
         }
 
         // Metodo Para traer Lista de Usuarios Administradores
-        public async Task<List<UserPostViewModel>> GetUsuariosAdministradores()
+        public async Task<List<UserViewModel>> GetUsuariosAdministradores()
         {
             var users = await _accountServices.GetUsuariosAdministrador();
 
             return users;
         }
-
-        // Metodo para Activar Agente
-        public async Task ActivarAgente(string userId)
+        // Metodo Para traer Lista de Usuarios Desarrolladores
+        public async Task<List<UserViewModel>> GetUsuariosDesarrolladores()
         {
-            var agente = await _agenteService.GetByIdentityId(userId);
-            SaveAgenteViewModel agenteSave = _mapper.Map<SaveAgenteViewModel>(agente);
+            var users = await _accountServices.GetUsuariosDesarrollador();
 
-            agenteSave.IsActive = true;
-
-            await _agenteService.UpdateAsync(agenteSave, agenteSave.Id);
-
-            await _accountServices.ActivarAgente(userId);
-
-        }
-
-        // Metodo para Inactivar Agente
-        public async Task InactivarAgente(string userId)
-        {
-            var agente = await _agenteService.GetByIdentityId(userId);
-            SaveAgenteViewModel agenteSave = _mapper.Map<SaveAgenteViewModel>(agente);
-
-            agenteSave.IsActive = false;
-
-            await _agenteService.UpdateAsync(agenteSave, agenteSave.Id);
-
-            await _accountServices.IanctivarAgente(userId);
-        }
-
-        // Metodo para Activar Usuario Administrador
-        public async Task ActivarAdmin(string userId)
-        {
-            await _accountServices.ActivarAdmin(userId);    
-        }
-
-        // Metodo para Inactivar Usuario Administrador
-        public async Task InactivarAdmin(string userId)
-        {
-            await _accountServices.InactivarAdmin(userId);
+            return users;
         }
 
         // Metodo para Editar Usuario Administrador
-        public async Task EditarUsuarioAdmin(UserPostViewModel vm)
+        public async Task EditarUsuario(UserPostViewModel vm)
         {
-            await _accountServices.EditarAdmin(vm);
+            await _accountServices.EditarUsuario(vm);
+        }
+
+        // Metodo para Crear Usuario Desarrollador
+        public async Task<RegistrerResponse> RegisterDesarrolladorAsync(RegistrerViewModel vm)
+        {
+
+            RegistrerRequest registerRequest = _mapper.Map<RegistrerRequest>(vm);
+
+
+            return await _accountServices.RegistrerDesarrolladorAsync(registerRequest);
+        }
+
+        // Metodo para Inactivar Desarrollador
+        public async Task InactivarUsuario(string userId)
+        {
+            await _accountServices.InactivarUsuario(userId);
+        }
+
+        // Metodo para Activar Desarrollador
+        public async Task ActivarUsuario(string userId)
+        {
+            await _accountServices.ActivarUsuario(userId);
         }
     }
 }

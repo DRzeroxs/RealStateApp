@@ -5,8 +5,8 @@ namespace RealStateApp.Core.Application.Interfaces.IAccount;
 
 public interface IAccountService
 {
-    Task ActivarAdmin(string userId);
-    Task ActivarAgente(string userId);
+
+    Task ActivarUsuario(string userId);
     Task<AuthenticationResponse> AuthenticateASYNC(AuthenticationRequest requuest);
     Task ConfirmAccountAsync(string userId);
     Task<string> ConfirmAccountAsync(string userId, string token);
@@ -16,15 +16,16 @@ public interface IAccountService
     Task<int> CountClientesInactivos();
     Task<int> CountDesarrolladoresActivos();
     Task<int> CountDesarrolladoresInactivos();
-    Task EditarAdmin(UserPostViewModel vm);
+    Task EditarUsuario(UserPostViewModel vm);
     Task EditUser(EditUserViewModel vm);
     Task EliminarAgente(string userId);
-    Task<UserPostViewModel> GetById(string userId);
-    Task<List<UserPostViewModel>> GetUsuariosAdministrador();
-    Task IanctivarAgente(string userId);
-    Task InactivarAdmin(string userId);
+    Task<UserViewModel> GetById(string userId);
+    Task<List<UserViewModel>> GetUsuariosAdministrador();
+    Task<List<UserViewModel>> GetUsuariosDesarrollador();
+    Task InactivarUsuario(string userId);
     Task<RegistrerResponse> RegistrerAdminUserAsync(RegistrerRequest request, string origin);
     Task<RegistrerResponse> RegistrerAgenteUserAsync(RegistrerRequest request, string origin);
     Task<RegistrerResponse> RegistrerClienteUserAsync(RegistrerRequest request, string origin);
+    Task<RegistrerResponse> RegistrerDesarrolladorAsync(RegistrerRequest request);
     Task SingOutAsync();
 }

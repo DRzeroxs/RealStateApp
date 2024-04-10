@@ -10,5 +10,6 @@ namespace RealStateApp.Core.Application.Interfaces.IServices
 {
     public interface ITipoVentaService : IGenericServices<TipoVentaViewModel, SaveTipoVentaViewModel, TipoVenta>
     {
+        Task<List<TipoVentaViewModel>> GetTipoVentasAsync();
     }
 }

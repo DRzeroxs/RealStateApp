@@ -20,15 +20,15 @@ namespace RealStateApp.Core.Application
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.AddTransient<IUserServices, UserServices>();
-
+            services.AddTransient<ITipoVentaService, TipoVentaService>();
             services.AddTransient<IPropiedadService, PropiedadService>();
             services.AddTransient<IBusquedaPersonalizada, BusquedaPersonalizada>();
-
+            services.AddTransient<ITipoPropiedadService, TipoPropiedadService>();
             services.AddTransient<IPropiedadFavoritaService, PropiedadFavoritaService>();
             services.AddTransient<IClienteService, ClienteService>();
             services.AddTransient<IAgenteService, AgenteService>();
             services.AddTransient<IAdministradorService, AdministradorService>();
-
+            services.AddTransient<IMejoraService, MejoraService>();
         }
     }
 }
