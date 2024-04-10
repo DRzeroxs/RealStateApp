@@ -16,5 +16,11 @@ namespace RealStateApp.Infraestructure.Persistence.Repositories
         {
             _context = context;
         }
+
+        public async Task<List<TipoPropiedad>> GetAllPropertyNameByAgentId(int id)
+        {
+            var tipoPropiedad =  _context.Set<TipoPropiedad>().Where(x => x.Propiedad.AgenteId == id).ToList();
+            return tipoPropiedad;
+        }
     }
 }

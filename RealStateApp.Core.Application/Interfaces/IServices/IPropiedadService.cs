@@ -32,5 +32,7 @@ namespace RealStateApp.Core.Application.Interfaces.IServices
           int numeroAcedados);
 
         #endregion
+
+        Task<List<PropiedadViewModel>> GetAllPropertyByAgentId(int id);
     }
 }

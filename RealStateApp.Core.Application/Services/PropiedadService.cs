@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.VisualBasic;
+using RealStateApp.Core.Application.Dto.Agente;
 using RealStateApp.Core.Application.Dto.Propiedades;
 using RealStateApp.Core.Application.Interfaces.IRepository;
 using RealStateApp.Core.Application.Interfaces.IServices;
@@ -16,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.AccessControl;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -69,6 +71,14 @@ namespace RealStateApp.Core.Application.Services
         {
 
             await CargarListas();
+            try
+            {
+
+            }
+            catch(Exception ex)
+            {
+
+            }
 
             var propiedadesList = from p in _listPropiedades
                                   join a in _listAgentes
@@ -86,18 +96,18 @@ namespace RealStateApp.Core.Application.Services
                                       TipoPropiedad = (from tp in _listTipoPropiedad
                                                        where tp.Id == p.TipoPropiedadId
                                                        select new TipoPropiedadViewModel
-                                                       { Nombre = tp.Nombre, Descripcion = tp.Descripcion, Id = tp.Id }).First(),
+                                                       { Nombre = tp.Nombre, Descripcion = tp.Descripcion, Id = tp.Id }).FirstOrDefault(),
 
 
                                       TipoVenta = (from p3 in _listPropiedades
                                                    join tv in _listTipoVenta
                                                    on p3.TipoVentaId equals tv.Id
-                                                   select new TipoVentaViewModel { Nombre = tv.Nombre, Id = tv.Id, Descripcion = tv.Descripcion }).First(),
+                                                   select new TipoVentaViewModel { Nombre = tv.Nombre, Id = tv.Id, Descripcion = tv.Descripcion }).FirstOrDefault(),
 
                                       Agente = (from p4 in _listPropiedades
                                                 join a2 in _listAgentes
                                                 on p4.AgenteId equals a.Id
-                                                select new AgenteViewModel { Nombre = a.Nombre, Id = a.Id }).First(),
+                                                select new AgenteViewModel { Nombre = a.Nombre, Id = a.Id }).FirstOrDefault(),
 
                                       Mejoras = (from ma in _listMejorasAplicadas
                                                  join m in _listMejoras
@@ -108,7 +118,7 @@ namespace RealStateApp.Core.Application.Services
 
                                       ImgUrl = (from Img in _listImgPropiedades
                                                 where Img.PropieadId == p.Id
-                                                select new ImgPropiedadViewModel { UrlImg = Img.UrlImg }).First(),
+                                                select new ImgPropiedadViewModel { UrlImg = Img.UrlImg }).FirstOrDefault(),
 
 
                                   };
@@ -737,5 +747,32 @@ namespace RealStateApp.Core.Application.Services
         
         #endregion
 
+        public async Task<List<PropiedadViewModel>> GetAllPropertyByAgentId(int id)
+        {
+            var listaPropiedadPorAgente = await _repository.GetAllPropertyByAgentId(id);
+            var tipoPropiedad = await _tipoPropiedadRepository.GetAllPropertyNameByAgentId(id);
+            var propiedad = new List<PropiedadViewModel>();
+
+            foreach (var item in listaPropiedadPorAgente)
+            {
+                var tipoPropiedadActual = tipoPropiedad.FirstOrDefault(x => x.Id == item.TipoPropiedadId);
+
+                if (tipoPropiedadActual != null)
+                {
+                    propiedad.Add(new PropiedadViewModel
+                    {
+                        Id = item.Id,
+                        TipoPropiedadNombre = tipoPropiedadActual.Nombre,
+                        Precio = item.Precio,
+                        Identifier = item.Identifier,
+                        Size = item.Size,
+                        NumAceados = item.NumAceados,
+                        NumHabitaciones = item.NumHabitaciones,
+                    });
+                }
+            }
+            return propiedad;
+        }
     }
 }
+
