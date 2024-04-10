@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RealStateApp.Core.Application.Interfaces.IServices;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Agente;
 using System.Runtime.CompilerServices;
 
 namespace RealStateApp.Controllers
 {
+    [Authorize(Roles = "Agente")]
     public class AgenteController : Controller
     {
         private readonly IAgenteService _agenteService;

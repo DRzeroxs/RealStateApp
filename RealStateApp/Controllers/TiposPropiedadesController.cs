@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RealStateApp.Core.Application.Interfaces.IServices;
 using RealStateApp.Core.Application.ViewModel.TipoPropiedad;
 
 namespace RealStateApp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TiposPropiedadesController : Controller
     {
         private readonly ITipoPropiedadService _tiposPropiedadService;

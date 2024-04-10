@@ -7,7 +7,7 @@ using RealStateApp.Core.Application.ViewModel.Propiedad;
 
 namespace RealStateApp.Controllers
 {
-    [Authorize(Roles = "Agente, Developer")]
+    [Authorize(Roles = "Agente")]
     public class PropiedadController : Controller
     {
 
@@ -25,6 +25,7 @@ namespace RealStateApp.Controllers
         }
 
         #region lobby
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             List<PropiedadViewModel> vm = await _propiedadService.GetAllPropiedades();

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RealStateApp.Core.Application.Interfaces.IServices;
 using RealStateApp.Core.Application.ViewModel.Favorita;
 using RealStateApp.Core.Application.ViewModel.Propiedad;
 
 namespace RealStateApp.Controllers
 {
+    [Authorize(Roles = "Cliente")]
     public class ClienteController : Controller
     {
         private readonly IUserServices _userServices;

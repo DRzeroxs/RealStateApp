@@ -98,6 +98,12 @@ namespace RealStateApp.Infraestructure.Identity
             services.AddIdentity<ApplicationUser, IdentityRole>()
              .AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/User/Login";
+
+            });
+
             services.AddAuthentication();
 
             ServiceConfiguration(services);
