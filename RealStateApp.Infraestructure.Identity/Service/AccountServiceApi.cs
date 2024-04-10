@@ -296,11 +296,15 @@ namespace RealStateApp.Infraestructure.Identity.Service
 
             UserPostViewModel UserVm = new()
             {
-                Id = u.Id,
+                UserId = u.Id,
                 FirstName = u.FirstName,
                 LastName = u.LastName,
-                Correo = u.Email,
-                IsActive = u.IsActive
+                UserName = u.UserName,
+                ImgUrl = u.ImgUrl,
+                PhoneNumber = u.PhoneNumber,
+                TypeOfUser = u.TypeOfUser,
+                Email = u.Email,
+                IsActived = u.IsActive
             };
             return UserVm;
         }

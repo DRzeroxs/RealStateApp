@@ -28,5 +28,35 @@ namespace RealStateApp.Controllers
             List<AgenteViewModel> agenteViewModels = new List<AgenteViewModel> {agente};
             return View("Index", agenteViewModels);
         }
+        private readonly IUserServices _userServices;
+        public AgenteController(IUserServices userServices)
+        {
+            _userServices = userServices;
+        }
+        public async Task<IActionResult> EliminarAgente(string userId)
+        {
+            return View("EliminarAgente", userId);    
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EliminarAgentePost(string userId)
+        {
+            await _userServices.EliminarAgente(userId);
+
+            return RedirectToAction("Index", "Admin");
+        }
+        public async Task<IActionResult> ActivarAgente(string userId)
+        {
+            await _userServices.ActivarUsuario(userId);
+
+            return RedirectToAction("Index", "Admin");
+        }
+        public async Task<IActionResult> InactivarAgente(string userId)
+        {
+            await _userServices.InactivarUsuario(userId);
+
+            return RedirectToAction("Index", "Admin");
+        }
+        
     }
 }

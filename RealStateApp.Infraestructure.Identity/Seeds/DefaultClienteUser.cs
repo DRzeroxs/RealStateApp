@@ -27,6 +27,8 @@ namespace RealStateApp.Infraestructure.Identity.Seeds
 
             defaultUser.PhoneNumber = "8093334554";
 
+            defaultUser.Cedula = "40226271827";
+
             defaultUser.ImgUrl = string.Empty;
 
             defaultUser.TypeOfUser = "Cliente";

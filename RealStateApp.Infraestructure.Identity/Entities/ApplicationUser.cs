@@ -14,5 +14,6 @@ namespace RealStateApp.Infraestructure.Identity.Entities
         public string ImgUrl { get; set; }
         public bool IsActive { get; set; }
         public string TypeOfUser { get; set; }  
+        public string Cedula {  get; set; }
     }
 }

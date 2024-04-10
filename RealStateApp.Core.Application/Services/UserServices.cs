@@ -2,7 +2,9 @@
 using RealStateApp.Core.Application.Dto.Account;
 using RealStateApp.Core.Application.Interfaces.IAccount;
 using RealStateApp.Core.Application.Interfaces.IServices;
+using RealStateApp.Core.Application.ViewModel.AppUsers.Agente;
 using RealStateApp.Core.Application.ViewModel.User;
+using RealStateApp.Core.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +17,12 @@ namespace RealStateApp.Core.Application.Services
     {
         private readonly IAccountService _accountServices;
         private readonly IMapper _mapper;
-
-        public UserServices(IAccountService accountServices, IMapper mapper)
+        private readonly IAgenteService _agenteService;
+        public UserServices(IAccountService accountServices, IMapper mapper, IAgenteService agenteService)
         {
             _accountServices = accountServices;
             _mapper = mapper;
+            _agenteService = agenteService;
         }
 
         // Metodo de logueo
@@ -47,6 +50,14 @@ namespace RealStateApp.Core.Application.Services
 
             return await _accountServices.RegistrerAgenteUserAsync(registerRequest, origin);
         }
+        public async Task<RegistrerResponse> RegisterAdminAsync(RegistrerViewModel vm, string origin)
+        {
+
+            RegistrerRequest registerRequest = _mapper.Map<RegistrerRequest>(vm);
+
+
+            return await _accountServices.RegistrerAdminUserAsync(registerRequest, origin);
+        }
 
         // Metodo de deslogueo
         public async Task SignOutAsync()
@@ -58,6 +69,121 @@ namespace RealStateApp.Core.Application.Services
         {
 
             return await _accountServices.ConfirmAccountAsync(userId, token);
+        }
+
+        // Metodo para Buscar Usuario Por el Id tipo String
+        public async Task<UserViewModel> GetUserById(string userId)
+        {
+            var user = await _accountServices.GetById(userId);
+
+            return user;    
+        }
+
+        // Metodo para Editar Usuarios
+        public async Task<EditUserViewModel> EditUser(EditUserViewModel vm)
+        {
+            await _accountServices.EditUser(vm);
+
+            return vm;  
+        }
+
+        // Metodo para Contar Agentes Activos
+        public async Task<int> ContarAgentesActivos()
+        {
+            var count = await _accountServices.CountAgentesActivos();
+
+            return count;
+        }
+
+        // Metodo para Contar Agentes Inactivos
+        public async Task<int> ContarAgentesInactivos()
+        {
+            var count = await _accountServices.CountAgentesInactivos();
+
+            return count;
+        }
+
+        // Metodo para Contar Clientes Activos
+        public async Task<int> ContarClientesActivos()
+        {
+            var count = await _accountServices.CountClientesActivos();
+
+            return count;
+        }
+        // Metodo para Contar Clientes Inactivos
+        public async Task<int> ContarClientesInactivos()
+        {
+            var count = await _accountServices.CountClientesInactivos();
+
+            return count;
+        }
+
+        // Metodo para Contar Desarrolladores Inactivos
+        public async Task<int> ContarDesarrolladoresInactivos()
+        {
+            var count = await _accountServices.CountDesarrolladoresInactivos();
+
+            return count;
+        }
+        // Metodo para Contar Desarrolladores Activos
+        public async Task<int> ContarDesarrolladoresActivos()
+        {
+            var count = await _accountServices.CountDesarrolladoresActivos();
+
+            return count;
+        }
+
+        // Metodo Para Eliminar Agentes
+        public async Task EliminarAgente(string userId)
+        {
+            var agenteVm = await _agenteService.GetByIdentityId(userId);
+
+            await _agenteService.RemoveAsync(agenteVm.Id);
+
+            await _accountServices.EliminarAgente(userId);
+        }
+
+        // Metodo Para traer Lista de Usuarios Administradores
+        public async Task<List<UserViewModel>> GetUsuariosAdministradores()
+        {
+            var users = await _accountServices.GetUsuariosAdministrador();
+
+            return users;
+        }
+        // Metodo Para traer Lista de Usuarios Desarrolladores
+        public async Task<List<UserViewModel>> GetUsuariosDesarrolladores()
+        {
+            var users = await _accountServices.GetUsuariosDesarrollador();
+
+            return users;
+        }
+
+        // Metodo para Editar Usuario Administrador
+        public async Task EditarUsuario(UserPostViewModel vm)
+        {
+            await _accountServices.EditarUsuario(vm);
+        }
+
+        // Metodo para Crear Usuario Desarrollador
+        public async Task<RegistrerResponse> RegisterDesarrolladorAsync(RegistrerViewModel vm)
+        {
+
+            RegistrerRequest registerRequest = _mapper.Map<RegistrerRequest>(vm);
+
+
+            return await _accountServices.RegistrerDesarrolladorAsync(registerRequest);
+        }
+
+        // Metodo para Inactivar Desarrollador
+        public async Task InactivarUsuario(string userId)
+        {
+            await _accountServices.InactivarUsuario(userId);
+        }
+
+        // Metodo para Activar Desarrollador
+        public async Task ActivarUsuario(string userId)
+        {
+            await _accountServices.ActivarUsuario(userId);
         }
     }
 }

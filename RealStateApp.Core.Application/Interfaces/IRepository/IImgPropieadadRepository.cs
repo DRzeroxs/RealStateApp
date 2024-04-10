@@ -9,5 +9,6 @@ namespace RealStateApp.Core.Application.Interfaces.IRepository
 {
     public interface IImgPropieadadRepository : IGenericRepository<ImgPropiedad>
     {
+        Task<List<ImgPropiedad>> GetImgPropiedadByPropiedadId(int PropiedadId);
     }
 }

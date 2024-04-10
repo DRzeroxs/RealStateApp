@@ -6,6 +6,7 @@
 <div class="d-flex align-items-center justify-content-center">
     <form enctype="multipart/form-data" class="d-flex flex-column w-25 m-2 formulario__registro" asp-controller="User" asp-action="Registrer">
         <h2 class="text-center mb-4 h1">Registrate</h2>
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
         <input type="text" asp-for="FirstName" placeholder="Nombre" class="fw-bold" />
         <input type="text" asp-for=LastName placeholder="Apellido" class="fw-bold mt-4" />

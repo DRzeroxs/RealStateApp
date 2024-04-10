@@ -17,5 +17,7 @@ namespace RealStateApp.Infraestructure.Persistence.Repositories
         {
             _context = context;
         }
+
+
     }
 }

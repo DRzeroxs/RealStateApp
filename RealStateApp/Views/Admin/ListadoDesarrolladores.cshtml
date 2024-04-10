@@ -1,0 +1,62 @@
+﻿@model List<RealStateApp.Core.Application.ViewModel.User.UserViewModel>
+@using RealStateApp.Core.Application.Helpers;
+@using RealStateApp.Core.Application.Dto.Account;
+@inject IHttpContextAccessor httpContext;
+@{
+    ViewData["Title"] = "ListadoAdministradores";
+    var user = httpContext.HttpContext.Session.get<AuthenticationResponse>("User");
+}
+
+<a asp-controller="Desarrollador" asp-action="CrearDesarrollador" class="btn btn-info">Crear Desarrollador</a>
+
+<section class="mt-4">
+    <table class="table table-active text-center">
+        <thead>
+            <tr>
+                <th>Nombre del Desarrollador</th>
+                <th>Apellido del Desarrollador</th>
+                <th>Nombre de Usuario Desarrollador</th>
+                <th>Cedula del Desarrollador</th>
+                <th>Correo del Desarrollador</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.UserName</td>
+                    <td>@item.Cedula</td>
+                    <td>@item.Email</td>
+                    <td>
+                        <div style="gap: 20px"
+                             class="d-flex mt-2 align-content-center justify-content-center p-1">
+
+                            @if (user.Id != item.UserId)
+                            {
+                                @if (item.IsActived == false)
+                                {
+                                    <a asp-controller="Desarrollador" asp-action="ActivarDesarrollador" asp-route-userId="@item.UserId" class="btn btn-primary"> <i class="fa-solid fa-toggle-off"></i> </a>
+                                }
+
+                                @if (item.IsActived == true)
+                                {
+                                    <a asp-controller="Desarrollador" asp-action="InactivarDesarrollador" asp-route-userId="@item.UserId" class="btn btn-primary"> <i class="fa-solid fa-toggle-on"></i> </a>
+                                }
+
+                                <a asp-controller="Desarrollador" asp-action="EditarDesarrollador" asp-route-userId="@item.UserId" class="btn btn-primary">Editar</a>
+                            }
+
+
+
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</section>
+

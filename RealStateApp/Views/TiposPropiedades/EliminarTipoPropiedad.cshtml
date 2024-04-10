@@ -1,0 +1,21 @@
+﻿@model RealStateApp.Core.Application.ViewModel.TipoPropiedad.TipoPropiedadViewModel;
+@{
+    ViewData["Title"] = "EliminarTipoPropiedad";
+}
+
+<form asp-controller="TiposPropiedades" asp-action="EliminarTipoPropiedadPost" method="post" style="margin-bottom:500px ;">
+    <h2 class="text-black  fw-bold text-center mt-3">
+        ¿Está seguro que desea eliminar este Tipo de Propiedad y todas sus
+        propiedades?
+    </h2>
+    <div style="gap: 20px;" class="d-flex justify-content-center align-content-between mt-3 ">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <button class="btn btn-danger " type="submit">Eliminar</button>
+        <a asp-controller="TiposPropiedades" class="btn btn-info text-white" asp-action="ListadoTipoPropiedades">Cancelar</a>
+    </div>
+
+</form>
+
+
+
+

@@ -12,6 +12,7 @@ namespace RealStateApp.Core.Application.ViewModel.Commons
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string? Descripcion { get; set; }
+        public int CountPropiedades { get; set; }
 
         List<PropiedadViewModel>? Propiedades { get; set;}
     }

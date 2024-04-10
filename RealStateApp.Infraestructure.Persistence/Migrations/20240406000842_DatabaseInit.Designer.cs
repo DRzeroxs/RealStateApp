@@ -12,8 +12,8 @@ using RealStateApp.Infraestructure.Persistence.Context;
 namespace RealStateApp.Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240330223503_AgregarCorreo")]
-    partial class AgregarCorreo
+    [Migration("20240406000842_DatabaseInit")]
+    partial class DatabaseInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -313,6 +313,9 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
@@ -358,6 +361,9 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
 
                     b.Property<string>("ImgUrl")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("datetime2");
@@ -405,6 +411,9 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                     b.Property<string>("IdentityId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("datetime2");

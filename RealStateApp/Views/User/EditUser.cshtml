@@ -1,0 +1,28 @@
+﻿@model RealStateApp.Core.Application.ViewModel.User.EditUserViewModel;
+@{
+    ViewData["Title"] = "EditUser";
+}
+
+<div class="d-flex align-items-center justify-content-center container mt-4">
+    <form method="post" class="w-25 bg-info p-3" asp-controller="User" asp-action="EditUser" enctype="multipart/form-data">
+        <div class="p-2 bg-primary mb-2 ">
+            <h1 style="color: white;" class="text-center ">Edit User</h1>
+        </div> @Html.ValidationSummary(false, "", new { @class = "text-white" })
+
+        <input asp-for="FirstName" class="form-control w-100 mb-3 p-2" placeholder="First Name">
+
+        <input asp-for="LastName" class="form-control w-100 mb-3 p-2" placeholder="Last Name">
+
+        <input asp-for="PhoneNumber" class="form-control w-100 mb-3 p-2" placeholder="Phone Number">
+
+        <input asp-for="file" class="form-control w-100 mb-3 p-2">
+
+        <input type="hidden" asp-for="Id" value="@Model.Id"/>
+
+        <div class="d-flex  justify-content-end align-items-end" style="gap:10px;">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary font-weight-bold ">Cancelar</a>
+            <button type="submit" class="btn btn-primary  font-weight-bold">Edit</button>
+        </div>
+    </form>
+</div>
+

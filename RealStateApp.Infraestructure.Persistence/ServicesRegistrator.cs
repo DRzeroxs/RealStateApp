@@ -41,6 +41,8 @@ namespace RealStateApp.Infraestructure.Persistence
 
             services.AddTransient<IMejorasAplicadasRepository, MejoreasAplicadasRepository>();
             services.AddTransient<IImgPropieadadRepository, ImgPropiedadRepository>();
+
+            services.AddTransient<IPropiedadFavoritaRepository, PropiedadFavoritaRepository>();
             #endregion
         }
     }

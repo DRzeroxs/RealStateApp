@@ -27,6 +27,8 @@ namespace RealStateApp.Core.Application.ViewModel.Propiedad
         public int NumAceados { get; set; }
 
         public int TipoPropiedadId { get; set; }
+
+        //eliminar
         public ImgPropiedadViewModel ImgUrl {  get; set; }
         public List<ImgPropiedadViewModel> ImgUrlList { get; set; }
         public int TipoVentaId { get; set; }

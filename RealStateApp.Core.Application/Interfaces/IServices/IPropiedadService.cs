@@ -30,6 +30,8 @@ namespace RealStateApp.Core.Application.Interfaces.IServices
           int numeroHabitaciones);
         Task<List<PropiedadViewModel>> GetPropiedadesPorTipoPropiedadNumeroBaños(string tipoPropiedad,
           int numeroAcedados);
+        Task<List<PropiedadViewModel>> GetPropiedadesFavoritas(int Id);
+        Task<int> ContarPropieades();
 
         #endregion
 

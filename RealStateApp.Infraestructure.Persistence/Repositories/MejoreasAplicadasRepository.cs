@@ -1,4 +1,5 @@
-﻿using RealStateApp.Core.Application.Interfaces.IRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using RealStateApp.Core.Application.Interfaces.IRepository;
 using RealStateApp.Core.Domain.Entities;
 using RealStateApp.Infraestructure.Persistence.Context;
 using System;
@@ -15,6 +16,12 @@ namespace RealStateApp.Infraestructure.Persistence.Repositories
         public MejoreasAplicadasRepository(ApplicationContext context) :base(context)
         {
             _Context = context;
+        }
+
+        public async Task<List<MejorasAplicadas>> GetMejorasAplicadasByPropiedadId(int PropiedadId)
+        {
+            var result = await _Context.MejorasAplicadas.Where(x => x.PropiedadId == PropiedadId).ToListAsync();
+            return result;
         }
     }
 }

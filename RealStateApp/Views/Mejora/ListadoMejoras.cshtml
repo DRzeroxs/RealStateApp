@@ -1,0 +1,43 @@
+﻿@model List<RealStateApp.Core.Application.ViewModel.Mejora.MejoraViewModel>
+@using RealStateApp.Core.Application.Helpers;
+@using RealStateApp.Core.Application.Dto.Account;
+@inject IHttpContextAccessor httpContext;
+@{
+    ViewData["Title"] = "ListadoAdministradores";
+    var user = httpContext.HttpContext.Session.get<AuthenticationResponse>("User");
+}
+
+<a asp-controller="Mejora" asp-action="CrearMejora" class="btn btn-info">Crear Nueva Mejora</a>
+
+<section class="mt-4">
+    <table class="table table-active text-center">
+        <thead>
+            <tr>
+                <th>Nombre de la Mejora</th>
+                <th>Descripcion</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Nombre</td>
+                    <td>@item.Descripcion</td>
+                    <td>
+                        <div style="gap: 20px"
+                             class="d-flex mt-2 align-content-center justify-content-center p-1">
+
+                            <a asp-controller="Mejora" asp-action="EditarMejora" asp-route-Id="@item.Id" class="btn btn-primary">Editar</a>
+
+                            <a asp-controller="Mejora" asp-action="EliminarMejora" asp-route-Id="@item.Id" class="btn btn-danger" class="btn btn-danger">Eliminar</a>
+
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</section>
+

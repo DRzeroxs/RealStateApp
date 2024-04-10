@@ -1,0 +1,40 @@
+﻿@model RealStateApp.Core.Application.ViewModel.User.UserPostViewModel;
+@{
+    ViewData["Title"] = "CrearDesarrollador";
+
+    bool editMode = Model.UserId == "" ? false : true;
+}
+
+
+<div class="d-flex align-items-center justify-content-center container mt-4">
+    <form enctype="multipart/form-data" method="post" class="w-25 bg-succes p-3" asp-controller="Desarrollador" asp-action="@(editMode ? "EditarDesarrolladorPost" : "CrearDesarrollador")">
+        <div class="p-2 bg-success mb-2 ">
+            <h1 style="color: white;" class="text-center ">Agregar Desarrollador</h1>
+        </div> @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+        <input asp-for="FirstName" class="form-control w-100 mb-3 p-2" placeholder="Nombre">
+
+        <input asp-for="LastName" class="form-control w-100 mb-3 p-2" placeholder="Apellido">
+
+        <input asp-for="Cedula" class="form-control w-100 mb-3 p-2" placeholder="Cedula">
+
+        <input asp-for="Email" class="form-control w-100 mb-3 p-2" placeholder="Correo">
+
+        <input asp-for="UserName" class="form-control w-100 mb-3 p-2" placeholder="Nombre de Usuario">
+
+        <input type="hidden" asp-for="UserId" value="@Model.UserId" />
+
+        <input asp-for="Password" class="form-control w-100 mb-3 p-2" placeholder="Password">
+
+        <input asp-for="ConfirnPassword" class="form-control w-100 mb-3 p-2" placeholder="Confirn Password">
+
+
+        <div class="d-flex  justify-content-end align-items-end mt-3" style="gap:10px ;">
+            <a asp-controller="Paciente" asp-action="Index" class="btn btn-secondary  font-weight-bold  ">Cancelar</a>
+            <button type="submit" class="btn btn-primary  font-weight-bold">Agregar</button>
+        </div>
+    </form>
+</div>
+
+
+
