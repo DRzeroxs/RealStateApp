@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RealStateApp.Core.Application.Dto.Account;
 using RealStateApp.Core.Application.Interfaces.IServices;
@@ -8,6 +9,7 @@ using RealStateApp.Core.Application.ViewModel.User;
 
 namespace RealStateApp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly IPropiedadService _propiedadService;

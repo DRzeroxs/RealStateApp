@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RealStateApp.Core.Application.Interfaces.IServices;
 using RealStateApp.Core.Application.Services;
@@ -7,6 +8,7 @@ using RealStateApp.Core.Application.ViewModel.TipoVenta;
 
 namespace RealStateApp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class MejoraController : Controller
     {
         private readonly IMejoraService _mejoraService;
