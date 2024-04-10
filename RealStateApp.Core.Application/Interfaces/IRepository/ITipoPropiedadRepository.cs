@@ -9,5 +9,7 @@ namespace RealStateApp.Core.Application.Interfaces.IRepository
 {
     public interface ITipoPropiedadRepository : IGenericRepository<TipoPropiedad>
     {
+        Task<List<TipoPropiedad>> GetAllPropertyNameByAgentId(int id);
+        
     }
 }

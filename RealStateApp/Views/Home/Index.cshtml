@@ -10,17 +10,68 @@
     var isCliente = user != null ? user.Roles.Any(r => r == "Cliente") : false;
 }
 
-<div class="mb-5 container p-2 ">
-    <form asp-controller="Home" asp-action="BuscarPorCodigo" method="post">
-        <h5 class="mb-2 ">Buscar por Codigo</h5>
-        <div class="d-flex">
-            <input type="text" class="form-control" name="identifier" style="width: 200px;">
-            <button class="mt-2 boton_busqueda">Buscar</button>
-        </div>
+<div class="row">
+    <div class="mb-4 col-4">
+        <form asp-controller="Home" asp-action="BuscarPorCodigo" method="post">
+            <div class="d-flex">
+                <input type="text" class="form-control me-2" placeholder="Buscar por codigo" />
+                <button type="submit" class="btn btn-outline-success"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </form>
+    </div>
 
-    </form>
+    <div class="mb-4 col-4">
+        <form asp-controller="Home" asp-action="BusquedaConjunta" method="post">
+            <div class="d-flex">
+                <input type="text" class="form-control me-2" name="tipoPropiedad" placeholder="Tipo propiedad" />
+                <button type="submit" class="btn btn-outline-success"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </form>
+    </div>
+
+    <div class="mb-4 col-4">
+        <form asp-controller="Home" asp-action="BusquedaConjunta" method="post">
+            <div class="d-flex">
+                <input type="text" class="form-control me-2" name="precioMinimo" placeholder="Precio minimo" />
+                <button type="submit" class="btn btn-outline-success"><i class="fa-solid fa-magnifying-glass"></i></button>
+
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="mb-4 col-4">
+        <form asp-controller="Home" asp-action="BusquedaConjunta" method="post">
+            <div class="d-flex">
+                <input type="text" class="form-control me-2" name="precioMaximo" placeholder="Precio Maximo" />
+                <button type="submit" class="btn btn-outline-success"><i class="fa-solid fa-magnifying-glass"></i></button>
+
+            </div>
+        </form>
+    </div>
+
+    <div class="mb-4 col-4">
+        <form asp-controller="Home" asp-action="BusquedaConjunta" method="post">
+            <div class="d-flex">
+                <input type="text" class="form-control me-2" name="numeroHabitaciones"  placeholder="Numero Habitaciones" />
+                <button type="submit" class="btn btn-outline-success"><i class="fa-solid fa-magnifying-glass"></i></button>
+
+            </div>
+        </form>
+    </div>
+
+    <div class="mb-4 col-4">
+        <form asp-controller="Home" asp-action="BusquedaConjunta" method="post">
+            <div class="d-flex">
+                <input type="text" class="form-control me-2" name="numeroAcedados" placeholder="Numero Aceados" />
+                <button type="submit" class="btn btn-outline-success"><i class="fa-solid fa-magnifying-glass"></i></button>
+
+            </div>
+        </form>
+    </div>
 </div>
 
+@* 
 <div class="container busqueda_conjunta">
     <div class="busqueda_conjunta__contenedor">
         <div class="titulo__busqueda__conjunta">
@@ -58,40 +109,46 @@
         </form>
 
     </div>
+</div> *@
+<section class="contenedor">
+    @foreach (var item in Model)
+    {
+        <a asp-action="detalles" asp-controller="Home" asp-route-id="@item.Id" class="ancher">
+            <div class="card">
+                <img class="card__img" src="https://d2p0bx8wfdkjkb.cloudfront.net/static/properties/TBCZYOYRXE/KKE0QAHBJV/Eaf3FGeezF/00c4fc57-2522-47e0-963b-d7688d12219a.jpg" alt="" />
+                <h2 class="card__tipo-propiedad"><small class="p0 mr-2" style="color: #909090">Tipo:</small> @item.TipoPropiedad.Nombre</h2>
+                <div class="card__contenido">
 
-    <section class="contenedor container">
-        @foreach(var item in Model)
-        {
-        <div class="card">
-            <img class="card__img" src="@item.ImgUrl.UrlImg" alt="" />
-            <h2 class="card__tipo-propiedad">@item.TipoPropiedad.Nombre</h2>
-            <div class="card__contenido">
-                <p class="card__precio">$@item.Precio</p>
-                <p class="card__titulo">#@item.Identifier</p>
-                <p class="card__calle">
-                    <i style="color: #00b98e"
-                       class="fa fa-map-marker-alt text-primary me-2"></i>
-                    123 Street, New Yor, USA
-                </p>
-            </div>
-
-            <div class="contendor__iconos--Card">
-                <div>
-                    <p class="card__iconos--medida">
-                        <i style="color: #00b98e; font-size: 18px"
-                           class="fa fa-ruler-combined text-primary me-2"></i>
-                        @item.Size mt
+                    <p class="card__precio"><small class="p0 mr-2" style="color: #909090">Precio: </small> $@item.Precio</p>
+                    <p class="card__titulo"><small class="p0 mr-2" style="color: #909090">Codigo:</small> #@item.Identifier</p>
+                    <p class="card__calle">
+                        <i class="fa-solid fa-location-dot" style="color: #909090"></i>
+                        Piantini, Santo Domingo D.N.
                     </p>
                 </div>
 
-                <div>
-                    <p class="card__iconos--habitaciones">
-                        <i style="color: #00b98e; font-size: 18px"
-                           class="fa fa-bed text-primary me-2"></i>
-                        @item.NumHabitaciones Bed
-                    </p>
-                </div>
+                <div class="contendor__iconos--Card">
+                    <div>
+                        <p class="card__iconos--medida">
+                            <i class="fa-solid fa-ruler-combined" style="color: #909090; font-size: 18px;"></i>
+                            @item.Size
+                        </p>
+                    </div>
 
+                    <div>
+                        <p class="card__iconos--habitaciones">
+                            <i class="fa-solid fa-bed" style="color: #909090; font-size: 18px;"></i>
+                            @item.NumHabitaciones
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="card__iconos--baños">
+                            <i class="fa-solid fa-toilet" style="color: #909090; font-size: 18px;"></i>
+                            @item.NumAceados
+                        </p>
+                    </div>
+              </div>
                 <div>
                     <p class="card__iconos--baños">
                         <i style="color: #00b98e; font-size: 18px"
@@ -111,8 +168,6 @@
                         </form>
                 }
             </div>
-        </div>
-        
-       
-        }
-   </section>
+        </a>
+    }
+</section>

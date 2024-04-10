@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RealStateApp.Core.Application.Dto.Agente;
 using RealStateApp.Core.Application.Interfaces.IRepository;
+using RealStateApp.Core.Domain.Entities;
 using RealStateApp.Core.Domain.Entities.Users;
 using RealStateApp.Infraestructure.Persistence.Context;
 using System;
@@ -35,6 +36,15 @@ namespace RealStateApp.Infraestructure.Persistence.Repositories
             return agente.FirstOrDefault(x => x.Id == id);
         }
 
+        public async Task<Agente> GetAgenteByNombre(string nombre)
+        {
+            var agente = await _context.Set<Agente>()
+                .Include(x => x.Propiedad)
+                .Include(x => x.Propiedad.TipoPropiedad)
+                .Include(x => x.Propiedad.TipoVenta)
+                .FirstOrDefaultAsync(x => x.Nombre == nombre);
+            return agente;
+        }
         public async Task<int> GetCantidadPropiedadAgenteById(int id)
         {
             var agente = await _context.Set<Agente>().Where(x => x.Id == id).Include(x => x.Propiedad).CountAsync();

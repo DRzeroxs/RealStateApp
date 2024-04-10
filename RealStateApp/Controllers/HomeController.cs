@@ -23,6 +23,13 @@ namespace RealStateApp.Controllers
 
             return View(propiedades);
         }
+
+        public async Task<IActionResult> PropiedadDelAgente(int id)
+        {
+            var propiedadDelAgente = await _propiedadesService.GetAllPropertyByAgentId(id);
+            return View("PropiedadDelAgente", propiedadDelAgente);
+        }
+
         [HttpPost]
         public async Task<IActionResult> BuscarPorCodigo(int identifier)
         {
@@ -47,10 +54,9 @@ namespace RealStateApp.Controllers
             return View("Index", propiedades);
         }
 
-        public async Task<IActionResult> Detalles(int Id)
+        public async Task<IActionResult> Detalles(int id)
         {
-            var propiedad = await _propiedadesService.GetPropiedadesById(Id); 
-
+            var propiedad = await _propiedadesService.GetPropiedadesById(id); 
             return View(propiedad);
         }
     }

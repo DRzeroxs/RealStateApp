@@ -34,5 +34,7 @@ namespace RealStateApp.Core.Application.Interfaces.IServices
         Task<int> ContarPropieades();
 
         #endregion
+
+        Task<List<PropiedadViewModel>> GetAllPropertyByAgentId(int id);
     }
 }

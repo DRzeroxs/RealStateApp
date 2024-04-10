@@ -1,0 +1,54 @@
+﻿
+@model List<RealStateApp.Core.Application.ViewModel.AppUsers.Agente.AgenteViewModel>
+@{
+    ViewData["Title"] = "Agente";
+}
+
+<div class="row">
+    <div class="mb-4 col-4">
+        <form method="post" asp-action="AgenteByName" asp-controller="Agente" class="d-flex">
+            <input type="text" name="Nombre" class="form-control me-2" placeholder="Nombre de agente" />
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+    </div>
+</div>
+
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-4">
+            @if (Model != null)
+            {
+                @if (item.HasError)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <p>@item.Error</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                }
+                else
+                {
+                    <a asp-action="PropiedadDelAgente" asp-controller="Home" asp-route-Id="@item.Id">
+                        <div class="wow fadeInUp alinear-agente" data-wow-delay="0.1s">
+                            <div class="team-item rounded overflow-hidden">
+                                <div class="position-relative">
+                                    <img class="img-fluid" src="https://t4.ftcdn.net/jpg/03/45/64/29/360_F_345642939_5ayo76RqCN73ZMcFuqcUu3p5LhyJltCg.jpg" alt="">
+                                    <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
+                                        <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                                        <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
+                                        <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
+                                    </div>
+                                </div>
+                                <div class="text-center p-4 mt-3">
+                                    <h5 class="fw-bold mb-0">@item.Nombre @item.Apellido</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                }
+            }
+        </div>
+    }
+</div>    
