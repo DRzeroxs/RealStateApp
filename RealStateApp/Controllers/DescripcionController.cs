@@ -64,8 +64,7 @@ namespace RealStateApp.Controllers
         [HttpGet]
         public IActionResult CrearMejora()
         {
-
-            return View();
+            return View( new SaveMejoraViewModel());
         }
 
         [HttpPost]
@@ -148,7 +147,7 @@ namespace RealStateApp.Controllers
         [HttpGet]
         public IActionResult CrearTipoPropiedad()
         {
-            return View();
+            return View(new SaveTipoPropiedadViewModel());
         }
 
         [HttpPost]
@@ -231,7 +230,7 @@ namespace RealStateApp.Controllers
         [HttpGet]
         public IActionResult CrearTipoVenta()
         {
-            return View();
+            return View(new SaveTipoPropiedadViewModel());
         }
 
         [HttpPost]
