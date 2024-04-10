@@ -9,7 +9,7 @@ using RealStateApp.Core.Application.ViewModel.User;
 
 namespace RealStateApp.Controllers
 {
-    [Authorize(Roles = "Admin, Developer")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly IPropiedadService _propiedadService;

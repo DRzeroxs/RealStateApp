@@ -7,7 +7,7 @@ using RealStateApp.Core.Application.ViewModel.TipoVenta;
 
 namespace RealStateApp.Controllers
 {
-    [Authorize(Roles = "Admin, Developer")]
+    [Authorize(Roles = "Admin")]
     public class DescripcionController : Controller
     {
         private readonly IMejoraService _mejoraService;
@@ -62,14 +62,13 @@ namespace RealStateApp.Controllers
 
         //Create
         [HttpGet]
-        [Authorize(Roles = "Admin, Developer")]
         public IActionResult CrearMejora()
         {
+
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin, Developer")]
         public async Task<IActionResult> CrearMejora(SaveMejoraViewModel vm)
         {
             if (!ModelState.IsValid)
@@ -84,7 +83,6 @@ namespace RealStateApp.Controllers
 
         //Update
         [HttpGet]
-        [Authorize(Roles = "Admin, Developer")]
         public async Task<IActionResult> EditarMejora(int id)
         {
             MejoraViewModel vm = await _mejoraService.GetByIdAsync(id);
@@ -98,7 +96,6 @@ namespace RealStateApp.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin, Developer")]
         public async Task<IActionResult> EditarMejora(SaveMejoraViewModel vm)
         {
             if (!ModelState.IsValid)
@@ -118,7 +115,6 @@ namespace RealStateApp.Controllers
 
         //Delete
         [HttpGet]
-        [Authorize(Roles = "Admin, Developer")]
         public async Task<IActionResult> EliminarMejora(int id)
         {
             MejoraViewModel vm = await _mejoraService.GetByIdAsync(id);
@@ -132,7 +128,6 @@ namespace RealStateApp.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin, Developer")]
         public async Task<IActionResult> EliminarMejora(MejoraViewModel vm)
         {
             if (vm.Id == 0)
@@ -151,14 +146,12 @@ namespace RealStateApp.Controllers
 
         //Create
         [HttpGet]
-        [Authorize(Roles = "Admin, Developer")]
         public IActionResult CrearTipoPropiedad()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin, Developer")]
         public async Task<IActionResult> CrearTipoPropiedad(SaveTipoPropiedadViewModel vm)
         {
             if (!ModelState.IsValid)
@@ -173,7 +166,6 @@ namespace RealStateApp.Controllers
 
         //Update
         [HttpGet]
-        [Authorize(Roles = "Admin, Developer")]
         public async Task<IActionResult> EditarTipoPropiedad(int id)
         {
             TipoPropiedadViewModel vm = await _tipoPropiedadService.GetByIdAsync(id);
@@ -187,7 +179,6 @@ namespace RealStateApp.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin, Developer")]
         public async Task<IActionResult> EditarTipoPropiedad(SaveTipoPropiedadViewModel vm)
         {
             if (!ModelState.IsValid)
@@ -238,14 +229,12 @@ namespace RealStateApp.Controllers
 
         //Create
         [HttpGet]
-        [Authorize(Roles = "Admin, Developer")]
         public IActionResult CrearTipoVenta()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin, Developer")]
         public async Task<IActionResult> CrearTipoVenta(SaveTipoVentaViewModel vm)
         {
             if (!ModelState.IsValid)
@@ -260,7 +249,6 @@ namespace RealStateApp.Controllers
 
         //Update
         [HttpGet]
-        [Authorize(Roles = "Admin, Developer")]
         public async Task<IActionResult> EditarTipoVenta(int id)
         {
             TipoVentaViewModel vm = await _tipoVentaService.GetByIdAsync(id);
@@ -274,7 +262,6 @@ namespace RealStateApp.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin, Developer")]
         public async Task<IActionResult> EditarTipoVenta(SaveTipoVentaViewModel vm)
         {
             if (!ModelState.IsValid)
@@ -294,7 +281,6 @@ namespace RealStateApp.Controllers
 
         //Delete
         [HttpGet]
-        [Authorize(Roles = "Admin, Developer")]
         public async Task<IActionResult> EliminarTipoVenta(int id)
         {
             TipoVentaViewModel vm = await _tipoVentaService.GetByIdAsync(id);
@@ -308,7 +294,6 @@ namespace RealStateApp.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin, Developer")]
         public async Task<IActionResult> EliminarTipoVenta(TipoVentaViewModel vm)
         {
             if (vm.Id == 0)
