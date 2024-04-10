@@ -18,8 +18,6 @@ namespace RealStateApp.Core.Application.Services
     public class AgenteService : GenericServices<AgenteViewModel, SaveAgenteViewModel, Agente>, IAgenteService
     {
 
-        private readonly IAgenteRepository _agenteRepository;
-
         private readonly IAgenteRepository _repository;
         private readonly IPropiedadRepository _propiedadRepository;
 
@@ -28,13 +26,14 @@ namespace RealStateApp.Core.Application.Services
         public AgenteService(IAgenteRepository repository, IMapper mapper, IPropiedadRepository propiedadRepository) : base(repository, mapper)
         {
 
-            _agenteRepository = repository;
+            _repository = repository;
+            _propiedadRepository = propiedadRepository;
             _mapper = mapper;
         }
 
         public override async Task<List<AgenteViewModel>> GetAllAsync()
         {
-            var agente = await _agenteRepository.GetAll();
+            var agente = await _repository.GetAll();
             return agente.Select(x => new AgenteViewModel
             {
                 Id = x.Id,
@@ -44,7 +43,7 @@ namespace RealStateApp.Core.Application.Services
         }
         public async Task<AgenteViewModel> GetAgenteByNombre(string nombre)
         {
-            var agente = await _agenteRepository.GetAgenteByNombre(nombre);
+            var agente = await _repository.GetAgenteByNombre(nombre);
             AgenteViewModel avm = new AgenteViewModel();
             if (agente != null)
             {
@@ -60,10 +59,6 @@ namespace RealStateApp.Core.Application.Services
                 return avm;
             }
 
-
-            _repository = repository;
-            _propiedadRepository = propiedadRepository; 
-            _mapper = mapper;
         }
         public async Task<List<AgenteViewModel>> GetAgenteConPropiedades()
         {
