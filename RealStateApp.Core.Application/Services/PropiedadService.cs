@@ -321,6 +321,11 @@ namespace RealStateApp.Core.Application.Services
 
                                   };
 
+            if(propiedadesList.Count() == 0)
+            {
+                return null;
+            }
+
             return propiedadesList.First();
         }
         #endregion

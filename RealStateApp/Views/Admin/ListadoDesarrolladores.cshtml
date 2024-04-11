@@ -13,12 +13,13 @@
     <table class="table table-active text-center">
         <thead>
             <tr>
-                <th>Nombre del Desarrollador</th>
-                <th>Apellido del Desarrollador</th>
-                <th>Nombre de Usuario Desarrollador</th>
-                <th>Cedula del Desarrollador</th>
-                <th>Correo del Desarrollador</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Nombre Usuario</th>
+                <th>Cedula</th>
+                <th>Correo</th>
                 <th>Acciones</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -48,8 +49,6 @@
 
                                 <a asp-controller="Desarrollador" asp-action="EditarDesarrollador" asp-route-userId="@item.UserId" class="btn btn-primary">Editar</a>
                             }
-
-
 
                         </div>
                     </td>

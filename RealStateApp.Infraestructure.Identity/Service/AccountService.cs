@@ -559,7 +559,9 @@ public class AccountService : IAccountService
         }
     
 
-      var result = await _userManager.UpdateAsync(user);   
+        }
+
+        var result = await _userManager.UpdateAsync(user);   
     }
     
     

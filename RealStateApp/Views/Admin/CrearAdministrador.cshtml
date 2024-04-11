@@ -6,7 +6,7 @@
 }
 
 
-<div class="d-flex align-items-center justify-content-center container mt-4">
+@* <div class="d-flex align-items-center justify-content-center container mt-4">
     <form enctype="multipart/form-data" method="post" class="w-25 bg-succes p-3" asp-controller="Admin" asp-action="@(editMode ? "EditarAdminPost" : "CrearAdministrador")">
         <div class="p-2 bg-success mb-2 ">
             <h1 style="color: white;" class="text-center ">Agregar Paciente</h1>
@@ -34,7 +34,69 @@
             <button type="submit" class="btn btn-primary  font-weight-bold">Agregar</button>
         </div>
     </form>
-</div>
+</div> *@
 
+
+<body>
+    <section>
+        <div class="row mt-3 pt-3">
+            <div class="col-6 offset-3">
+                <div class="card border-0 shadow">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h5 class="fw-bold" style="color: #023e8a">Administrador</h5>
+                        </div>
+               
+                        <form method="post" enctype="multipart/form-data" asp-controller="Admin" asp-action="@(editMode ? "EditarAdminPost" : "CrearAdministrador")">
+
+                            <div class="mb-2">
+                                <input asp-for="FirstName" class="form-control" placeholder="Nombre" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-2">
+                                <input asp-for="LastName" class="form-control" placeholder="Apellidos" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-2">
+                                <input asp-for="Cedula" class="form-control" placeholder="Cedula" />
+                                <span asp-validation-for="Cedula" class="text-danger"></span>
+
+                            </div>
+                             <div class="mb-2">
+                                <input asp-for="Email" class="form-control" placeholder="Correo" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+
+                            </div>
+                             <div class="mb-2">
+                                <input asp-for="UserName" class="form-control" placeholder="Nombre Usuario" />
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-2">
+                                <input asp-for="Password" class="form-control" placeholder="Password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-2">
+                                <input asp-for="ConfirnPassword" class="form-control" placeholder="Confirm Password" />
+                                <span asp-validation-for="ConfirnPassword" class="text-danger"></span>
+                            </div>
+                            
+
+                            <input type="hidden" asp-for="UserId" value="@Model.UserId"/>
+
+                            <div class="d-flex  justify-content-end align-items-end mt-3" style="gap:10px ;">
+                                <a asp-controller="Admin" asp-action="ListadoAdministradores" class="btn btn-secondary  font-weight-bold">Cancelar</a>
+                                <button type="submit" class="btn btn-primary  font-weight-bold" style="background-color:#023e8a">Agregar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
 
 
