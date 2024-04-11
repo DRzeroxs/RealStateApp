@@ -547,9 +547,18 @@ public class AccountService : IAccountService
         user.Email = vm.Email;
         user.UserName = vm.UserName;
         user.Cedula = vm.Cedula;
-        user.PasswordHash = await UpdatePassword(vm.UserId, vm.Password);
+        
+        if(vm.Password == null)
+        {
+            vm.Password = user.PasswordHash;
+        }
+        else
+        {
+            user.PasswordHash = await UpdatePassword(vm.UserId, vm.Password);
 
-      var result = await _userManager.UpdateAsync(user);   
+        }
+
+        var result = await _userManager.UpdateAsync(user);   
     }
     
     

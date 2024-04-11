@@ -98,9 +98,10 @@ namespace RealStateApp.Controllers
 
         public async Task<IActionResult> EditarAdmin(string userId)
         {
-            var user = await _userServices.GetUserById(userId); 
+            var user = await _userServices.GetUserById(userId);
+            UserPostViewModel userPostViewModel = _mapper.Map<UserPostViewModel>(user);
 
-            return View("CrearAdministrador", user);
+            return View("CrearAdministrador", userPostViewModel);
         }
         [HttpPost]
         public async Task<IActionResult> EditarAdminPost(UserPostViewModel vm)

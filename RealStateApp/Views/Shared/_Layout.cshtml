@@ -145,12 +145,13 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        @if(isAdmin is not false)
+                        @if(isAdmin is not false || isAgente is not false)
                         {
                             <div style="display: none;">
                                 <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                                 <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Agente" asp-action="Index">Agentes</a>
                                 <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="Registrer">Unete a la APP</a>
+                                <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="Login">Iniciar Sesion</a>
                             </div>
                         }
                         else
@@ -158,6 +159,18 @@
                             <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Agente" asp-action="Index">Agentes</a>
                             <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="Registrer">Unete a la APP</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="Login">Iniciar Sesion</a>
+
+
+                        }
+
+
+                        @if(isAgente is not false)
+                        {
+                                <a class=" nav-item nav-link fw-bold" style="color:#023e8a" asp-area="" asp-route-userId="@user.Id" asp-controller="" asp-action="PropiedadesFavoritas">Home</a>
+                                <a class=" nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-route-userId="@user.Id" asp-controller="User" asp-action="EditUser">Perfil</a>
+                                <a class=" nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Propiedades" asp-action="Index">Propiedades</a>
+                                <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="CerrarSesion">Cerrar Sesion</a>
                         }
 
 
@@ -165,14 +178,27 @@
                         {
                             <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Admin" asp-action="Index">Home</a>
                             <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Admin" asp-action="ListadoAgentes">Listado de Agentes</a>
-                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Admin" asp-action="ListadoAdministradores">Mantenimiento de Administradores</a>
-                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Admin" asp-action="ListadoDesarrolladores">Mantenimiento de Desarrolladores</a>
-                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="TiposPropiedades" asp-action="ListadoTipoPropiedades">Mantenimiento de Tipo de Propiedades</a>
-                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="TipoVentas" asp-action="ListadoTipoVentas">Mantenimiento de Tipo de Ventas</a>
-                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Mejora" asp-action="ListadoMejoras">Mantenimiento de Mejoras</a>
+
+                                <div class="dropdown">
+                                    <a class="nav-item nav-link fw-bold dropdown-toggle" style="color: #023e8a" asp-area="" asp-controller="Customer" asp-action="Index" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Mantenimientos
+                                    </a>
+
+                                    <ul class="dropdown-menu" style="margin: auto; padding: 10px;" aria-labelledby="dropdownMenuLink">
+
+                                        <a class="nav-item nav-link fw-bold" style="color: #023e8a;" asp-area="" asp-controller="Admin" asp-action="ListadoAdministradores">Administradores</a>
+                                        <a class="nav-item nav-link fw-bold" style="color: #023e8a;" asp-area="" asp-controller="Admin" asp-action="ListadoDesarrolladores">Desarrolladores</a>
+                                        <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="TiposPropiedades" asp-action="ListadoTipoPropiedades">TipoPropiedades</a>
+                                        <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="TipoVentas" asp-action="ListadoTipoVentas">Tipo de Ventas</a>
+                                        <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Mejora" asp-action="ListadoMejoras">Mejoras</a>
+
+                                    </ul>
+                                </div>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="CerrarSesion">Cerrar Sesion</a>
                         }
                     </div>
-                    <a class="btn btn-primary px-3 d-none d-lg-flex " asp-area="" asp-controller="User" asp-action="Login">Iniciar Sesion</a>
+                    
+
                 </div>
             </nav>
         </div>
