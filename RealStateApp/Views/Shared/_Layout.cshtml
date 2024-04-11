@@ -135,7 +135,7 @@
         <!-- Navbar Start -->
         <div class="container-fluid nav-bar bg-transparent">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
-                <a href="index.html" class="navbar-brand d-flex align-items-center text-center">
+                <a asp-controller="Home" asp-action="Index" class="navbar-brand d-flex align-items-center text-center">
                     <div class="icon p-2 me-2">
                         <img class="img-fluid" src="~/css/tucasa_v2.png" alt="Icon" style="width: 60px; height: 60px;">
                     </div>
@@ -145,9 +145,32 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Agente" asp-action="Index">Agentes</a>
-                        <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="Registrer">Unete a la APP</a>
+                        @if(isAdmin is not false)
+                        {
+                            <div style="display: none;">
+                                <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Agente" asp-action="Index">Agentes</a>
+                                <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="Registrer">Unete a la APP</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Agente" asp-action="Index">Agentes</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="Registrer">Unete a la APP</a>
+                        }
+
+
+                        @if(isAdmin is not false)
+                        {
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Admin" asp-action="Index">Home</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Admin" asp-action="ListadoAgentes">Listado de Agentes</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Admin" asp-action="ListadoAdministradores">Mantenimiento de Administradores</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Admin" asp-action="ListadoDesarrolladores">Mantenimiento de Desarrolladores</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="TiposPropiedades" asp-action="ListadoTipoPropiedades">Mantenimiento de Tipo de Propiedades</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="TipoVentas" asp-action="ListadoTipoVentas">Mantenimiento de Tipo de Ventas</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Mejora" asp-action="ListadoMejoras">Mantenimiento de Mejoras</a>
+                        }
                     </div>
                     <a class="btn btn-primary px-3 d-none d-lg-flex " asp-area="" asp-controller="User" asp-action="Login">Iniciar Sesion</a>
                 </div>
