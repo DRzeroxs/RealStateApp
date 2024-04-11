@@ -840,6 +840,7 @@ namespace RealStateApp.Core.Application.Services
 
         #endregion
 
+        #region "Buscar Propiedades por el Id"
         public async Task<List<PropiedadViewModel>> GetAllPropertyByAgentId(int id)
         {
             var listaPropiedadPorAgente = await _repository.GetAllPropertyByAgentId(id);
@@ -866,6 +867,8 @@ namespace RealStateApp.Core.Application.Services
             }
             return propiedad;
         }
+        #endregion
+
         #region"Buscar Propiedades Favoritas"
         public async Task<List<PropiedadViewModel>> GetPropiedadesFavoritas(int Id)
         {
@@ -927,7 +930,7 @@ namespace RealStateApp.Core.Application.Services
         #region"Contar Propieadades"
         public async Task <int> ContarPropieades()
         {
-            var propiedades = await _propiedadFavoritaRepository.GetAll();  
+            var propiedades = await _repository.GetAll();
             var count = propiedades.ToList().Count();
 
             return count;

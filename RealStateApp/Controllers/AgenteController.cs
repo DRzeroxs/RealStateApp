@@ -6,13 +6,15 @@ using System.Runtime.CompilerServices;
 
 namespace RealStateApp.Controllers
 {
-    [Authorize(Roles = "Agente")]
+    //[Authorize(Roles = "Agente")]
     public class AgenteController : Controller
     {
         private readonly IAgenteService _agenteService;
-        public AgenteController(IAgenteService agenteService)
+        private readonly IUserServices _userServices;
+        public AgenteController(IAgenteService agenteService, IUserServices userServices)
         {
             _agenteService = agenteService;
+            _userServices = userServices;
         }
         public async Task<IActionResult> Index()
         {
@@ -30,11 +32,7 @@ namespace RealStateApp.Controllers
             List<AgenteViewModel> agenteViewModels = new List<AgenteViewModel> {agente};
             return View("Index", agenteViewModels);
         }
-        private readonly IUserServices _userServices;
-        public AgenteController(IUserServices userServices)
-        {
-            _userServices = userServices;
-        }
+        
         public async Task<IActionResult> EliminarAgente(string userId)
         {
             return View("EliminarAgente", userId);    
