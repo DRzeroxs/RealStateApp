@@ -927,7 +927,7 @@ namespace RealStateApp.Core.Application.Services
         #region"Contar Propieadades"
         public async Task <int> ContarPropieades()
         {
-            var propiedades = await _propiedadFavoritaRepository.GetAll();  
+            var propiedades = await _repository.GetAll();  
             var count = propiedades.ToList().Count();
 
             return count;
