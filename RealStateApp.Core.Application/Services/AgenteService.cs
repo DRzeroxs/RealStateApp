@@ -39,6 +39,7 @@ namespace RealStateApp.Core.Application.Services
                 Id = x.Id,
                 Nombre = x.Nombre,
                 Apellido = x.Apellido,
+                IdentityId = x.IdentityId,
             }).OrderBy(x => x.Nombre).ToList();
         }
         public async Task<AgenteViewModel> GetAgenteByNombre(string nombre)

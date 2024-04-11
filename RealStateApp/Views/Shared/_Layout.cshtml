@@ -145,9 +145,32 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Agente" asp-action="Index">Agentes</a>
-                        <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="Registrer">Unete a la APP</a>
+                        @if(isAdmin is not false)
+                        {
+                            <div style="display: none;">
+                                <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Agente" asp-action="Index">Agentes</a>
+                                <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="Registrer">Unete a la APP</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Agente" asp-action="Index">Agentes</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="Registrer">Unete a la APP</a>
+                        }
+
+
+                        @if(isAdmin is not false)
+                        {
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Admin" asp-action="Index">Home</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Admin" asp-action="ListadoAgentes">Listado de Agentes</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Admin" asp-action="ListadoAdministradores">Mantenimiento de Administradores</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Admin" asp-action="ListadoDesarrolladores">Mantenimiento de Desarrolladores</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="TiposPropiedades" asp-action="ListadoTipoPropiedades">Mantenimiento de Tipo de Propiedades</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="TipoVentas" asp-action="ListadoTipoVentas">Mantenimiento de Tipo de Ventas</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Mejora" asp-action="ListadoMejoras">Mantenimiento de Mejoras</a>
+                        }
                     </div>
                     <a class="btn btn-primary px-3 d-none d-lg-flex " asp-area="" asp-controller="User" asp-action="Login">Iniciar Sesion</a>
                 </div>

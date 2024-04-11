@@ -6,12 +6,11 @@ using System.Runtime.CompilerServices;
 
 namespace RealStateApp.Controllers
 {
-    [Authorize(Roles = "Agente")]
+    //[Authorize(Roles = "Agente")]
     public class AgenteController : Controller
     {
         private readonly IAgenteService _agenteService;
         private readonly IUserServices _userServices;
-
         public AgenteController(IAgenteService agenteService, IUserServices userServices)
         {
             _agenteService = agenteService;
@@ -36,8 +35,7 @@ namespace RealStateApp.Controllers
             List<AgenteViewModel> agenteViewModels = new List<AgenteViewModel> {agente};
             return View("Index", agenteViewModels);
         }
-
-        [Authorize(Roles = "Admin")]
+        
         public async Task<IActionResult> EliminarAgente(string userId)
         {
             return View("EliminarAgente", userId);    

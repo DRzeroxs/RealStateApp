@@ -71,7 +71,7 @@ namespace RealStateApp.Controllers
 
             RegistrerResponse response = await _userServices.RegisterAdminAsync(registrerVm, origin);
           
-            return View();  
+            return RedirectToAction("CrearAdministrador");  
         }
         public async Task<IActionResult> ActivarAdmin(string userId)
         {
