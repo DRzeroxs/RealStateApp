@@ -16,12 +16,15 @@ namespace RealStateApp.Controllers
             _agenteService = agenteService;
             _userServices = userServices;
         }
+
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var agentes = await _agenteService.GetAllAsync();
             return View(agentes);
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> AgenteByName(string nombre)
         {
             var agente = await _agenteService.GetAgenteByNombre(nombre);
@@ -45,12 +48,16 @@ namespace RealStateApp.Controllers
 
             return RedirectToAction("Index", "Admin");
         }
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ActivarAgente(string userId)
         {
             await _userServices.ActivarUsuario(userId);
 
             return RedirectToAction("Index", "Admin");
         }
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> InactivarAgente(string userId)
         {
             await _userServices.InactivarUsuario(userId);
