@@ -541,13 +541,23 @@ public class AccountService : IAccountService
     public async Task EditarUsuario(UserPostViewModel vm)
     {
         var user = await _userManager.FindByIdAsync(vm.UserId);
+        
 
         user.FirstName = vm.FirstName;
         user.LastName = vm.LastName;    
         user.Email = vm.Email;
         user.UserName = vm.UserName;
         user.Cedula = vm.Cedula;
-        user.PasswordHash = await UpdatePassword(vm.UserId, vm.Password);
+
+        if(vm.Password == null)
+        {
+            user.PasswordHash = user.PasswordHash;
+        }
+        else
+        {
+            user.PasswordHash = await UpdatePassword(vm.UserId, vm.Password);
+        }
+    
 
       var result = await _userManager.UpdateAsync(user);   
     }
