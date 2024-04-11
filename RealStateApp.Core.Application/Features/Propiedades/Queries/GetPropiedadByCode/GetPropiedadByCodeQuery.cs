@@ -41,6 +41,8 @@ namespace RealStateApp.Core.Application.Features.Propiedades.Queries.GetAllPropi
         {
             var propiedades = await _service.GetAllPropiedadesByCode(identifier);
 
+            if (propiedades is null) return null;
+
             PropiedadesDto propiedadesDto = _mapper.Map<PropiedadesDto>(propiedades);
 
             return new Response<PropiedadesDto>( propiedadesDto);

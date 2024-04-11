@@ -35,6 +35,8 @@ namespace RealStateApp.Controllers
         {
             var propiedades = await _propiedadesService.GetAllPropiedadesByCode(identifier);
 
+            if (propiedades is null) return RedirectToAction(nameof(Index));
+
             List<PropiedadViewModel> propiedadesList = new List<PropiedadViewModel>();
 
             propiedadesList.Add(propiedades);
