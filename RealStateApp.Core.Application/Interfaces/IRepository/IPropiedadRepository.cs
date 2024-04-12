@@ -10,5 +10,6 @@ namespace RealStateApp.Core.Application.Interfaces.IRepository
     public interface IPropiedadRepository : IGenericRepository<Propiedad>
     {
         Task<List<Propiedad>> GetAllPropertyByAgentId(int id);
+        Task<List<int>> GetIdentificadoresAsync();
     }
 }

@@ -133,6 +133,11 @@ namespace RealStateApp.Controllers
                     return RedirectToAction("Index", "Admin");
                 }
 
+                else if(userRole == "Agente")
+                {
+                    return RedirectToAction("PropiedadesDelAgente", "Propiedad" , new {userId = userAuthenticate.Id});
+                }
+
                 return RedirectToRoute(new { controller = "Home", action = "Index" });
             }
             else
