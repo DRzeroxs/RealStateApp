@@ -70,6 +70,21 @@ namespace RealStateApp.Core.Application.Services
             _listImgPropiedades = await _imgPropiedadRepository.GetAll();
         }
 
+        public async Task<int> GenerarIdentificadorUnico()
+        {
+            List<int> IdentificadoresExistentes = await _repository.GetIdentificadoresAsync();
+
+            Random random = new Random();
+            int codigo;
+
+            do
+            {
+                codigo = random.Next(1000, 9999);
+            } while (IdentificadoresExistentes.Contains(codigo));
+
+            return codigo;
+        }
+
         public override async Task<SavePropiedadViewModel> AddAsync(SavePropiedadViewModel vm)
         {
             Propiedad propiedad = _mapper.Map<Propiedad>(vm);
