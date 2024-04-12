@@ -60,6 +60,8 @@ namespace RealStateApp.Controllers
                 return View(savePropiedadViewModel);
             }
 
+            savePropiedadViewModel.Identifier = await _propiedadService.GenerarIdentificadorUnico();
+
             AgenteViewModel agente = await _agenteService.GetByIdentityId(userId);
 
             if (agente == null)

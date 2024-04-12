@@ -37,5 +37,6 @@ namespace RealStateApp.Core.Application.Interfaces.IServices
 
         Task<List<PropiedadViewModel>> GetAllPropertyByAgentId(int id);
         Task<List<PropiedadViewModel>> GetPropiedadesDelAgente(int Id);
+        Task<int> GenerarIdentificadorUnico();
     }
 }
