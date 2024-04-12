@@ -167,7 +167,7 @@
 
                         @if(isAgente is not false)
                         {
-                                <a class=" nav-item nav-link fw-bold" style="color:#023e8a" asp-area="" asp-route-userId="@user.Id" asp-controller="" asp-action="PropiedadesFavoritas">Home</a>
+                            <a class=" nav-item nav-link fw-bold" style="color:#023e8a" asp-area="" asp-route-userId="@user.Id" asp-controller="Propiedad" asp-action="PropiedadesDelAgente">Home</a>
                                 <a class=" nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-route-userId="@user.Id" asp-controller="User" asp-action="EditUser">Perfil</a>
                                 <a class=" nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Propiedades" asp-action="Index">Propiedades</a>
                                 <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="CerrarSesion">Cerrar Sesion</a>
