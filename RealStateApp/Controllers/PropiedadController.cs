@@ -196,5 +196,16 @@ namespace RealStateApp.Controllers
             ViewBag.TipoVenta = await _tipoVentaService.GetAllAsync();
         }
         #endregion
+
+        #region "Propiedades del Agente"
+        public async Task<IActionResult> PropiedadesDelAgente(string userId)
+        {
+            var agente = await _agenteService.GetByIdentityId(userId);
+
+            var propiedades = await _propiedadService.GetPropiedadesDelAgente(agente.Id);
+
+            return View(propiedades);
+        }
+        #endregion
     }
 }

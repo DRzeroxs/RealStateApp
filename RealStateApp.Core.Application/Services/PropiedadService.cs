@@ -942,7 +942,55 @@ namespace RealStateApp.Core.Application.Services
         }
         #endregion
 
-        
+        #region "Propiedades del Agente"
+        public async Task<List<PropiedadViewModel>> GetPropiedadesDelAgente(int Id)
+        {
+            await CargarListas();
+
+            var propiedades = from p in _listPropiedades
+                              where p.AgenteId == Id
+                              select new PropiedadViewModel
+                              {
+                                  Id = p.Id,
+                                  Identifier = p.Identifier,
+                                  Precio = p.Precio,
+                                  Size = p.Size,
+                                  NumAceados = p.NumAceados,
+                                  NumHabitaciones = p.NumHabitaciones,
+                                  Descripcion = p.Descripcion,
+                                  AgenteId = p.AgenteId,
+                                  TipoPropiedad = (from tp in _listTipoPropiedad
+                                                   where tp.Id == p.TipoPropiedadId
+                                                   select new TipoPropiedadViewModel
+                                                   { Nombre = tp.Nombre, Descripcion = tp.Descripcion, Id = tp.Id }).First(),
+
+
+                                  TipoVenta = (from p3 in _listPropiedades
+                                               join tv in _listTipoVenta
+                                               on p3.TipoVentaId equals tv.Id
+                                               select new TipoVentaViewModel { Nombre = tv.Nombre, Id = tv.Id, Descripcion = tv.Descripcion }).First(),
+
+                                  Agente = (from p4 in _listPropiedades
+                                            join a2 in _listAgentes
+                                            on p4.AgenteId equals a2.Id
+                                            select new AgenteViewModel { Nombre = a2.Nombre, Id = a2.Id }).First(),
+
+                                  Mejoras = (from ma in _listMejorasAplicadas
+                                             join m in _listMejoras
+                                             on ma.MejoraId equals m.Id
+                                             where ma.PropiedadId == p.Id
+                                             select new MejoraViewModel
+                                             { Nombre = m.Nombre, Descripcion = m.Descripcion }).ToList(),
+
+                                  ImgUrl = (from Img in _listImgPropiedades
+                                            where Img.PropieadId == p.Id
+                                            select new ImgPropiedadViewModel { UrlImg = Img.UrlImg }).First(),
+                              };
+
+            return propiedades.ToList();
+        }
+
+        #endregion
     }
 }
 
