@@ -5,12 +5,12 @@
 }
 
 <section class="contenedor">
-    @foreach(var item in Model)
+    @foreach (var item in Model)
     {
         <a asp-action="detalles" asp-controller="Home" asp-route-id="@item.Id" class="ancher">
             <div class="card">
-                <img class="card__img" src="https://d2p0bx8wfdkjkb.cloudfront.net/static/properties/TBCZYOYRXE/KKE0QAHBJV/Eaf3FGeezF/00c4fc57-2522-47e0-963b-d7688d12219a.jpg" alt="" />
-                <h2 class="card__tipo-propiedad"><small class="p0 mr-2" style="color: #909090">Tipo:</small> @item.TipoPropiedadNombre</h2>
+                <img class="card__img" src="@item.ImgUrl.UrlImg" alt="" />
+                <h2 class="card__tipo-propiedad"><small class="p0 mr-2" style="color: #909090">Tipo:</small> @item.TipoPropiedad.Nombre</h2>
                 <div class="card__contenido">
 
                     <p class="card__precio"><small class="p0 mr-2" style="color: #909090">Precio: </small> $@item.Precio</p>
@@ -43,10 +43,18 @@
                         </p>
                     </div>
                 </div>
+
+                @*  @if (isAgente is not false)
+            {
+            <form asp-controller="Cliente" asp-action="Favorita">
+            <input name="propiedadId" value="@item.Id" type="hidden" />
+
+            <input name="userId" value="@user.Id" type="hidden" />
+
+            <button class="btn btn-primary">Marcar como Favorita</button>
+            </form>
+            } *@
             </div>
         </a>
-        
-
     }
-    
 </section>

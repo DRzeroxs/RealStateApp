@@ -7,21 +7,23 @@ using RealStateApp.Core.Application.ViewModel.Propiedad;
 
 namespace RealStateApp.Controllers
 {
-    [Authorize(Roles = "Agente")]
+    //[Authorize(Roles = "Agente")]
     public class PropiedadController : Controller
     {
 
         private readonly IPropiedadService _propiedadService;
         private readonly ITipoPropiedadService _tipoPropiedadService;
         private readonly ITipoVentaService _tipoVentaService;
+        private readonly IMejoraService _mejoraService;
         private readonly IAgenteService _agenteService;
 
-        public PropiedadController(IPropiedadService propiedadService, ITipoPropiedadService tipoPropiedadService, ITipoVentaService tipoVentaService, IAgenteService agenteService)
+        public PropiedadController(IPropiedadService propiedadService, ITipoPropiedadService tipoPropiedadService, ITipoVentaService tipoVentaService, IAgenteService agenteService, IMejoraService mejoraService)
         {
             _propiedadService = propiedadService;
             _tipoPropiedadService = tipoPropiedadService;
             _tipoVentaService = tipoVentaService;
             _agenteService = agenteService;
+            _mejoraService = mejoraService;
         }
 
         #region lobby
@@ -194,6 +196,7 @@ namespace RealStateApp.Controllers
         {
             ViewBag.TipoPropiedad = await _tipoPropiedadService.GetAllAsync();
             ViewBag.TipoVenta = await _tipoVentaService.GetAllAsync();
+            ViewBag.Mejoras = await _mejoraService.GetAllAsync();
         }
         #endregion
     }
