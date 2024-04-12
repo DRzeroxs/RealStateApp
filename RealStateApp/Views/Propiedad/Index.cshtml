@@ -57,16 +57,15 @@
                     </div>
                 </div>
 
-               @*  @if (isAgente is not false)
+                @if (isAgente is not false)
                 {
-                    <form asp-controller="Cliente" asp-action="Favorita">
-                        <input name="propiedadId" value="@item.Id" type="hidden" />
-
-                        <input name="userId" value="@user.Id" type="hidden" />
-
-                        <button class="btn btn-primary">Marcar como Favorita</button>
-                    </form>
-                } *@
+                    <div class="d-flex " style="gap: 20px;">
+                        <a asp-controller="Propiedad" asp-route-Id="@item.Id" asp-action="EditarPropiedad" class="btn btn-info">Editar</a>
+                        <a asp-controller="Propiedad" asp-route-Id="@item.Id" asp-action="Eliminar" class="btn btn-danger">Eliminar</a>
+                    </div>
+                    
+                  
+                } 
             </div>
         </a>
     }

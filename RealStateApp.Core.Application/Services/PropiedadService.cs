@@ -160,7 +160,7 @@ namespace RealStateApp.Core.Application.Services
 
             await _repository.DeleteAsync(propiedad);
 
-            PropiedadViewModel vm = await GetByIdAsync(Id);
+           /* PropiedadViewModel vm = await GetByIdAsync(Id);
 
             List<string> urlsImgPropiedades = new();
 
@@ -169,7 +169,7 @@ namespace RealStateApp.Core.Application.Services
                 urlsImgPropiedades.Add(item.UrlImg);
             }
 
-            FileManager.DeletePropertyImages(urlsImgPropiedades);
+            FileManager.DeletePropertyImages(urlsImgPropiedades);*/
         }
 
 

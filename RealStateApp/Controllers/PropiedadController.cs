@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp;
 using RealStateApp.Core.Application.Helpers;
 using RealStateApp.Core.Application.Interfaces.IServices;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Agente;
@@ -117,14 +118,23 @@ namespace RealStateApp.Controllers
                 TipoPropiedadId = vm.TipoPropiedadId,
                 TipoVentaId = vm.TipoVentaId,
                 AgenteId = vm.AgenteId,
+                ImgUrls = AgregarImagen(vm.ImgUrlList)
             };
 
-            foreach (var item in vm.ImgUrlList)
+            await CargarViewBags();
+
+            return View("CrearPropiedad", savePropiedadViewModel);
+        }
+        private List<string> AgregarImagen(List<ImgPropiedadViewModel> imgagenes)
+        {
+            List< string> result = new List< string>(); 
+
+            foreach(var img in imgagenes)
             {
-                savePropiedadViewModel.ImgUrls.Add(item.UrlImg);
+                result.Add(img.UrlImg);
             }
 
-            return View(vm);
+            return result;
         }
 
         [HttpPost]
