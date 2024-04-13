@@ -33,8 +33,18 @@ namespace RealStateApp.Controllers
             vm.PropiedadId = propiedadId;
             vm.ClienteId = cliente.Id;
 
+            var favorita = await _propiedadFavoritaService.GetPropiedadFavoritaPorPropiedadId(propiedadId);
+
+            if(favorita != null)
+            {
+                ModelState.AddModelError("Se encuentra agregada", "Esta Propiedad ya esta marcada como Favorita");
+
+                return RedirectToAction("PropiedadesFavoritas", new {userId = userId });
+            }
+
             await _propiedadFavoritaService.AddAsync(vm);
-            return View("Index", "Home");
+
+            return RedirectToAction("PropiedadesFavoritas", new { userId = userId });
         }
         public async Task<IActionResult> PropiedadesFavoritas(string userId)
         {

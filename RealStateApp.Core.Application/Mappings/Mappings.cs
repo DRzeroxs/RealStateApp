@@ -84,6 +84,8 @@ namespace RealStateApp.Core.Application.Mappings
              .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
               .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
              .ReverseMap();
+
+            CreateMap<FavoritaViewModel, Favorita>().ReverseMap();
             #endregion
 
             #region "Agente"

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.VisualBasic;
 using RealStateApp.Core.Application.Interfaces.IRepository;
 using RealStateApp.Core.Application.Interfaces.IServices;
 using RealStateApp.Core.Application.ViewModel.Favorita;
@@ -19,6 +20,16 @@ namespace RealStateApp.Core.Application.Services
         {
             _repository = repository;
             _mapper = mapper;   
+        }
+        public async Task<FavoritaViewModel> GetPropiedadFavoritaPorPropiedadId(int Id)
+        {
+            var propiedadesFavoritas = await _repository.GetAll();
+
+            var propiedad = propiedadesFavoritas.FirstOrDefault(p => p.PropiedadId == Id);
+
+            FavoritaViewModel favoritaVm = _mapper.Map<FavoritaViewModel>(propiedad);
+
+            return favoritaVm;
         }
     }
 }
