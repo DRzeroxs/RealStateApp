@@ -279,7 +279,7 @@ namespace RealStateApp.Core.Application.Services
                                       Agente = (from p4 in _listPropiedades
                                                 join a2 in _listAgentes
                                                 on p4.AgenteId equals a.Id
-                                                select new AgenteViewModel { Nombre = a.Nombre, Id = a.Id, ImgUrl = a2.ImgUrl, Telefono = a2.Telefono }).First(),
+                                                select new AgenteViewModel { Nombre = a.Nombre, Id = a.Id, ImgUrl = a.ImgUrl, Correo = a.Correo, Apellido = a.Apellido, Telefono = a.Telefono }).FirstOrDefault(x => x.Id == a.Id),
 
                                       Mejoras = (from ma in _listMejorasAplicadas
                                                  join m in _listMejoras

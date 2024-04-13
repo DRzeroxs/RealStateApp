@@ -40,6 +40,9 @@ namespace RealStateApp.Core.Application.Services
                 Nombre = x.Nombre,
                 Apellido = x.Apellido,
                 IdentityId = x.IdentityId,
+                ImgUrl = x.ImgUrl,
+                Cedula = x.Cedula,
+                Correo = x.Correo,
             }).OrderBy(x => x.Nombre).ToList();
         }
         public async Task<AgenteViewModel> GetAgenteByNombre(string nombre)
