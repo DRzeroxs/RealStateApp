@@ -26,7 +26,7 @@ namespace RealStateApp.Controllers
 
         public async Task<IActionResult> PropiedadDelAgente(int id)
         {
-            var propiedadDelAgente = await _propiedadesService.GetAllPropertyByAgentId(id);
+            var propiedadDelAgente = await _propiedadesService.GetPropiedadesDelAgente(id);
             return View("PropiedadDelAgente", propiedadDelAgente);
         }
 
