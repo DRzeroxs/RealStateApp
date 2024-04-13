@@ -46,7 +46,7 @@ namespace RealStateApp.Core.Application.ViewModel.Propiedad
         public List<string>? ImgUrls { get; set; }
 
         [MinLength(1, ErrorMessage = "Debe agregar por lo menos una mejora")]
-        public List<string> Mejoras { get; set; }
+        public List<int> Mejoras { get; set; }
 
 
     }
