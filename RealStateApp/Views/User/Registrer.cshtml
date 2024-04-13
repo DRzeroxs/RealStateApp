@@ -63,6 +63,16 @@
 
                             </div>
                             <div class="mb-2">
+                                <input type="file" asp-for="file" class="form-control" placeholder="Agrega una imagen">
+                                <span asp-validation-for="file" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-2">
+                                <input asp-for="PhoneNumber" class="form-control" placeholder="Agrega un numero telefonico">
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-2">
                                 <input asp-for="Email" class="form-control" placeholder="Correo" />
                                 <span asp-validation-for="Email" class="text-danger"></span>
 

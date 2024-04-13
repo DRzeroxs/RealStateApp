@@ -100,7 +100,7 @@ namespace RealStateApp.Controllers
                 }
             }
 
-            return View();    
+            return RedirectToRoute(new { controller = "User", action = "Login" });
 
         }
         public async Task<IActionResult> Login()
