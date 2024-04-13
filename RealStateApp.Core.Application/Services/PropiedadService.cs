@@ -91,6 +91,17 @@ namespace RealStateApp.Core.Application.Services
 
             propiedad = await _repository.AddAsync(propiedad);
 
+            foreach (var mejoraId in vm.Mejoras)
+            {
+                MejorasAplicadas mejora = new MejorasAplicadas
+                {
+                    PropiedadId = propiedad.Id,
+                    MejoraId = mejoraId
+                };
+
+                await _mejorasAplicadasRepository.AddAsync(mejora);
+            }
+
             List<string> rutaImg = FileManager.UploadFiles(vm.Files, propiedad.Id);
 
             foreach (var url in rutaImg)
