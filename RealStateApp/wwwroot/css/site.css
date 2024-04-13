@@ -161,6 +161,7 @@ body {
 
 .contendor__iconos--Card {
     border-top: 1px dashed #00b98e;
+    padding-top: 10px;
     color: #023e8a;
     display: flex;
     gap: 40px;
@@ -179,11 +180,9 @@ body {
     padding: 10px;
     padding-left: 10px;
 }
-.card .contendor__iconos--Card .card__iconos--baños {
-    padding: 0;
-    margin: 0;
-    border-left: 1px dashed #00b98e;
+.card__iconos--baños {
     padding: 10px;
+    border-left: 1px dashed #00b98e;
 }
 
 .border-alineado {
