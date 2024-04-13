@@ -26,7 +26,7 @@ body {
     margin-bottom: 60px;
 }
 
-
+/*
 .formulario__registro input {
     border: none;
     border-bottom: 1px solid;
@@ -35,14 +35,14 @@ body {
 .formulario__registro {
     border: 5px solid #0B5ED7;
     padding: 35px;
-}
+}*/
 
 
 .ancher{
    text-decoration: none;
 }
 
-.boton_busqueda {
+/*.boton_busqueda {
     margin-left: 10px;
     border-radius: 5px;
     border: none;
@@ -79,7 +79,7 @@ body {
     background-color: rebeccapurple;
     border-top: 3px solid;
 }
-
+*/
 
 .contenedor {
     margin: 0 auto;
@@ -118,10 +118,11 @@ body {
     transition: all 500ms ease;
 }
 
-    .card .card__img:hover {
-        transform: scale(1.03);
-        cursor: pointer;
-    }
+.card .card__img:hover 
+{
+    transform: scale(1.03);
+    cursor: pointer;
+}
 
 
 .card__tipo-propiedad {
@@ -160,6 +161,7 @@ body {
 
 .contendor__iconos--Card {
     border-top: 1px dashed #00b98e;
+    color: #023e8a;
     display: flex;
     gap: 40px;
 }
@@ -175,15 +177,17 @@ body {
     margin: 0;
     border-left: 1px dashed #00b98e;
     padding: 10px;
-    padding-left: 30px;
-    padding-right: 0;
+    padding-left: 10px;
 }
-
-.card__iconos--baños {
+.card .contendor__iconos--Card .card__iconos--baños {
     padding: 0;
     margin: 0;
     border-left: 1px dashed #00b98e;
     padding: 10px;
+}
+
+.border-alineado {
+    border-top: 1px dashed #00b98e;
 }
 
 .home__imagenes {
@@ -199,13 +203,14 @@ body {
     align-items: center;
 }
 
-    .carousel-inner img {
-        width: auto;
-        max-width: 500px;
-        border-radius: 20px;
-        vertical-align: middle;
-        margin: 0 auto;
-    }
+.carousel-inner img 
+{
+    width: auto;
+    max-width: 500px;
+    border-radius: 20px;
+    vertical-align: middle;
+    margin: 0 auto;
+}
 
 .carousel-control-prev {
     background-color: #fff;
@@ -268,12 +273,13 @@ body {
     border-radius: 20px;
 }
 
-    .propidad--mejoras__lista li {
-        text-decoration: none;
-        list-style: none;
-        font-size: 20px;
-        text-align: center;
-    }
+.propidad--mejoras__lista li 
+{
+    text-decoration: none;
+    list-style: none;
+    font-size: 20px;
+    text-align: center;
+}
 
 
 
@@ -357,31 +363,37 @@ body {
     transition: .5s;
 }
 
-    .team-item .btn {
-        color: var(--primary);
-        background: #FFFFFF;
-        box-shadow: 0 0 30px rgba(0, 0, 0, .15);
-    }
+.team-item .btn 
+{
+    color: var(--primary);
+    background: #FFFFFF;
+    box-shadow: 0 0 30px rgba(0, 0, 0, .15);
+}
 
-        .team-item .btn:hover {
-            color: #FFFFFF;
-            background: var(--primary);
-        }
+.team-item .btn:hover 
+{
+    color: #FFFFFF;
+    background: var(--primary);
+}
 
-    .team-item:hover {
-        border-color: var(--secondary) !important;
-    }
+.team-item:hover 
+{
+    border-color: var(--secondary) !important;
+}
 
-        .team-item:hover .bg-primary {
-            background: var(--secondary) !important;
-        }
+.team-item:hover .bg-primary 
+{
+    background: var(--secondary) !important;
+}
 
-            .team-item:hover .bg-primary i {
-                color: var(--secondary) !important;
-            }
+.team-item:hover .bg-primary i 
+{
+    color: var(--secondary) !important;
+}
 
 
-.asesoria{
+.asesoria
+{
     font-size: 15px;
     text-align: center;
 }
@@ -446,7 +458,8 @@ body {
     background: #0077b6;
 }
 
-html {
+html 
+{
     position: relative;
     min-height: 100%;
 }
@@ -485,9 +498,10 @@ body {
     transition: all 0.5s ease-in-out;
 }
 
-    .card--seguidores:hover {
-        transform: translateY(-5px);
-    }
+.card--seguidores:hover 
+{
+   transform: translateY(-5px);
+}
 
 .card--header {
     display: flex;

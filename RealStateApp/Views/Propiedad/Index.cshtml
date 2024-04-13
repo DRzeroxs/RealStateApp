@@ -17,56 +17,55 @@
     </div>
 </div>
 
-<section class="contenedor">
-    @foreach (var item in Model)
-    {
-        <a asp-action="detalles" asp-controller="Home" asp-route-id="@item.Id" class="ancher">
-            <div class="card">
-                <img class="card__img" src="@item.ImgUrl.UrlImg" alt="" />
-                <h2 class="card__tipo-propiedad"><small class="p0 mr-2" style="color: #909090">Tipo:</small> @item.TipoPropiedad.Nombre</h2>
-                <div class="card__contenido">
+    <section class="row">
+        <div class="col-4">
+        @foreach (var item in Model)
+        {
+            <a asp-action="detalles" asp-controller="Home" asp-route-id="@item.Id" class="ancher">
+                <div class="card">
+                    <img class="card__img" src="@item.ImgUrl.UrlImg" alt="" />
+                    <h2 class="card__tipo-propiedad"><small class="p0 mr-2" style="color: #909090">Tipo:</small> @item.TipoPropiedad.Nombre</h2>
+                    <div class="card__contenido">
 
-                    <p class="card__precio"><small class="p0 mr-2" style="color: #909090">Precio: </small> $@item.Precio</p>
-                    <p class="card__titulo"><small class="p0 mr-2" style="color: #909090">Codigo:</small> #@item.Identifier</p>
-                    <p class="card__calle">
-                        <i class="fa-solid fa-location-dot" style="color: #909090"></i>
-                        Piantini, Santo Domingo D.N.
-                    </p>
+                        <p class="card__precio"><small class="p0 mr-2" style="color: #909090">Precio: </small> $@item.Precio</p>
+                        <p class="card__titulo"><small class="p0 mr-2" style="color: #909090">Codigo:</small> #@item.Identifier</p>
+                        <p class="card__calle">
+                            <i class="fa-solid fa-location-dot" style="color: #909090"></i>
+                            Piantini, Santo Domingo D.N.
+                        </p>
+                    </div>
+
+                    <div class="contendor__iconos--Card">
+                            <p class="card__iconos--medida">
+                                <i class="fa-solid fa-ruler-combined" style="color: #909090; font-size: 18px;"></i>
+                                @item.Size
+                            </p>
+
+                            <p class="card__iconos--habitaciones">
+                                <i class="fa-solid fa-bed" style="color: #909090; font-size: 18px;"></i>
+                                @item.NumHabitaciones
+                            </p>
+
+                            <p class="card__iconos--baños">
+                                <i class="fa-solid fa-toilet" style="color: #909090; font-size: 18px;"></i>
+                                @item.NumAceados
+                            </p>
+                    </div>
+                    <div class="border-alineado">
+
+                    </div>
+
+                    @if (isAgente is not false)
+                    {
+                        <div class="d-flex justify-content-end m-2 " style="gap: 10px;">
+                            <a asp-controller="Propiedad" asp-route-Id="@item.Id" asp-action="EditarPropiedad" class="btn text-white" style="background: #023e8a">Editar</a>
+                            <a asp-controller="Propiedad" asp-route-Id="@item.Id" asp-action="Eliminar" class="btn btn-danger">Eliminar</a>
+                        </div>
+
+                    }
                 </div>
-
-                <div class="contendor__iconos--Card">
-                    <div>
-                        <p class="card__iconos--medida">
-                            <i class="fa-solid fa-ruler-combined" style="color: #909090; font-size: 18px;"></i>
-                            @item.Size
-                        </p>
-                    </div>
-
-                    <div>
-                        <p class="card__iconos--habitaciones">
-                            <i class="fa-solid fa-bed" style="color: #909090; font-size: 18px;"></i>
-                            @item.NumHabitaciones
-                        </p>
-                    </div>
-
-                    <div>
-                        <p class="card__iconos--baños">
-                            <i class="fa-solid fa-toilet" style="color: #909090; font-size: 18px;"></i>
-                            @item.NumAceados
-                        </p>
-                    </div>
-                </div>
-
-                @if (isAgente is not false)
-                {
-                    <div class="d-flex " style="gap: 20px;">
-                        <a asp-controller="Propiedad" asp-route-Id="@item.Id" asp-action="EditarPropiedad" class="btn btn-info">Editar</a>
-                        <a asp-controller="Propiedad" asp-route-Id="@item.Id" asp-action="Eliminar" class="btn btn-danger">Eliminar</a>
-                    </div>
-                    
-                  
-                } 
-            </div>
-        </a>
-    }
-</section>
+            </a>
+        }
+        </div>
+       
+    </section>
