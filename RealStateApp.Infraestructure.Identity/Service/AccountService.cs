@@ -12,6 +12,7 @@ using RealStateApp.Core.Application.Interfaces.IEmail;
 using RealStateApp.Core.Application.Interfaces.IServices;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Administrador;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Agente;
+using RealStateApp.Core.Application.ViewModel.AppUsers.Cliente;
 using RealStateApp.Core.Application.ViewModel.User;
 using RealStateApp.Infraestructure.Identity.Entities;
 using System;
@@ -29,9 +30,10 @@ public class AccountService : IAccountService
     private readonly IEmailService _emailService;
     private readonly IAgenteService _agenteService;
     private readonly IAdministradorService _adminService;
+    private readonly IClienteService _clienteService;
 
     private readonly IMapper _mapper;
-    public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,IEmailService emailService ,IMapper mapper, IAgenteService agenteService, IAdministradorService administradorService)
+    public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,IEmailService emailService ,IMapper mapper, IAgenteService agenteService, IAdministradorService administradorService, IClienteService clienteService)
     {
         _signInManager = signInManager;
         _userManager = userManager;
@@ -39,6 +41,7 @@ public class AccountService : IAccountService
         _mapper = mapper;
         _adminService = administradorService;   
         _agenteService = agenteService; 
+        _clienteService = clienteService;   
     }
     public async Task<AuthenticationResponse> AuthenticateASYNC(AuthenticationRequest requuest)
     {
@@ -75,7 +78,8 @@ public class AccountService : IAccountService
         response.UserName = user.UserName;
 
         var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
-
+        await AddClienteEsquemaDb();
+        await AddAgentesEsquemaDb();
         response.Roles = rolesList.ToList();
         response.IsVerified = user.EmailConfirmed;
         return response;
@@ -259,8 +263,6 @@ public class AccountService : IAccountService
         var users = await _userManager.Users.ToListAsync();
         var count = users.Where(u => u.EmailConfirmed == true && u.TypeOfUser == "Agente").Count();
 
-        await AddAgentesEsquemaDb();
-
         return count;
 
     }
@@ -299,6 +301,38 @@ public class AccountService : IAccountService
         }
     }
 
+    private async Task AddClienteEsquemaDb()
+    {
+        var users = await _userManager.Users.ToListAsync();
+        var cliente = users.Where(u => u.TypeOfUser == "Cliente");
+
+        List<SaveClienteViewModel> agenteSave = new();
+
+        foreach (var item in cliente)
+        {
+            agenteSave.Add(new SaveClienteViewModel
+            {
+                Apellido = item.LastName,
+                Nombre = item.FirstName,
+                IdentityId = item.Id,
+                Cedula = item.Cedula,
+                Correo = item.Email,
+                IsActive = item.EmailConfirmed,
+            });
+
+            foreach (var item2 in agenteSave)
+            {
+                var clientesDb = await _clienteService.GetAllAsync();
+                var confirn = clientesDb.Where(a => a.IdentityId == item2.IdentityId).FirstOrDefault();
+
+                if (confirn == null)
+                {
+                    await _clienteService.AddAsync(item2);
+                }
+
+            }
+        }
+    }
     public async Task EliminarAgente(string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
