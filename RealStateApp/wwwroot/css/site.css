@@ -540,3 +540,13 @@ body {
     border-radius: 50%;
     font-size: 1.5rem;
 }
+
+.contenedor__propiedad {
+    margin: 0 auto;
+    max-width: 12000px;
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 20px;
+    row-gap: 20px;
+}

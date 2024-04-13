@@ -17,8 +17,7 @@
     </div>
 </div>
 
-    <section class="row">
-        <div class="col-4">
+    <section class="contenedor__propiedad">
         @foreach (var item in Model)
         {
             <a asp-action="detalles" asp-controller="Home" asp-route-id="@item.Id" class="ancher">
@@ -33,6 +32,15 @@
                             <i class="fa-solid fa-location-dot" style="color: #909090"></i>
                             Piantini, Santo Domingo D.N.
                         </p>
+
+                    @if (isAgente is not false)
+                    {
+                        <div class="d-flex justify-content-end m-2 " style="gap: 10px;">
+                            <a asp-controller="Propiedad" asp-route-Id="@item.Id" asp-action="EditarPropiedad" class="btn text-white" style="background: #023e8a">Editar</a>
+                            <a asp-controller="Propiedad" asp-route-Id="@item.Id" asp-action="Eliminar" class="btn btn-danger">Eliminar</a>
+                        </div>
+
+                    }
                     </div>
 
                     <div class="contendor__iconos--Card d-flex align-content-center justify-content-center">
@@ -51,21 +59,13 @@
                             @item.NumAceados
                         </p>
                     </div>
+
+               
                     <div class="border-alineado">
-
+                   
                     </div>
-
-                    @if (isAgente is not false)
-                    {
-                        <div class="d-flex justify-content-end m-2 " style="gap: 10px;">
-                            <a asp-controller="Propiedad" asp-route-Id="@item.Id" asp-action="EditarPropiedad" class="btn text-white" style="background: #023e8a">Editar</a>
-                            <a asp-controller="Propiedad" asp-route-Id="@item.Id" asp-action="Eliminar" class="btn btn-danger">Eliminar</a>
-                        </div>
-
-                    }
                 </div>
             </a>
         }
-        </div>
        
     </section>

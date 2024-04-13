@@ -3,8 +3,7 @@
     ViewData["Title"] = "PropiedadesDelAgente";
 }
 
-<section class="row">
-    <div class="col-4">
+<section class="contenedor">
         @foreach (var item in Model)
         {
             <a asp-action="detalles" asp-controller="Home" asp-route-id="@item.Id" class="ancher">
@@ -40,7 +39,6 @@
                 </div>
             </a>
         }
-    </div>
    
 </section>
 
