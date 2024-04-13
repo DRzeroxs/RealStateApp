@@ -30,6 +30,7 @@ namespace RealStateApp.Core.Application.ViewModel.Propiedad
 
         //eliminar
         public ImgPropiedadViewModel ImgUrl {  get; set; }
+        public string ImgURlString { get; set; }
         public List<ImgPropiedadViewModel> ImgUrlList { get; set; }
         public int TipoVentaId { get; set; }
         public int AgenteId { get; set; }

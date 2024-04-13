@@ -893,6 +893,7 @@ namespace RealStateApp.Core.Application.Services
                         Size = item.Size,
                         NumAceados = item.NumAceados,
                         NumHabitaciones = item.NumHabitaciones,
+                        ImgURlString = item.ImgPropiedad.UrlImg
                     });
                 }
             }
