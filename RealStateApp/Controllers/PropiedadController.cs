@@ -144,7 +144,7 @@ namespace RealStateApp.Controllers
             if (!ModelState.IsValid)
             {
                 await CargarViewBags();
-                return View(savePropiedadViewModel);
+                return View("CrearPropiedad", savePropiedadViewModel);
             }
 
             PropiedadViewModel vm = await _propiedadService.GetByIdAsync(savePropiedadViewModel.Id);

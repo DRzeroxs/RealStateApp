@@ -143,7 +143,15 @@ namespace RealStateApp.Core.Application.Services
             propiedadVm.TipoVenta = _mapper.Map<TipoVentaViewModel>(await _tipoVentaRepository.GetById(propiedadVm.TipoVentaId));
             propiedadVm.Agente = _mapper.Map<AgenteViewModel>(await _agenteRepository.GetById(propiedadVm.AgenteId));
 
-            propiedadVm.Mejoras = _mapper.Map<List<MejoraViewModel>>( await _mejorasAplicadasRepository.GetMejorasAplicadasByPropiedadId(propiedadVm.Id));
+            List<MejorasAplicadas> mejorasAplicadas = await _mejorasAplicadasRepository.GetMejorasAplicadasByPropiedadId(propiedadVm.Id);
+
+            propiedadVm.Mejoras = new List<MejoraViewModel>();
+
+            foreach (MejorasAplicadas mejoraAplicada in mejorasAplicadas)
+            {
+                propiedadVm.Mejoras.Add(_mapper.Map<MejoraViewModel>(await _mejoraRepository.GetById(mejoraAplicada.MejoraId)));
+            }
+
             propiedadVm.ImgUrlList = _mapper.Map<List<ImgPropiedadViewModel>>( await _imgPropiedadRepository.GetImgPropiedadByPropiedadId(propiedadVm.Id));
 
             return propiedadVm;
