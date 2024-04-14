@@ -194,12 +194,14 @@ namespace RealStateApp.Core.Application.Services
             var propiedadesList = from p in _listPropiedades
                                   join a in _listAgentes
                                   on p.AgenteId equals a.Id
+                                  orderby p.CreatedDate descending
                                   select new PropiedadViewModel
                                   {
                                       Id = p.Id,
                                       Identifier = p.Identifier,
                                       Precio = p.Precio,
                                       Size = p.Size,
+                                      CreatedDate = p.CreatedDate,
                                       NumAceados = p.NumAceados,
                                       NumHabitaciones = p.NumHabitaciones,
                                       Descripcion = p.Descripcion,
