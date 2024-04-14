@@ -17,7 +17,7 @@ namespace RealStateApp.Core.Domain.Entities.Descripcion
         public int PropieadId { get; set; }
 
         //Conductores
-        public Propiedad Propiedad { get; set; }
+        public ICollection<Propiedad>  Propiedad { get; set; }
 
     }
 }

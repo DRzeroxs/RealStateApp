@@ -11,6 +11,6 @@ namespace RealStateApp.Core.Domain.Entities.Users
     public class Cliente : PersonBaseEntity
     {
         [InverseProperty(nameof(Cliente))]
-        public Favorita Favorita { get; set; }
+        public ICollection<Favorita>  Favorita { get; set; }
     }
 }

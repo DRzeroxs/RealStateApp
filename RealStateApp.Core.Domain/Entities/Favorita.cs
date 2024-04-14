@@ -18,7 +18,7 @@ namespace RealStateApp.Core.Domain.Entities
         public int ClienteId { get; set; }  
 
         //Navegadores
-        public Propiedad Propiedad { get; set; }
-        public Cliente Cliente { get; set;}
+        public ICollection<Propiedad> Propiedad { get; set; }
+        public ICollection<Cliente> Cliente { get; set;}
     }
 }

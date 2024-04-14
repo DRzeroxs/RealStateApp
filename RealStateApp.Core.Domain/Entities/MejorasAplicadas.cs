@@ -17,7 +17,7 @@ namespace RealStateApp.Core.Domain.Entities
         public int MejoraId { get; set; }
 
         //navegadores
-        public Propiedad Propiedad { get; set; }
-        public Mejora Mejora { get; set; }
+        public ICollection<Propiedad>  Propiedad { get; set; }
+        public ICollection<Mejora>  Mejora { get; set; }
     }
 }

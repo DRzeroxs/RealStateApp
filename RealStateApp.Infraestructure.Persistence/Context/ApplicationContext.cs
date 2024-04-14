@@ -53,7 +53,27 @@ namespace RealStateApp.Infraestructure.Persistence.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+
             base.OnModelCreating(modelBuilder);
+
+            //// Relación entre MejorasAplicadas y Propiedades
+            //modelBuilder.Entity<MejorasAplicadas>()
+            //    .HasOne(ma => ma.Propiedad)
+            //    .WithMany(p => p.MejorasAplicadas)
+            //    .HasForeignKey(ma => ma.PropiedadId);
+
+            //// Relación entre ImgPropiedades y Propiedades
+            //modelBuilder.Entity<ImgPropiedad>()
+            //    .HasOne(ip => ip.Propiedad)
+            //    .WithMany(p => p.ImgPropiedad)
+            //    .HasForeignKey(ip => ip.PropieadId);
+
+            //// Relación entre Favorita y Propiedades
+            //modelBuilder.Entity<Favorita>()
+            //    .HasOne(f => f.Propiedad)
+            //    .WithMany(p => p.Favorita)
+            //    .HasForeignKey(f => f.PropiedadId);
 
             // Configurar el comportamiento predeterminado para los índices
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
