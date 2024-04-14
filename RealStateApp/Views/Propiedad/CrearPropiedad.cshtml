@@ -27,6 +27,11 @@
                         </div>
 
                         <form method="post" enctype="multipart/form-data" asp-controller="Propiedad" asp-action="@(editMode ? "EditarPropiedad" : "CrearPropiedad")">
+                                
+                            @if(editMode)
+                            {
+                                <input type="hidden" value="@Model.Identifier" asp-for="Identifier"/>
+                            }
 
                             <div class="mb-2">
                                 <select asp-for="TipoPropiedadId" class="form-select">
@@ -105,7 +110,7 @@
                             <input type="hidden" name="userId" value="@user.Id"/>
 
                             <div class="d-flex  justify-content-end align-items-end mt-3" style="gap:10px ;">
-                                <a asp-controller="Admin" asp-action="ListadoDesarrolladores" class="btn btn-secondary  font-weight-bold">Cancelar</a>
+                                <a asp-controller="Propiedad" asp-action="Index" class="btn btn-secondary  font-weight-bold">Volver Atras</a>
                                 <button type="submit" class="btn btn-primary  font-weight-bold" style="background-color:#023e8a">Agregar</button>
                             </div>
                         </form>

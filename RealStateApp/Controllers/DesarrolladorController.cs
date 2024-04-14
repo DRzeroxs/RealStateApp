@@ -81,6 +81,8 @@ namespace RealStateApp.Controllers
         [HttpPost]
         public async Task<IActionResult> EditarDesarrolladorPost(UserPostViewModel vm)
         {
+            if (!ModelState.IsValid) return View("CrearDesarrollador",vm);
+
             await _userService.EditarUsuario(vm);
 
             return RedirectToAction("ListadoDesarrolladores", "Admin");

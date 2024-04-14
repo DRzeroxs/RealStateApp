@@ -62,7 +62,7 @@ namespace RealStateApp.Controllers
         {
             if(!ModelState.IsValid)
             {
-                return View();
+                return View(vm);
             }
             var origin = Request.Headers["origin"];
 
@@ -71,7 +71,7 @@ namespace RealStateApp.Controllers
 
             RegistrerResponse response = await _userServices.RegisterAdminAsync(registrerVm, origin);
           
-            return RedirectToAction("CrearAdministrador");  
+            return RedirectToAction("ListadoAdministradores");  
         }
         public async Task<IActionResult> ActivarAdmin(string userId)
         {
@@ -108,6 +108,8 @@ namespace RealStateApp.Controllers
         [HttpPost]
         public async Task<IActionResult> EditarAdminPost(UserPostViewModel vm)
         {
+            if(!ModelState.IsValid) return View("CrearAdministrador", vm); 
+
             await _userServices.EditarUsuario(vm);
 
             return RedirectToAction("ListadoAdministradores");

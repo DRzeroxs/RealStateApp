@@ -5,6 +5,7 @@ using RealStateApp.Core.Application.Helpers;
 using RealStateApp.Core.Application.Interfaces.IServices;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Agente;
 using RealStateApp.Core.Application.ViewModel.Propiedad;
+using System.Numerics;
 
 namespace RealStateApp.Controllers
 {
@@ -186,7 +187,7 @@ namespace RealStateApp.Controllers
         }
 
         [HttpPost, ActionName("Eliminar")]
-        [ValidateAntiForgeryToken]
+       // [ValidateAntiForgeryToken]
         public async Task<IActionResult> EliminarPropiedad(int id)
         {
             if (id == 0)
