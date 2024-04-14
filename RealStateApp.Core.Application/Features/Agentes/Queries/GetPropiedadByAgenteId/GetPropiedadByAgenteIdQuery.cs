@@ -68,20 +68,16 @@ namespace RealStateApp.Core.Application.Features.Agentes.Queries.GetPropiedadByA
                 Descripcion = propiedadByAgente.Propiedad.TipoVenta.Descripcion,
             };
 
-            //propiedadByAgenteDto.Mejora.Select(x => new MejoraViewModel
-            //{
-            //    Id = propiedadByAgente.Propiedad.MejorasAplicadas.Mejora.Id,
-            //    Nombre = propiedadByAgente.Propiedad.MejorasAplicadas.Mejora.Nombre,
-            //    Descripcion = propiedadByAgente.Propiedad.MejorasAplicadas.Mejora.Descripcion
-            //}).ToList();
 
-            var mejora = await _mejoraRepository.GetAll();
-            propiedadByAgenteDto.Mejora = mejora.Select(x => new MejoraViewModel
+            // Obtener todas las mejoras aplicadas a la propiedad
+            var mejorasAplicadas = propiedadByAgente.Propiedad.MejorasAplicadas;
+
+            // Construir lista de MejoraViewModel
+            propiedadByAgenteDto.Mejora = mejorasAplicadas.Select(ma => new MejoraViewModel
             {
-                Id = propiedadByAgente.Propiedad.MejorasAplicadas.Mejora.Id,
-                Nombre = propiedadByAgente.Propiedad.MejorasAplicadas.Mejora.Nombre,
-                Descripcion = propiedadByAgente.Propiedad.MejorasAplicadas.Mejora.Descripcion
-
+                Id = ma.Mejora.Id,
+                Nombre = ma.Mejora.Nombre,
+                Descripcion = ma.Mejora.Descripcion
             }).ToList();
 
             return propiedadByAgenteDto;
