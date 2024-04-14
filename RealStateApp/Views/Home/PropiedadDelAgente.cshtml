@@ -7,7 +7,7 @@
 <section class="contenedor">
     @foreach (var item in Model)
     {
-        <a asp-action="detalles" asp-controller="Home" asp-route-id="@item.Id" class="ancher">
+        <a asp-action="detalles" asp-controller="Home" asp-route-id="@item.Id" class="ancher" style="text-decoration: none;">
             <div class="card">
                 <img class="card__img" src="@item.ImgUrl.UrlImg" alt="" />
                 <h2 class="card__tipo-propiedad"><small class="p0 mr-2" style="color: #909090">Tipo:</small> @item.TipoPropiedad.Nombre</h2>
