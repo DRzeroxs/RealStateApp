@@ -127,25 +127,9 @@ namespace RealStateApp.Core.Application.Services
 
             await _repository.UpdateAsync(propiedad, ID);
 
-            List<string> rutaImg = FileManager.UploadFiles(vm.Files, propiedad.Id);
+            await ActualizarImagenesEnPropiedad(vm, propiedad.Id);
 
-            List<ImgPropiedad> ImgAntiguas = await _imgPropiedadRepository.GetImgPropiedadByPropiedadId(propiedad.Id);
-
-            foreach (var item in ImgAntiguas)
-            {
-                await _imgPropiedadRepository.DeleteAsync(item);
-            }
-
-            foreach (var url in rutaImg)
-            {
-                ImgPropiedad imgPropiedad = new ImgPropiedad
-                {
-                    PropieadId = propiedad.Id,
-                    UrlImg = url
-                };
-
-                await _imgPropiedadRepository.AddAsync(imgPropiedad);
-            }
+            await ActualizarImagenesEnPropiedad(vm, propiedad.Id);
         }   
 
         public override async Task<PropiedadViewModel> GetByIdAsync(int Id)
@@ -1017,6 +1001,56 @@ namespace RealStateApp.Core.Application.Services
             return propiedades.ToList();
         }
 
+        #endregion
+
+        #region Actualizar mejoras e imagenes
+
+        private async Task ActualizarMejorasAplicadasEnPropiedad(SavePropiedadViewModel vm, int propiedadId)
+        {
+
+            List<MejorasAplicadas> MejorasAntiguas = await _mejorasAplicadasRepository.GetMejorasAplicadasByPropiedadId(propiedadId);
+
+
+            foreach (var item in MejorasAntiguas)
+            {
+                await _mejorasAplicadasRepository.DeleteAsync(item);
+            }
+
+
+            foreach (var mejoraId in vm.Mejoras)
+            {
+                MejorasAplicadas mejora = new MejorasAplicadas
+                {
+                    PropiedadId = propiedadId,
+                    MejoraId = mejoraId
+                };
+
+                await _mejorasAplicadasRepository.AddAsync(mejora);
+            }
+
+        }
+
+        private async Task ActualizarImagenesEnPropiedad(SavePropiedadViewModel vm, int propiedadId)
+        {
+            List<string> rutaImg = FileManager.UploadFiles(vm.Files, propiedadId);
+            List<ImgPropiedad> ImgAntiguas = await _imgPropiedadRepository.GetImgPropiedadByPropiedadId(propiedadId);
+
+            foreach (var item in ImgAntiguas)
+            {
+                await _imgPropiedadRepository.DeleteAsync(item);
+            }
+
+            foreach (var url in rutaImg)
+            {
+                ImgPropiedad imgPropiedad = new ImgPropiedad
+                {
+                    PropieadId = propiedadId,
+                    UrlImg = url
+                };
+
+                await _imgPropiedadRepository.AddAsync(imgPropiedad);
+            }
+        }
         #endregion
     }
 }
