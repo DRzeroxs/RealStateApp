@@ -14,7 +14,7 @@
     <div class="mb-4 col-4">
         <form asp-controller="Home" asp-action="BuscarPorCodigo" method="post">
             <div class="d-flex">
-                <input type="text" class="form-control me-2" placeholder="Buscar por codigo" />
+                <input type="text" name="identifier" class="form-control me-2" placeholder="Buscar por codigo" />
                 <button type="submit" class="btn btn-outline-success"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </form>
@@ -127,7 +127,7 @@
                     </p>
                     @if (isCliente is not false)
                     {
-                        <form asp-controller="Cliente" asp-action="Favorita">
+                        <form asp-controller="Cliente" asp-action="Favorita" method="post">
                             <input name="propiedadId" value="@item.Id" type="hidden" />
 
                             <input name="userId" value="@user.Id" type="hidden" />

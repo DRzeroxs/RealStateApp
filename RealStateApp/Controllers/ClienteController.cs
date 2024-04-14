@@ -25,6 +25,8 @@ namespace RealStateApp.Controllers
         {
             return View();
         }
+
+        [HttpPost]
         public async Task<IActionResult> Favorita(int propiedadId, string userId)
         {
             var cliente = await _clienteService.GetClientePorIdentityId(userId);
