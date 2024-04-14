@@ -23,6 +23,7 @@ namespace RealStateApp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [SwaggerOperation(Summary = "Listado de agentes", Description = "Obtiene un listado de todos los agentes")]
         public async Task<IActionResult> List()
         {
@@ -37,6 +38,7 @@ namespace RealStateApp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [SwaggerOperation(Summary = "Agente por id", Description = "Obtiene un agente por el id del mismo")]
 
         public async Task<IActionResult> GetById(int id)
@@ -52,6 +54,7 @@ namespace RealStateApp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [SwaggerOperation(Summary = "Propiedad por el id del agente", Description = "Obtiene una propiedad por el id del agente")]
 
         public async Task<IActionResult> GetAgentProperty(int id)

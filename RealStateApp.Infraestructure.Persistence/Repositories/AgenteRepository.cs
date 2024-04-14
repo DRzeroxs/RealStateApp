@@ -32,6 +32,7 @@ namespace RealStateApp.Infraestructure.Persistence.Repositories
                 .Include(x => x.Propiedad)
                 .Include(x => x.Propiedad.TipoPropiedad)
                 .Include(x => x.Propiedad.TipoVenta)
+                .Include(x => x.Propiedad.MejorasAplicadas.Mejora)
                 .ToListAsync();
             return agente.FirstOrDefault(x => x.Id == id);
         }

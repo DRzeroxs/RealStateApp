@@ -2,9 +2,11 @@
 using RealStateApp.Core.Application.Dto.Agente;
 using RealStateApp.Core.Application.Exceptions;
 using RealStateApp.Core.Application.Interfaces.IRepository;
+using RealStateApp.Core.Application.ViewModel.Mejora;
 using RealStateApp.Core.Application.ViewModel.TipoPropiedad;
 using RealStateApp.Core.Application.ViewModel.TipoVenta;
 using RealStateApp.Core.Application.Wrappers;
+using RealStateApp.Core.Domain.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
@@ -27,9 +29,11 @@ namespace RealStateApp.Core.Application.Features.Agentes.Queries.GetPropiedadByA
     public class GetPropiedadByAgenteIdQueryHandler : IRequestHandler<GetPropiedadByAgenteIdQuery, Response<PropiedadByAgenteDto>>
     {
         private readonly IAgenteRepository _agenteRepository;
-        public GetPropiedadByAgenteIdQueryHandler(IAgenteRepository agenteRepository)
+        private readonly IMejoraRepository _mejoraRepository;
+        public GetPropiedadByAgenteIdQueryHandler(IAgenteRepository agenteRepository, IMejoraRepository mejoraRepository)
         {
             _agenteRepository = agenteRepository;
+            _mejoraRepository = mejoraRepository;
         }
         public async Task<Response<PropiedadByAgenteDto>> Handle(GetPropiedadByAgenteIdQuery request, CancellationToken cancellationToken)
         {
@@ -63,7 +67,22 @@ namespace RealStateApp.Core.Application.Features.Agentes.Queries.GetPropiedadByA
                 Nombre = propiedadByAgente.Propiedad.TipoVenta.Nombre,
                 Descripcion = propiedadByAgente.Propiedad.TipoVenta.Descripcion,
             };
-            
+
+            //propiedadByAgenteDto.Mejora.Select(x => new MejoraViewModel
+            //{
+            //    Id = propiedadByAgente.Propiedad.MejorasAplicadas.Mejora.Id,
+            //    Nombre = propiedadByAgente.Propiedad.MejorasAplicadas.Mejora.Nombre,
+            //    Descripcion = propiedadByAgente.Propiedad.MejorasAplicadas.Mejora.Descripcion
+            //}).ToList();
+
+            var mejora = await _mejoraRepository.GetAll();
+            propiedadByAgenteDto.Mejora = mejora.Select(x => new MejoraViewModel
+            {
+                Id = propiedadByAgente.Propiedad.MejorasAplicadas.Mejora.Id,
+                Nombre = propiedadByAgente.Propiedad.MejorasAplicadas.Mejora.Nombre,
+                Descripcion = propiedadByAgente.Propiedad.MejorasAplicadas.Mejora.Descripcion
+
+            }).ToList();
 
             return propiedadByAgenteDto;
         }
