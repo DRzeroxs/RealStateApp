@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RealStateApp.Core.Application.Dto.Account;
 using RealStateApp.Core.Application.Interfaces.IAccount;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace RealStateApp.Api.Controllers
 {
@@ -17,6 +18,10 @@ namespace RealStateApp.Api.Controllers
         }
 
         [HttpPost("authenticate")]
+        [SwaggerOperation(
+            Summary = "Autenticar un usuario",
+            Description = "Autenticar un usuario en el sistema"
+            )]
         public async Task<IActionResult> AuthenticateAsync(AuthenticationRequest request)
         {
             return Ok(await _accountServices.AuthenticateASYNC(request));
@@ -27,6 +32,10 @@ namespace RealStateApp.Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [SwaggerOperation(
+            Summary = "Registra a un usuario administrador",
+            Description = "Registra a un usuario administrador en el sistema"
+            )]
         public async Task<IActionResult> RegistroAdministrador(RegistrerRequest request)
         {
             var origin = Request.Headers["Origin"];
@@ -37,6 +46,10 @@ namespace RealStateApp.Api.Controllers
         }
 
         [HttpPost("RegistroDesarrollador")]
+        [SwaggerOperation(
+            Summary = "Autenticar un usuario desarrollador",
+            Description = "Autenticar un usuario desarrollador en el sistema"
+            )]
         public async Task<IActionResult> RegistroDesarrollador(RegistrerRequest request)
         {
             var origin = Request.Headers["Origin"];
