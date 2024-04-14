@@ -22,81 +22,6 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ClienteFavorita", b =>
-                {
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FavoritaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ClienteId", "FavoritaId");
-
-                    b.HasIndex("FavoritaId");
-
-                    b.ToTable("ClienteFavorita");
-                });
-
-            modelBuilder.Entity("FavoritaPropiedad", b =>
-                {
-                    b.Property<int>("FavoritaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PropiedadId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FavoritaId", "PropiedadId");
-
-                    b.HasIndex("PropiedadId");
-
-                    b.ToTable("FavoritaPropiedad");
-                });
-
-            modelBuilder.Entity("ImgPropiedadPropiedad", b =>
-                {
-                    b.Property<int>("ImgPropiedadId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PropiedadId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ImgPropiedadId", "PropiedadId");
-
-                    b.HasIndex("PropiedadId");
-
-                    b.ToTable("ImgPropiedadPropiedad");
-                });
-
-            modelBuilder.Entity("MejoraMejorasAplicadas", b =>
-                {
-                    b.Property<int>("MejoraId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MejorasAplicadasId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MejoraId", "MejorasAplicadasId");
-
-                    b.HasIndex("MejorasAplicadasId");
-
-                    b.ToTable("MejoraMejorasAplicadas");
-                });
-
-            modelBuilder.Entity("MejorasAplicadasPropiedad", b =>
-                {
-                    b.Property<int>("MejorasAplicadasId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PropiedadId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MejorasAplicadasId", "PropiedadId");
-
-                    b.HasIndex("PropiedadId");
-
-                    b.ToTable("MejorasAplicadasPropiedad");
-                });
-
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Descripcion.ImgPropiedad", b =>
                 {
                     b.Property<int>("Id")
@@ -125,6 +50,8 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PropieadId");
 
                     b.ToTable("ImgPropiedades");
                 });
@@ -221,6 +148,10 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClienteId");
+
+                    b.HasIndex("PropiedadId");
+
                     b.ToTable("Favoritas");
                 });
 
@@ -283,6 +214,10 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MejoraId");
+
+                    b.HasIndex("PropiedadId");
 
                     b.ToTable("MejorasAplicadas");
                 });
@@ -491,79 +426,53 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("ClienteFavorita", b =>
+            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Descripcion.ImgPropiedad", b =>
                 {
-                    b.HasOne("RealStateApp.Core.Domain.Entities.Users.Cliente", null)
-                        .WithMany()
+                    b.HasOne("RealStateApp.Core.Domain.Entities.Propiedad", "Propiedad")
+                        .WithMany("ImgPropiedades")
+                        .HasForeignKey("PropieadId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Propiedad");
+                });
+
+            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Favorita", b =>
+                {
+                    b.HasOne("RealStateApp.Core.Domain.Entities.Users.Cliente", "Cliente")
+                        .WithMany("Favoritas")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RealStateApp.Core.Domain.Entities.Favorita", null)
-                        .WithMany()
-                        .HasForeignKey("FavoritaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FavoritaPropiedad", b =>
-                {
-                    b.HasOne("RealStateApp.Core.Domain.Entities.Favorita", null)
-                        .WithMany()
-                        .HasForeignKey("FavoritaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RealStateApp.Core.Domain.Entities.Propiedad", null)
-                        .WithMany()
+                    b.HasOne("RealStateApp.Core.Domain.Entities.Propiedad", "Propiedad")
+                        .WithMany("Favoritas")
                         .HasForeignKey("PropiedadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Propiedad");
                 });
 
-            modelBuilder.Entity("ImgPropiedadPropiedad", b =>
+            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.MejorasAplicadas", b =>
                 {
-                    b.HasOne("RealStateApp.Core.Domain.Entities.Descripcion.ImgPropiedad", null)
-                        .WithMany()
-                        .HasForeignKey("ImgPropiedadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RealStateApp.Core.Domain.Entities.Propiedad", null)
-                        .WithMany()
-                        .HasForeignKey("PropiedadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MejoraMejorasAplicadas", b =>
-                {
-                    b.HasOne("RealStateApp.Core.Domain.Entities.Mejora", null)
-                        .WithMany()
+                    b.HasOne("RealStateApp.Core.Domain.Entities.Mejora", "Mejora")
+                        .WithMany("MejorasAplicadas")
                         .HasForeignKey("MejoraId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RealStateApp.Core.Domain.Entities.MejorasAplicadas", null)
-                        .WithMany()
-                        .HasForeignKey("MejorasAplicadasId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MejorasAplicadasPropiedad", b =>
-                {
-                    b.HasOne("RealStateApp.Core.Domain.Entities.MejorasAplicadas", null)
-                        .WithMany()
-                        .HasForeignKey("MejorasAplicadasId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RealStateApp.Core.Domain.Entities.Propiedad", null)
-                        .WithMany()
+                    b.HasOne("RealStateApp.Core.Domain.Entities.Propiedad", "Propiedad")
+                        .WithMany("MejorasAplicadas")
                         .HasForeignKey("PropiedadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Mejora");
+
+                    b.Navigation("Propiedad");
                 });
 
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Propiedad", b =>
@@ -605,10 +514,29 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Mejora", b =>
+                {
+                    b.Navigation("MejorasAplicadas");
+                });
+
+            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Propiedad", b =>
+                {
+                    b.Navigation("Favoritas");
+
+                    b.Navigation("ImgPropiedades");
+
+                    b.Navigation("MejorasAplicadas");
+                });
+
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Users.Agente", b =>
                 {
                     b.Navigation("Propiedad")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Users.Cliente", b =>
+                {
+                    b.Navigation("Favoritas");
                 });
 #pragma warning restore 612, 618
         }

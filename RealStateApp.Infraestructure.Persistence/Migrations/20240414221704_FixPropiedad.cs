@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RealStateApp.Infraestructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class FixDePropiedad : Migration
+    public partial class FixPropiedad : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -80,42 +80,6 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Favoritas",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PropiedadId = table.Column<int>(type: "int", nullable: false),
-                    ClienteId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LastModifiedby = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Favoritas", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ImgPropiedades",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UrlImg = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PropieadId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LastModifiedby = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ImgPropiedades", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Mejoras",
                 columns: table => new
                 {
@@ -131,24 +95,6 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Mejoras", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MejorasAplicadas",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PropiedadId = table.Column<int>(type: "int", nullable: false),
-                    MejoraId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LastModifiedby = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MejorasAplicadas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,54 +131,6 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TiposVenta", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ClienteFavorita",
-                columns: table => new
-                {
-                    ClienteId = table.Column<int>(type: "int", nullable: false),
-                    FavoritaId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ClienteFavorita", x => new { x.ClienteId, x.FavoritaId });
-                    table.ForeignKey(
-                        name: "FK_ClienteFavorita_Clientes_ClienteId",
-                        column: x => x.ClienteId,
-                        principalTable: "Clientes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ClienteFavorita_Favoritas_FavoritaId",
-                        column: x => x.FavoritaId,
-                        principalTable: "Favoritas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MejoraMejorasAplicadas",
-                columns: table => new
-                {
-                    MejoraId = table.Column<int>(type: "int", nullable: false),
-                    MejorasAplicadasId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MejoraMejorasAplicadas", x => new { x.MejoraId, x.MejorasAplicadasId });
-                    table.ForeignKey(
-                        name: "FK_MejoraMejorasAplicadas_MejorasAplicadas_MejorasAplicadasId",
-                        column: x => x.MejorasAplicadasId,
-                        principalTable: "MejorasAplicadas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MejoraMejorasAplicadas_Mejoras_MejoraId",
-                        column: x => x.MejoraId,
-                        principalTable: "Mejoras",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -279,23 +177,29 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FavoritaPropiedad",
+                name: "Favoritas",
                 columns: table => new
                 {
-                    FavoritaId = table.Column<int>(type: "int", nullable: false),
-                    PropiedadId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PropiedadId = table.Column<int>(type: "int", nullable: false),
+                    ClienteId = table.Column<int>(type: "int", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedby = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FavoritaPropiedad", x => new { x.FavoritaId, x.PropiedadId });
+                    table.PrimaryKey("PK_Favoritas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FavoritaPropiedad_Favoritas_FavoritaId",
-                        column: x => x.FavoritaId,
-                        principalTable: "Favoritas",
+                        name: "FK_Favoritas_Clientes_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Clientes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_FavoritaPropiedad_Propiedades_PropiedadId",
+                        name: "FK_Favoritas_Propiedades_PropiedadId",
                         column: x => x.PropiedadId,
                         principalTable: "Propiedades",
                         principalColumn: "Id",
@@ -303,47 +207,53 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ImgPropiedadPropiedad",
+                name: "ImgPropiedades",
                 columns: table => new
                 {
-                    ImgPropiedadId = table.Column<int>(type: "int", nullable: false),
-                    PropiedadId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UrlImg = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PropieadId = table.Column<int>(type: "int", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedby = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ImgPropiedadPropiedad", x => new { x.ImgPropiedadId, x.PropiedadId });
+                    table.PrimaryKey("PK_ImgPropiedades", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ImgPropiedadPropiedad_ImgPropiedades_ImgPropiedadId",
-                        column: x => x.ImgPropiedadId,
-                        principalTable: "ImgPropiedades",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ImgPropiedadPropiedad_Propiedades_PropiedadId",
-                        column: x => x.PropiedadId,
+                        name: "FK_ImgPropiedades_Propiedades_PropieadId",
+                        column: x => x.PropieadId,
                         principalTable: "Propiedades",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MejorasAplicadasPropiedad",
+                name: "MejorasAplicadas",
                 columns: table => new
                 {
-                    MejorasAplicadasId = table.Column<int>(type: "int", nullable: false),
-                    PropiedadId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PropiedadId = table.Column<int>(type: "int", nullable: false),
+                    MejoraId = table.Column<int>(type: "int", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedby = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MejorasAplicadasPropiedad", x => new { x.MejorasAplicadasId, x.PropiedadId });
+                    table.PrimaryKey("PK_MejorasAplicadas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MejorasAplicadasPropiedad_MejorasAplicadas_MejorasAplicadasId",
-                        column: x => x.MejorasAplicadasId,
-                        principalTable: "MejorasAplicadas",
+                        name: "FK_MejorasAplicadas_Mejoras_MejoraId",
+                        column: x => x.MejoraId,
+                        principalTable: "Mejoras",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MejorasAplicadasPropiedad_Propiedades_PropiedadId",
+                        name: "FK_MejorasAplicadas_Propiedades_PropiedadId",
                         column: x => x.PropiedadId,
                         principalTable: "Propiedades",
                         principalColumn: "Id",
@@ -351,28 +261,28 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClienteFavorita_FavoritaId",
-                table: "ClienteFavorita",
-                column: "FavoritaId");
+                name: "IX_Favoritas_ClienteId",
+                table: "Favoritas",
+                column: "ClienteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FavoritaPropiedad_PropiedadId",
-                table: "FavoritaPropiedad",
+                name: "IX_Favoritas_PropiedadId",
+                table: "Favoritas",
                 column: "PropiedadId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ImgPropiedadPropiedad_PropiedadId",
-                table: "ImgPropiedadPropiedad",
-                column: "PropiedadId");
+                name: "IX_ImgPropiedades_PropieadId",
+                table: "ImgPropiedades",
+                column: "PropieadId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MejoraMejorasAplicadas_MejorasAplicadasId",
-                table: "MejoraMejorasAplicadas",
-                column: "MejorasAplicadasId");
+                name: "IX_MejorasAplicadas_MejoraId",
+                table: "MejorasAplicadas",
+                column: "MejoraId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MejorasAplicadasPropiedad_PropiedadId",
-                table: "MejorasAplicadasPropiedad",
+                name: "IX_MejorasAplicadas_PropiedadId",
+                table: "MejorasAplicadas",
                 column: "PropiedadId");
 
             migrationBuilder.CreateIndex(
@@ -398,34 +308,19 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                 name: "Administradores");
 
             migrationBuilder.DropTable(
-                name: "ClienteFavorita");
-
-            migrationBuilder.DropTable(
-                name: "FavoritaPropiedad");
-
-            migrationBuilder.DropTable(
-                name: "ImgPropiedadPropiedad");
-
-            migrationBuilder.DropTable(
-                name: "MejoraMejorasAplicadas");
-
-            migrationBuilder.DropTable(
-                name: "MejorasAplicadasPropiedad");
-
-            migrationBuilder.DropTable(
-                name: "Clientes");
-
-            migrationBuilder.DropTable(
                 name: "Favoritas");
 
             migrationBuilder.DropTable(
                 name: "ImgPropiedades");
 
             migrationBuilder.DropTable(
-                name: "Mejoras");
+                name: "MejorasAplicadas");
 
             migrationBuilder.DropTable(
-                name: "MejorasAplicadas");
+                name: "Clientes");
+
+            migrationBuilder.DropTable(
+                name: "Mejoras");
 
             migrationBuilder.DropTable(
                 name: "Propiedades");
