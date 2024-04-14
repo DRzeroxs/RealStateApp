@@ -88,7 +88,6 @@ namespace RealStateApp.Core.Application.Services
         public override async Task<SavePropiedadViewModel> AddAsync(SavePropiedadViewModel vm)
         {
             Propiedad propiedad = _mapper.Map<Propiedad>(vm);
-
             propiedad = await _repository.AddAsync(propiedad);
 
             foreach (var mejoraId in vm.Mejoras)
@@ -103,6 +102,7 @@ namespace RealStateApp.Core.Application.Services
             }
 
             List<string> rutaImg = FileManager.UploadFiles(vm.Files, propiedad.Id);
+            List<ImgPropiedad> imgPropiedades = new List<ImgPropiedad>();
 
             foreach (var url in rutaImg)
             {
@@ -117,9 +117,10 @@ namespace RealStateApp.Core.Application.Services
 
             SavePropiedadViewModel propiedadVm = _mapper.Map<SavePropiedadViewModel>(propiedad);
             propiedadVm.ImgUrls = rutaImg;
-    
+
             return propiedadVm;
         }
+
 
         public override async Task UpdateAsync(SavePropiedadViewModel vm, int ID)
         {

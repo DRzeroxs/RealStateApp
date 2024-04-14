@@ -74,6 +74,8 @@ namespace RealStateApp.Controllers
 
             savePropiedadViewModel.AgenteId = agente.Id;
 
+
+
             SavePropiedadViewModel savedVm = await _propiedadService.AddAsync(savePropiedadViewModel);
 
             if (savedVm == null)

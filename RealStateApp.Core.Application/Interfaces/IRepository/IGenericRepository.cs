@@ -13,5 +13,7 @@ namespace RealStateApp.Core.Application.Interfaces.IRepository
         Task<List<Entity>> GetAll();
         Task<Entity> GetById(int id);
         Task UpdateAsync(Entity entity, int id);
+
+        Task AddRangeAsync(IEnumerable<Entity> entities);
     }
 }
