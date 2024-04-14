@@ -4,7 +4,8 @@
 @{
     var user = httpContext.HttpContext.Session.get<AuthenticationResponse>("User");
     var isCliente = user != null ? user.Roles.Any(r => r == "Cliente") : false;
-    var isBasic = user != null ? user.Roles.Any(r => r == "Basic") : false;
+    var isAdmin = user != null ? user.Roles.Any(r => r == "Admin") : false;
+    var isAgente = user != null ? user.Roles.Any(r => r == "Agente") : false;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -15,30 +16,53 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/RealStateApp.styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+       @*  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">RealStateApp</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-building"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Registrer">Registro</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Agentes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Registro</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Registrer">Unete a la App</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Iniciar Sesion</a>
+                        </li>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+                    <ul class="navbar-nav flex-grow-1">
+                        @if(user == null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Registrer">Registro</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
+                            </li>
+                        }
 
                         @if(isCliente is not false)
                         {
@@ -51,29 +75,155 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Mis Propiedades</a>
+                                <a class="nav-link text-dark" asp-area="" asp-route-userId="@user.Id" asp-controller="Cliente" asp-action="PropiedadesFavoritas">Mis Propiedades</a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CerrarSesion">Cerrar Sesion</a>
                             </li>
+
                         }
+
+                        @if (isAgente is not false)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-route-userId="@user.Id" asp-controller="User" asp-action="EditUser">Editar Usuario</a>
+                            </li>
+                        }
+
+                        @if(isAdmin is not false)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Home Administrador</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListadoAgentes">Listado de los Agentes</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-route-userId="@user.Id" asp-controller="Admin" asp-action="ListadoAdministradores">Mantenimiento de Administradores</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListadoDesarrolladores">Mantenimiento de Desarrolladores</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="TiposPropiedades" asp-action="ListadoTipoPropiedades">Mantenimiento de Tipos de Propiedades</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="TipoVentas" asp-action="ListadoTipoVentas">Mantenimiento de Tipos de Ventas</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Mejora" asp-action="ListadoMejoras">Mantenimiento de Mejoras</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CerrarSesion">Cerrar Sesion</a>
+                            </li>
+
+                        }
+
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> *@ 
+
+        <!-- Navbar Start -->
+        <div class="container-fluid nav-bar bg-transparent">
+            <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
+                <a asp-controller="Home" asp-action="Index" class="navbar-brand d-flex align-items-center text-center">
+                    <div class="icon p-2 me-2">
+                        <img class="img-fluid" src="~/css/tucasa_v2.png" alt="Icon" style="width: 60px; height: 60px;">
+                    </div>
+                    </a>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        @if(isAdmin is not false || isAgente is not false || isCliente is not false)
+                        {
+                            <div style="display: none;">
+                                <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Agente" asp-action="Index">Agentes</a>
+                                <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="Registrer">Unete a la APP</a>
+                                <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="Login">Iniciar Sesion</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Agente" asp-action="Index">Agentes</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="Registrer">Unete a la APP</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="Login">Iniciar Sesion</a>
+
+
+                        }
+
+
+                        @if(isAgente is not false)
+                        {
+                                <a class=" nav-item nav-link fw-bold" style="color:#023e8a" asp-area="" asp-route-userId="@user.Id" asp-controller="Propiedad" asp-action="PropiedadesDelAgente">Home</a>
+                                <a class=" nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-route-userId="@user.Id" asp-controller="User" asp-action="EditUser">Perfil</a>
+                                <a class=" nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Propiedad" asp-action="Index">Propiedades</a>
+                                <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="CerrarSesion">Cerrar Sesion</a>
+                        }
+
+                        @if(isCliente is not false)
+                        {
+                            <a class="nav-item nav-link fw-bold" style="color:#023e8a" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                              <a class="nav-item nav-link fw-bold"  style="color: #023e8a" asp-area="" asp-controller="Agente" asp-action="Index">Agentes</a>
+                              <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-route-userId="@user.Id" asp-controller="Cliente" asp-action="PropiedadesFavoritas">Mis Propiedades</a>
+                              <a class="nav-item nav-link fw-bold"  style="color: #023e8a" asp-area="" asp-controller="User" asp-action="CerrarSesion">Cerrar Sesion</a>
+
+                        }
+
+
+                        @if(isAdmin is not false)
+                        {
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Admin" asp-action="Index">Home</a>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Admin" asp-action="ListadoAgentes">Listado de Agentes</a>
+
+                                <div class="dropdown">
+                                    <a class="nav-item nav-link fw-bold dropdown-toggle" style="color: #023e8a" asp-area="" asp-controller="Customer" asp-action="Index" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Mantenimientos
+                                    </a>
+
+                                    <ul class="dropdown-menu" style="margin: auto; padding: 10px;" aria-labelledby="dropdownMenuLink">
+
+                                        <a class="nav-item nav-link fw-bold" style="color: #023e8a;" asp-area="" asp-controller="Admin" asp-action="ListadoAdministradores">Administradores</a>
+                                        <a class="nav-item nav-link fw-bold" style="color: #023e8a;" asp-area="" asp-controller="Admin" asp-action="ListadoDesarrolladores">Desarrolladores</a>
+                                        <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="TiposPropiedades" asp-action="ListadoTipoPropiedades">TipoPropiedades</a>
+                                        <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="TipoVentas" asp-action="ListadoTipoVentas">Tipo de Ventas</a>
+                                        <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="Mejora" asp-action="ListadoMejoras">Mejoras</a>
+
+                                    </ul>
+                                </div>
+                            <a class="nav-item nav-link fw-bold" style="color: #023e8a" asp-area="" asp-controller="User" asp-action="CerrarSesion">Cerrar Sesion</a>
+                        }
+                    </div>
+                    
+
+                </div>
+            </nav>
+        </div>
+        <!-- Navbar End -->
     </header>
-    <div class="container">
+    <div class="container m-4">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+   @*  <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - RealStateApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer> *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

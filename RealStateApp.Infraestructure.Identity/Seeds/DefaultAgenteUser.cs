@@ -27,9 +27,11 @@ namespace RealStateApp.Infraestructure.Identity.Seeds
 
             defaultUser.PhoneNumber = "8093334554";
 
-            defaultUser.ImgUrl = string.Empty;
+            defaultUser.ImgUrl = "https://blog.remaxrd.com/wp-content/uploads/2021/11/asesor-inmobiliario.jpg";
 
             defaultUser.TypeOfUser = "Agente";
+
+            defaultUser.Cedula = "40226271827";
 
             defaultUser.IsActive = true;
 

@@ -9,5 +9,8 @@ namespace RealStateApp.Core.Application.Interfaces.IRepository
 {
     public interface IMejorasAplicadasRepository : IGenericRepository<MejorasAplicadas>
     {
+        Task<List<MejorasAplicadas>> GetMejorasAplicadasByPropiedadId(int PropiedadId);
+
+        Task AgregarMejorasdePropiedad(int PropiedadId, List<int> MejoraId);
     }
 }

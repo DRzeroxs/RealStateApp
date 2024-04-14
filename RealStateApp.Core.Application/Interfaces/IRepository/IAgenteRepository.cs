@@ -12,5 +12,7 @@ namespace RealStateApp.Core.Application.Interfaces.IRepository
         Task<int> GetCantidadPropiedadAgenteById(int id);
         Task<int> GetCantidadPropiedadAgente();
         Task<Agente> GetPropiedadByAgenteId(int id);
+        Task<Agente> GetAgenteByNombre(string nombre);
+        
     }
 }

@@ -15,5 +15,6 @@ namespace RealStateApp.Core.Domain.Entities.Users
 
         [InverseProperty(nameof(Agente))]
         public Propiedad Propiedad { get; set; }
+ 
     }
 }

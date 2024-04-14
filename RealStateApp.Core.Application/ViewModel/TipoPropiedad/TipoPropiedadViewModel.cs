@@ -9,5 +9,6 @@ namespace RealStateApp.Core.Application.ViewModel.TipoPropiedad
 {
     public class TipoPropiedadViewModel : BaseDescripcionViewModel
     {
+         
     }
 }

@@ -12,6 +12,8 @@ namespace RealStateApp.Core.Application.ViewModel.AppUsers.Agente
     {
         public string ImgUrl { get; set; }  
         public string Telefono { get; set; }
+        public bool HasError { get; set; }
+        public string? Error {  get; set; }
         public List<PropiedadViewModel>? Propiedades { get; set; }  
     }
 }

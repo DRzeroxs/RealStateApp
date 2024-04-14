@@ -22,5 +22,6 @@ namespace RealStateApp.Core.Application.Dto.Agente
         public int NumAceados { get; set; }
         public TipoPropiedadViewModel TipoPropiedad { get; set; }
         public TipoVentaViewModel TipoVenta { get; set; }
+        public List<MejoraViewModel>? Mejora {  get; set; }
     }
 }

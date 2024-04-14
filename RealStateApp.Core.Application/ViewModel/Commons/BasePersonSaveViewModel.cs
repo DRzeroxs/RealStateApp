@@ -30,5 +30,6 @@ namespace RealStateApp.Core.Application.ViewModel.Commons
         [Required(ErrorMessage = "El campo Cedula es requerido")]
         [DataType(DataType.Text)]
         public string Cedula { get; set; }
+        public bool? IsActive { get; set; }  
     }
 }

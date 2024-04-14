@@ -11,5 +11,6 @@ namespace RealStateApp.Core.Application.Interfaces.IServices
 {
     public interface IPropiedadFavoritaService : IGenericServices<FavoritaViewModel, SaveFavoritaViewModel, Favorita>
     {
+        Task<FavoritaViewModel> GetPropiedadFavoritaPorPropiedadId(int Id);
     }
 }

@@ -10,5 +10,6 @@ namespace RealStateApp.Core.Application.Interfaces.IServices
 {
     public interface ITipoPropiedadService : IGenericServices<TipoPropiedadViewModel, SaveTipoPropiedadViewModel, TipoPropiedad>
     {
+        Task<List<TipoPropiedadViewModel>> GetTipoPropiedadAsync();
     }
 }

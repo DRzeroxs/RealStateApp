@@ -12,12 +12,11 @@ namespace RealStateApp.Core.Domain.Entities.Descripcion
     {
         public string UrlImg { get; set; }
 
-        //llaves foraneas
-        [ForeignKey(nameof(Propiedad))]
+        // Llave foranea
         public int PropieadId { get; set; }
 
-        //Conductores
+        // Navegador
+        [ForeignKey(nameof(PropieadId))]
         public Propiedad Propiedad { get; set; }
-
     }
 }

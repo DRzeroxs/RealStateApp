@@ -3,9 +3,10 @@
     ViewData["Title"] = "Registrer";
 }
 
-<div class="d-flex align-items-center justify-content-center">
+@* <div class="d-flex align-items-center justify-content-center">
     <form enctype="multipart/form-data" class="d-flex flex-column w-25 m-2 formulario__registro" asp-controller="User" asp-action="Registrer">
         <h2 class="text-center mb-4 h1">Registrate</h2>
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
         <input type="text" asp-for="FirstName" placeholder="Nombre" class="fw-bold" />
         <input type="text" asp-for=LastName placeholder="Apellido" class="fw-bold mt-4" />
@@ -31,4 +32,79 @@
         </div>
     </form>
 </div>
+ *@
 
+
+<body>
+    <section>
+        <div class="row mt-3 pt-3">
+            <div class="col-6 offset-3">
+                <div class="card border-0 shadow">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h5 class="fw-bold" style="color: #023e8a">Registrarte</h5>
+                        </div>
+
+                        <form method="post" enctype="multipart/form-data" asp-controller="User" asp-action="Registrer">
+
+                            <div class="mb-2">
+                                <input asp-for="FirstName" class="form-control" placeholder="Nombre" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-2">
+                                <input asp-for="LastName" class="form-control" placeholder="Apellidos" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-2">
+                                <input asp-for="Cedula" class="form-control" placeholder="Cedula" />
+                                <span asp-validation-for="Cedula" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-2">
+                                <input type="file" asp-for="file" class="form-control" placeholder="Agrega una imagen">
+                                <span asp-validation-for="file" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-2">
+                                <input asp-for="PhoneNumber" class="form-control" placeholder="Agrega un numero telefonico">
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-2">
+                                <input asp-for="Email" class="form-control" placeholder="Correo" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-2">
+                                <input asp-for="UserName" class="form-control" placeholder="Nombre Usuario" />
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-2">
+                                <input asp-for="Password" class="form-control" placeholder="Password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-2">
+                                <input asp-for="ConfirnPassword" class="form-control" placeholder="Confirm Password" />
+                                <span asp-validation-for="ConfirnPassword" class="text-danger"></span>
+                            </div>
+
+                            <select asp-for="TypeOfUser" class="form-control">
+                                <option value="0">Seleciona un tipo de usuario</option>
+                                <option value="Agente">Agente</option>
+                                <option value="Cliente">Cliente</option>
+                            </select>
+
+                            <div class="d-flex  justify-content-end align-items-end mt-3" style="gap:10px ;">
+                                <button type="submit" class="btn btn-primary  font-weight-bold" style="background-color:#023e8a">Registrarte</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>

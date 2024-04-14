@@ -1,4 +1,5 @@
-﻿using RealStateApp.Core.Application.Interfaces.IRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using RealStateApp.Core.Application.Interfaces.IRepository;
 using RealStateApp.Core.Domain.Entities.Descripcion;
 using RealStateApp.Infraestructure.Persistence.Context;
 using System;
@@ -15,6 +16,12 @@ namespace RealStateApp.Infraestructure.Persistence.Repositories
         public ImgPropiedadRepository(ApplicationContext context) :base(context)
         {
             _Context = context;
+        }
+
+        public async Task<List<ImgPropiedad>> GetImgPropiedadByPropiedadId(int PropiedadId)
+        {
+            var result = await _Context.ImgPropiedades.Where(x => x.PropieadId == PropiedadId).ToListAsync();
+            return result;
         }
     }
 }

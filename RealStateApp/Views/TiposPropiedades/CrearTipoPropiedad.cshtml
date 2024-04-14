@@ -1,0 +1,62 @@
+﻿@model RealStateApp.Core.Application.ViewModel.TipoPropiedad.SaveTipoPropiedadViewModel;
+@{
+    ViewData["Title"] = "CrearTipoPropiedad";
+
+    bool editMode = Model.Id == 0 ? false : true;
+}
+
+@* 
+<div class="d-flex align-items-center justify-content-center container mt-4">
+    <form enctype="multipart/form-data" method="post" class="w-25 bg-succes p-3" asp-controller="TiposPropiedades" asp-action="@(editMode ? "EditarTipoPropiedad" : "CrearTipoPropiedad")">
+        <div class="p-2 bg-success mb-2 ">
+            <h1 style="color: white;" class="text-center ">Agregar Desarrollador</h1>
+        </div> @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+        <input asp-for="Nombre" class="form-control w-100 mb-3 p-2" placeholder="Nombre">
+
+         <textarea asp-for="Descripcion" class="form-control">
+
+         </textarea>
+
+
+        <div class="d-flex  justify-content-end align-items-end mt-3" style="gap:10px ;">
+            <a asp-controller="TiposPropiedades" asp-action="ListadoTipoPropiedades" class="btn btn-secondary  font-weight-bold  ">Cancelar</a>
+            <button type="submit" class="btn btn-primary  font-weight-bold">Agregar</button>
+        </div>
+    </form>
+</div>
+ *@
+
+<body>
+    <section>
+        <div class="row mt-3 pt-3">
+            <div class="col-6 offset-3">
+                <div class="card border-0 shadow">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h5 class="fw-bold" style="color: #023e8a">Tipo Propiedades</h5>
+                        </div>
+
+                        <form method="post" enctype="multipart/form-data" asp-controller="TiposPropiedades" asp-action="@(editMode ? "EditarTipoPropiedad" : "CrearTipoPropiedad")">
+
+                            <div class="mb-2">
+                                <input asp-for="Nombre" class="form-control" placeholder="Nombre" />
+                                <span asp-validation-for="Nombre" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-2">
+                                <input asp-for="Descripcion" class="form-control" placeholder="Descripcion" />
+                                <span asp-validation-for="Descripcion" class="text-danger"></span>
+
+                            </div>
+                            <div class="d-flex  justify-content-end align-items-end mt-3" style="gap:10px ;">
+                                <a asp-controller="TiposPropiedades" asp-action="ListadoTipoPropiedades" class="btn btn-secondary  font-weight-bold  ">Cancelar</a>
+                                <button type="submit" class="btn btn-primary  font-weight-bold" style="background-color:#023e8a">Agregar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>

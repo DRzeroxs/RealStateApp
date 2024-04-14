@@ -23,6 +23,22 @@ namespace RealStateApp.Infraestructure.Persistence.Repositories
             _context = context;
         }
 
+        public async Task<List<int>> GetIdentificadoresAsync()
+        {
+            var identificadores = await _context.Set<Propiedad>()
+                .Select(x => x.Identifier)
+                .ToListAsync();
+            return identificadores;
+        }
 
+        public async Task<List<Propiedad>> GetAllPropertyByAgentId(int id)
+        {
+            var propiedad = await _context.Set<Propiedad>()
+                .Where(x => x.AgenteId == id)
+                .Include(x => x.TipoPropiedad)
+                .Include(x => x.TipoVenta)
+                .ToListAsync();
+            return propiedad;
+        }
     }
 }

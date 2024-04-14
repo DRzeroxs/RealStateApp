@@ -1,0 +1,122 @@
+﻿@using Microsoft.AspNetCore.Http
+@using RealStateApp.Core.Application.Helpers;
+@using RealStateApp.Core.Application.Dto.Account
+@model RealStateApp.Core.Application.ViewModel.Propiedad.SavePropiedadViewModel
+@inject IHttpContextAccessor httpContext;
+@{
+    ViewData["Title"] = "Crear Propiedad";
+    bool editMode = Model.Id == 0 ? false : true;
+    var user = httpContext.HttpContext.Session.get<AuthenticationResponse>("User");
+    var isAgente = user != null ? user.Roles.Any(r => r == "Agente") : false;
+    var tipoVentas = @ViewBag.TipoVenta;
+    var tipoPropiedades = ViewBag.TipoPropiedad;
+    var mejoras = ViewBag.Mejoras;
+}
+
+   
+
+
+<body>
+    <section>
+        <div class="row mt-3 pt-3">
+            <div class="col-6 offset-3">
+                <div class="card border-0 shadow">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h5 class="fw-bold" style="color: #023e8a">Propiedad</h5>
+                        </div>
+
+                        <form method="post" enctype="multipart/form-data" asp-controller="Propiedad" asp-action="@(editMode ? "EditarPropiedad" : "CrearPropiedad")">
+                                
+                            @if(editMode)
+                            {
+                                <input type="hidden" value="@Model.Identifier" asp-for="Identifier"/>
+                            }
+
+                            <div class="mb-2">
+                                <select asp-for="TipoPropiedadId" class="form-select">
+                                    <option value="0">Selelciona un tipo de propiedad</option>
+                                    @foreach (var tipoPropiedad in tipoPropiedades)
+                                    {
+                                        <option value="@tipoPropiedad.Id">@tipoPropiedad.Nombre</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="TipoPropiedadId" class="text-danger"></span>
+                            </div>
+                            <div class="mb-2">
+                                <select asp-for="TipoVentaId" class="form-select">
+                                    <option value="0">Selelciona un tipo de venta</option>
+                                    @foreach (var tipoVenta in tipoVentas)
+                                    {
+                                        <option value="@tipoVenta.Id">@tipoVenta.Nombre</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="TipoVentaId" class="text-danger"></span>
+                            </div>
+
+                             <div class="mb-2">
+                                <input asp-for="Precio" class="form-control" placeholder="Precio" />
+                                <span asp-validation-for="Precio" class="text-danger"></span>
+
+                            </div>
+
+                            <div class="mb-2">
+                                <input asp-for="Descripcion" class="form-control" placeholder="Descripcion" />
+                                <span asp-validation-for="Descripcion" class="text-danger"></span>
+
+                            </div>
+
+                            <div class="mb-2">
+                                <input asp-for="Size" class="form-control" placeholder="Size" />
+                                <span asp-validation-for="Size" class="text-danger"></span>
+
+                            </div>
+                           
+                            <div class="mb-2">
+                                <input asp-for="NumHabitaciones" class="form-control" placeholder="Numero de habitaciones" />
+                                <span asp-validation-for="NumHabitaciones" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-2">
+                                <input asp-for="NumAceados" class="form-control" placeholder="Numero de aceados" />
+                                <span asp-validation-for="NumAceados" class="text-danger"></span>
+
+                            </div>
+
+                            <div class="mb-2">
+                                <input asp-for="Files" class="form-control" placeholder="Foto de la propiedad" />
+                                <span asp-validation-for="Files" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-2">
+                                <input asp-for="Files" class="form-control" placeholder="Foto de la propiedad" />
+                                <span asp-validation-for="Files" class="text-danger"></span>
+                            </div>
+                            
+                            <div class="mb-2">
+                                <select asp-for="Mejoras" class="form-select">
+                                    <option value="0">Selelciona ua mejora</option>
+                                    @foreach(var mejorasDeLaPropiedad in mejoras)
+                                    {
+                                        <option value="@mejorasDeLaPropiedad.Id">@mejorasDeLaPropiedad.Nombre</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="Mejoras" class="text-danger"></span>
+                            </div>
+
+                            
+                            <input type="hidden" asp-for="Id" value="@Model.Id" />
+                            <input type="hidden" asp-for="AgenteId" value="@Model.AgenteId" />
+                            <input type="hidden" name="userId" value="@user.Id"/>
+
+                            <div class="d-flex  justify-content-end align-items-end mt-3" style="gap:10px ;">
+                                <a asp-controller="Propiedad" asp-action="Index" class="btn btn-secondary  font-weight-bold">Volver Atras</a>
+                                <button type="submit" class="btn btn-primary  font-weight-bold" style="background-color:#023e8a">Agregar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>

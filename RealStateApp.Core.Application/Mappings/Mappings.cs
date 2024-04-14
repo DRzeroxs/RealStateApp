@@ -28,6 +28,7 @@ using RealStateApp.Core.Application.Dto.TipoVenta;
 using RealStateApp.Core.Application.Dto.Agente;
 using RealStateApp.Core.Application.ViewModel.Favorita;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Cliente;
+using System.Runtime.CompilerServices;
 
 namespace RealStateApp.Core.Application.Mappings
 {
@@ -46,14 +47,24 @@ namespace RealStateApp.Core.Application.Mappings
             #endregion
 
             #region "Propiedades"
-            CreateMap<PropiedadViewModel, Propiedad>()
+            CreateMap<SavePropiedadViewModel, Propiedad>()
               .ForMember(opt => opt.CreatedBy, i => i.Ignore())
               .ForMember(opt => opt.CreatedDate, i => i.Ignore())
               .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
                .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
               .ReverseMap()
+              .ForMember(opt => opt.Files, i => i.Ignore())
+                .ForMember(opt => opt.ImgUrls, i => i.Ignore());
+
+            CreateMap<PropiedadViewModel, Propiedad>()
+              .ForMember(opt => opt.CreatedBy, i => i.Ignore())
+              .ForMember(opt => opt.CreatedDate, i => i.Ignore())
+              .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
+              .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+              .ReverseMap()
               .ForMember(opt => opt.ImgUrl, i => i.Ignore())
-                .ForMember(opt => opt.ImgUrlList, i => i.Ignore());
+              .ForMember(opt => opt.ImgUrlList, i => i.Ignore());
+
 
             CreateMap<PropiedadesDto, Propiedad>()
              .ForMember(opt => opt.CreatedBy, i => i.Ignore())
@@ -73,6 +84,8 @@ namespace RealStateApp.Core.Application.Mappings
              .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
               .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
              .ReverseMap();
+
+            CreateMap<FavoritaViewModel, Favorita>().ReverseMap();
             #endregion
 
             #region "Agente"
@@ -89,6 +102,9 @@ namespace RealStateApp.Core.Application.Mappings
                 .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
                 .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
                 .ReverseMap();
+
+            CreateMap<SaveAgenteViewModel, AgenteViewModel>()
+               .ReverseMap();
 
             CreateMap<AgenteDto, Agente>()
             .ForMember(opt => opt.CreatedBy, i => i.Ignore())
@@ -113,6 +129,9 @@ namespace RealStateApp.Core.Application.Mappings
                 .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
                 .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
                 .ReverseMap();
+
+            CreateMap<SaveTipoVentaViewModel, TipoVentaViewModel>()
+              .ReverseMap();
 
             CreateMap<CreateTipoVentaCommand, TipoVenta>()
                 .ForMember(opt => opt.CreatedBy, i => i.Ignore())
@@ -156,6 +175,9 @@ namespace RealStateApp.Core.Application.Mappings
               .ForMember(opt => opt.CreatedDate, i => i.Ignore())
               .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
               .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+              .ReverseMap();
+
+            CreateMap<SaveTipoPropiedadViewModel, TipoPropiedadViewModel>()
               .ReverseMap();
 
             CreateMap<CreateTipoPropiedadCommand,  TipoPropiedad>()
@@ -203,6 +225,9 @@ namespace RealStateApp.Core.Application.Mappings
             .ForMember(opt => opt.CreatedDate, i => i.Ignore())
             .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
             .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
+            .ReverseMap();
+
+            CreateMap<SaveMejoraViewModel, MejoraViewModel>()
             .ReverseMap();
 
             #endregion
@@ -282,6 +307,12 @@ namespace RealStateApp.Core.Application.Mappings
         .ForMember(opt => opt.LastModifiedby, i => i.Ignore())
         .ForMember(opt => opt.LastModifiedDate, i => i.Ignore())
         .ReverseMap();
+            #endregion
+
+            #region"Registrer"
+            CreateMap<RegistrerViewModel, UserPostViewModel>().ReverseMap();
+            CreateMap<RegistrerViewModel, UserViewModel>().ReverseMap();
+            CreateMap<UserPostViewModel, UserViewModel>().ReverseMap();
             #endregion
         }
     }
