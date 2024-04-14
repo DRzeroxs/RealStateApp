@@ -10,14 +10,15 @@ namespace RealStateApp.Core.Domain.Entities
 {
     public class MejorasAplicadas : AuditableBaseEntity
     {
-        //Llaves foraneas
-        [ForeignKey(nameof(Propiedad))]
+        // Llaves foraneas
         public int PropiedadId { get; set; }
-        [ForeignKey(nameof(Mejora))]
         public int MejoraId { get; set; }
 
-        //navegadores
-        public ICollection<Propiedad>  Propiedad { get; set; }
-        public ICollection<Mejora>  Mejora { get; set; }
+        // Navegadores
+        [ForeignKey(nameof(PropiedadId))]
+        public Propiedad Propiedad { get; set; }
+
+        [ForeignKey(nameof(MejoraId))]
+        public Mejora Mejora { get; set; }
     }
 }

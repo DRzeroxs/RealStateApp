@@ -863,43 +863,34 @@ namespace RealStateApp.Core.Application.Services
         #region "Buscar Propiedades por el Id"
         public async Task<List<PropiedadViewModel>> GetAllPropertyByAgentId(int id)
         {
-            var propiedades = await _repository.GetAllPropertyByAgentId(id);
-            var tipoPropiedades = await _tipoPropiedadRepository.GetAllPropertyNameByAgentId(id);
+            var listaPropiedadPorAgente = await _repository.GetAllPropertyByAgentId(id);
+            var tipoPropiedad = await _tipoPropiedadRepository.GetAllPropertyNameByAgentId(id);
+            var propiedad = new List<PropiedadViewModel>();
 
-            var propiedadesViewModel = new List<PropiedadViewModel>();
-
-            foreach (var propiedad in propiedades)
+            foreach (var item in listaPropiedadPorAgente)
             {
-                var tipoPropiedad = tipoPropiedades.FirstOrDefault(tp => tp.Id == propiedad.TipoPropiedadId);
+                var tipoPropiedadActual = tipoPropiedad.FirstOrDefault(x => x.Id == item.TipoPropiedadId);
 
-                var propiedadViewModel = new PropiedadViewModel
+                if (tipoPropiedadActual != null)
                 {
-                    Id = propiedad.Id,
-                    TipoPropiedadNombre = tipoPropiedad.Nombre,
-                    Precio = propiedad.Precio,
-                    Identifier = propiedad.Identifier,
-                    Size = propiedad.Size,
-                    NumAceados = propiedad.NumAceados,
-                    NumHabitaciones = propiedad.NumHabitaciones,
-                    ImgUrlList = propiedad.ImgPropiedad.Select(imgPropiedad => new ImgPropiedadViewModel
+                    propiedad.Add(new PropiedadViewModel
                     {
-                        UrlImg = imgPropiedad.UrlImg,
-                        PropieadId = imgPropiedad.PropieadId,
-                        Propiedad = new PropiedadViewModel
-                        {
-                            // Puedes asignar otras propiedades de PropiedadViewModel si es necesario
-                        }
-                    }).ToList()
-                };
-
-                propiedadesViewModel.Add(propiedadViewModel);
+                        Id = item.Id,
+                        TipoPropiedadNombre = tipoPropiedadActual.Nombre,
+                        Precio = item.Precio,
+                        Identifier = item.Identifier,
+                        Size = item.Size,
+                        NumAceados = item.NumAceados,
+                        NumHabitaciones = item.NumHabitaciones,
+                        ImgURlString = item.ImgPropiedades.FirstOrDefault()?.UrlImg
+                    });
+                }
             }
-
-            return propiedadesViewModel;
+            return propiedad;
         }
 
 
-        
+
         #endregion
 
         #region"Buscar Propiedades Favoritas"

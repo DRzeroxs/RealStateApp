@@ -10,7 +10,6 @@ namespace RealStateApp.Core.Domain.Entities
 {
     public class Mejora : DescripcionBaseEntity
     {
-        [InverseProperty(nameof(Mejora))]
-        public ICollection<MejorasAplicadas>  MejorasAplicadas { get; set; }
+        public ICollection<MejorasAplicadas> MejorasAplicadas { get; set; }
     }
 }

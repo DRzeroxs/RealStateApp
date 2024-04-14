@@ -37,13 +37,14 @@ namespace RealStateApp.Core.Domain.Entities
 
         //inverse properties
 
-        [InverseProperty(nameof(Propiedad))]
-        public ICollection<ImgPropiedad>  ImgPropiedad { get; set;}
-        
+        // Inverse properties
+        [InverseProperty(nameof(ImgPropiedad.Propiedad))]
+        public ICollection<ImgPropiedad> ImgPropiedades { get; set; }
+
         [InverseProperty(nameof(Propiedad))]
         public ICollection<MejorasAplicadas> MejorasAplicadas { get; set;}
         
         [InverseProperty(nameof(Propiedad))]
-        public ICollection<Favorita> Favorita { get; set;}
+        public ICollection<Favorita> Favoritas { get; set; }
     }
 }
