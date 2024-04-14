@@ -50,5 +50,11 @@ namespace RealStateApp.Infraestructure.Persistence.Repositories
             var entity = await _context.Set<Entity>().FindAsync(id);
             return entity;
         }
+
+        public async Task AddRangeAsync(IEnumerable<Entity> entities)
+        {
+            await _context.Set<Entity>().AddRangeAsync(entities);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -88,21 +88,12 @@ namespace RealStateApp.Core.Application.Services
         public override async Task<SavePropiedadViewModel> AddAsync(SavePropiedadViewModel vm)
         {
             Propiedad propiedad = _mapper.Map<Propiedad>(vm);
-
             propiedad = await _repository.AddAsync(propiedad);
 
-            foreach (var mejoraId in vm.Mejoras)
-            {
-                MejorasAplicadas mejora = new MejorasAplicadas
-                {
-                    PropiedadId = propiedad.Id,
-                    MejoraId = mejoraId
-                };
-
-                await _mejorasAplicadasRepository.AddAsync(mejora);
-            }
+            await _mejorasAplicadasRepository.AgregarMejorasdePropiedad(propiedad.Id, vm.Mejoras);
 
             List<string> rutaImg = FileManager.UploadFiles(vm.Files, propiedad.Id);
+            List<ImgPropiedad> imgPropiedades = new List<ImgPropiedad>();
 
             foreach (var url in rutaImg)
             {
@@ -117,9 +108,10 @@ namespace RealStateApp.Core.Application.Services
 
             SavePropiedadViewModel propiedadVm = _mapper.Map<SavePropiedadViewModel>(propiedad);
             propiedadVm.ImgUrls = rutaImg;
-    
+
             return propiedadVm;
         }
+
 
         public override async Task UpdateAsync(SavePropiedadViewModel vm, int ID)
         {
@@ -127,25 +119,9 @@ namespace RealStateApp.Core.Application.Services
 
             await _repository.UpdateAsync(propiedad, ID);
 
-            List<string> rutaImg = FileManager.UploadFiles(vm.Files, propiedad.Id);
+            await ActualizarImagenesEnPropiedad(vm, propiedad.Id);
 
-            List<ImgPropiedad> ImgAntiguas = await _imgPropiedadRepository.GetImgPropiedadByPropiedadId(propiedad.Id);
-
-            foreach (var item in ImgAntiguas)
-            {
-                await _imgPropiedadRepository.DeleteAsync(item);
-            }
-
-            foreach (var url in rutaImg)
-            {
-                ImgPropiedad imgPropiedad = new ImgPropiedad
-                {
-                    PropieadId = propiedad.Id,
-                    UrlImg = url
-                };
-
-                await _imgPropiedadRepository.AddAsync(imgPropiedad);
-            }
+            await ActualizarImagenesEnPropiedad(vm, propiedad.Id);
         }   
 
         public override async Task<PropiedadViewModel> GetByIdAsync(int Id)
@@ -159,7 +135,15 @@ namespace RealStateApp.Core.Application.Services
             propiedadVm.TipoVenta = _mapper.Map<TipoVentaViewModel>(await _tipoVentaRepository.GetById(propiedadVm.TipoVentaId));
             propiedadVm.Agente = _mapper.Map<AgenteViewModel>(await _agenteRepository.GetById(propiedadVm.AgenteId));
 
-            propiedadVm.Mejoras = _mapper.Map<List<MejoraViewModel>>( await _mejorasAplicadasRepository.GetMejorasAplicadasByPropiedadId(propiedadVm.Id));
+            List<MejorasAplicadas> mejorasAplicadas = await _mejorasAplicadasRepository.GetMejorasAplicadasByPropiedadId(propiedadVm.Id);
+
+            propiedadVm.Mejoras = new List<MejoraViewModel>();
+
+            foreach (MejorasAplicadas mejoraAplicada in mejorasAplicadas)
+            {
+                propiedadVm.Mejoras.Add(_mapper.Map<MejoraViewModel>(await _mejoraRepository.GetById(mejoraAplicada.MejoraId)));
+            }
+
             propiedadVm.ImgUrlList = _mapper.Map<List<ImgPropiedadViewModel>>( await _imgPropiedadRepository.GetImgPropiedadByPropiedadId(propiedadVm.Id));
 
             return propiedadVm;
@@ -169,9 +153,7 @@ namespace RealStateApp.Core.Application.Services
         {
             Propiedad propiedad = await _repository.GetById(Id);
 
-            await _repository.DeleteAsync(propiedad);
-
-           /* PropiedadViewModel vm = await GetByIdAsync(Id);
+            PropiedadViewModel vm = await GetByIdAsync(Id);
 
             List<string> urlsImgPropiedades = new();
 
@@ -180,7 +162,10 @@ namespace RealStateApp.Core.Application.Services
                 urlsImgPropiedades.Add(item.UrlImg);
             }
 
-            FileManager.DeletePropertyImages(urlsImgPropiedades);*/
+            FileManager.DeletePropertyImages(urlsImgPropiedades);
+
+            await _repository.DeleteAsync(propiedad);
+
         }
 
 
@@ -202,12 +187,14 @@ namespace RealStateApp.Core.Application.Services
             var propiedadesList = from p in _listPropiedades
                                   join a in _listAgentes
                                   on p.AgenteId equals a.Id
+                                  orderby p.CreatedDate descending
                                   select new PropiedadViewModel
                                   {
                                       Id = p.Id,
                                       Identifier = p.Identifier,
                                       Precio = p.Precio,
                                       Size = p.Size,
+                                      CreatedDate = p.CreatedDate,
                                       NumAceados = p.NumAceados,
                                       NumHabitaciones = p.NumHabitaciones,
                                       Descripcion = p.Descripcion,
@@ -874,31 +861,43 @@ namespace RealStateApp.Core.Application.Services
         #region "Buscar Propiedades por el Id"
         public async Task<List<PropiedadViewModel>> GetAllPropertyByAgentId(int id)
         {
-            var listaPropiedadPorAgente = await _repository.GetAllPropertyByAgentId(id);
-            var tipoPropiedad = await _tipoPropiedadRepository.GetAllPropertyNameByAgentId(id);
-            var propiedad = new List<PropiedadViewModel>();
+            var propiedades = await _repository.GetAllPropertyByAgentId(id);
+            var tipoPropiedades = await _tipoPropiedadRepository.GetAllPropertyNameByAgentId(id);
 
-            foreach (var item in listaPropiedadPorAgente)
+            var propiedadesViewModel = new List<PropiedadViewModel>();
+
+            foreach (var propiedad in propiedades)
             {
-                var tipoPropiedadActual = tipoPropiedad.FirstOrDefault(x => x.Id == item.TipoPropiedadId);
+                var tipoPropiedad = tipoPropiedades.FirstOrDefault(tp => tp.Id == propiedad.TipoPropiedadId);
 
-                if (tipoPropiedadActual != null)
+                var propiedadViewModel = new PropiedadViewModel
                 {
-                    propiedad.Add(new PropiedadViewModel
+                    Id = propiedad.Id,
+                    TipoPropiedadNombre = tipoPropiedad.Nombre,
+                    Precio = propiedad.Precio,
+                    Identifier = propiedad.Identifier,
+                    Size = propiedad.Size,
+                    NumAceados = propiedad.NumAceados,
+                    NumHabitaciones = propiedad.NumHabitaciones,
+                    ImgUrlList = propiedad.ImgPropiedades.Select(imgPropiedad => new ImgPropiedadViewModel
                     {
-                        Id = item.Id,
-                        TipoPropiedadNombre = tipoPropiedadActual.Nombre,
-                        Precio = item.Precio,
-                        Identifier = item.Identifier,
-                        Size = item.Size,
-                        NumAceados = item.NumAceados,
-                        NumHabitaciones = item.NumHabitaciones,
-                        ImgURlString = item.ImgPropiedad.UrlImg
-                    });
-                }
+                        UrlImg = imgPropiedad.UrlImg,
+                        PropieadId = imgPropiedad.PropieadId,
+                        Propiedad = new PropiedadViewModel
+                        {
+                            // Puedes asignar otras propiedades de PropiedadViewModel si es necesario
+                        }
+                    }).ToList()
+                };
+
+                propiedadesViewModel.Add(propiedadViewModel);
             }
-            return propiedad;
+
+            return propiedadesViewModel;
         }
+
+
+
         #endregion
 
         #region"Buscar Propiedades Favoritas"
@@ -1017,6 +1016,56 @@ namespace RealStateApp.Core.Application.Services
             return propiedades.ToList();
         }
 
+        #endregion
+
+        #region Actualizar mejoras e imagenes
+
+        private async Task ActualizarMejorasAplicadasEnPropiedad(SavePropiedadViewModel vm, int propiedadId)
+        {
+
+            List<MejorasAplicadas> MejorasAntiguas = await _mejorasAplicadasRepository.GetMejorasAplicadasByPropiedadId(propiedadId);
+
+
+            foreach (var item in MejorasAntiguas)
+            {
+                await _mejorasAplicadasRepository.DeleteAsync(item);
+            }
+
+
+            foreach (var mejoraId in vm.Mejoras)
+            {
+                MejorasAplicadas mejora = new MejorasAplicadas
+                {
+                    PropiedadId = propiedadId,
+                    MejoraId = mejoraId
+                };
+
+                await _mejorasAplicadasRepository.AddAsync(mejora);
+            }
+
+        }
+
+        private async Task ActualizarImagenesEnPropiedad(SavePropiedadViewModel vm, int propiedadId)
+        {
+            List<string> rutaImg = FileManager.UploadFiles(vm.Files, propiedadId);
+            List<ImgPropiedad> ImgAntiguas = await _imgPropiedadRepository.GetImgPropiedadByPropiedadId(propiedadId);
+
+            foreach (var item in ImgAntiguas)
+            {
+                await _imgPropiedadRepository.DeleteAsync(item);
+            }
+
+            foreach (var url in rutaImg)
+            {
+                ImgPropiedad imgPropiedad = new ImgPropiedad
+                {
+                    PropieadId = propiedadId,
+                    UrlImg = url
+                };
+
+                await _imgPropiedadRepository.AddAsync(imgPropiedad);
+            }
+        }
         #endregion
     }
 }

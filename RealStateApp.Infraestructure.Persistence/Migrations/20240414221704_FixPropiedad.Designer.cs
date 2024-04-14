@@ -12,8 +12,8 @@ using RealStateApp.Infraestructure.Persistence.Context;
 namespace RealStateApp.Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240411181100_Initial")]
-    partial class Initial
+    [Migration("20240414221704_FixPropiedad")]
+    partial class FixPropiedad
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -432,8 +432,8 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Descripcion.ImgPropiedad", b =>
                 {
                     b.HasOne("RealStateApp.Core.Domain.Entities.Propiedad", "Propiedad")
-                        .WithOne("ImgPropiedad")
-                        .HasForeignKey("RealStateApp.Core.Domain.Entities.Descripcion.ImgPropiedad", "PropieadId")
+                        .WithMany("ImgPropiedades")
+                        .HasForeignKey("PropieadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -443,14 +443,14 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Favorita", b =>
                 {
                     b.HasOne("RealStateApp.Core.Domain.Entities.Users.Cliente", "Cliente")
-                        .WithOne("Favorita")
-                        .HasForeignKey("RealStateApp.Core.Domain.Entities.Favorita", "ClienteId")
+                        .WithMany("Favoritas")
+                        .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("RealStateApp.Core.Domain.Entities.Propiedad", "Propiedad")
-                        .WithOne("Favorita")
-                        .HasForeignKey("RealStateApp.Core.Domain.Entities.Favorita", "PropiedadId")
+                        .WithMany("Favoritas")
+                        .HasForeignKey("PropiedadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -462,14 +462,14 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.MejorasAplicadas", b =>
                 {
                     b.HasOne("RealStateApp.Core.Domain.Entities.Mejora", "Mejora")
-                        .WithOne("MejorasAplicadas")
-                        .HasForeignKey("RealStateApp.Core.Domain.Entities.MejorasAplicadas", "MejoraId")
+                        .WithMany("MejorasAplicadas")
+                        .HasForeignKey("MejoraId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("RealStateApp.Core.Domain.Entities.Propiedad", "Propiedad")
-                        .WithOne("MejorasAplicadas")
-                        .HasForeignKey("RealStateApp.Core.Domain.Entities.MejorasAplicadas", "PropiedadId")
+                        .WithMany("MejorasAplicadas")
+                        .HasForeignKey("PropiedadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -519,20 +519,16 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
 
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Mejora", b =>
                 {
-                    b.Navigation("MejorasAplicadas")
-                        .IsRequired();
+                    b.Navigation("MejorasAplicadas");
                 });
 
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Propiedad", b =>
                 {
-                    b.Navigation("Favorita")
-                        .IsRequired();
+                    b.Navigation("Favoritas");
 
-                    b.Navigation("ImgPropiedad")
-                        .IsRequired();
+                    b.Navigation("ImgPropiedades");
 
-                    b.Navigation("MejorasAplicadas")
-                        .IsRequired();
+                    b.Navigation("MejorasAplicadas");
                 });
 
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Users.Agente", b =>
@@ -543,8 +539,7 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
 
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Users.Cliente", b =>
                 {
-                    b.Navigation("Favorita")
-                        .IsRequired();
+                    b.Navigation("Favoritas");
                 });
 #pragma warning restore 612, 618
         }

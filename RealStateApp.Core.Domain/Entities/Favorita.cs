@@ -11,14 +11,15 @@ namespace RealStateApp.Core.Domain.Entities
 {
     public class Favorita : AuditableBaseEntity
     {
-        //Llaves foraneas
-        [ForeignKey(nameof(Propiedad))]
+        // Llaves foraneas
         public int PropiedadId { get; set; }
-        [ForeignKey(nameof(Cliente))]
-        public int ClienteId { get; set; }  
+        public int ClienteId { get; set; }
 
-        //Navegadores
+        // Navegadores
+        [ForeignKey(nameof(PropiedadId))]
         public Propiedad Propiedad { get; set; }
-        public Cliente Cliente { get; set;}
+
+        [ForeignKey(nameof(ClienteId))]
+        public Cliente Cliente { get; set; }
     }
 }

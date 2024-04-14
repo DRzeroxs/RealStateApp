@@ -46,23 +46,34 @@ namespace RealStateApp.Controllers
         {
             await _userServices.EliminarAgente(userId);
 
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("ListadoAgentes", "Admin");
+        }
+        public async Task<IActionResult> ActivarAgente(string userId)
+        {
+
+           return View("ActivarAgente",userId);
         }
 
+
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> ActivarAgente(string userId)
+        [HttpPost]
+        public async Task<IActionResult> ActivarAgentePost(string userId)
         {
             await _userServices.ActivarUsuario(userId);
 
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("ListadoAgentes", "Admin");
         }
-
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> InactivarAgente(string userId)
+        {
+            return View("InactivarAgente", userId);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> InactivarAgentePost(string userId)
         {
             await _userServices.InactivarUsuario(userId);
 
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("ListadoAgentes", "Admin");
         }
         
     }

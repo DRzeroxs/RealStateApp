@@ -5,6 +5,7 @@ using RealStateApp.Core.Application.Helpers;
 using RealStateApp.Core.Application.Interfaces.IServices;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Agente;
 using RealStateApp.Core.Application.ViewModel.Propiedad;
+using System.Numerics;
 
 namespace RealStateApp.Controllers
 {
@@ -73,6 +74,8 @@ namespace RealStateApp.Controllers
             }
 
             savePropiedadViewModel.AgenteId = agente.Id;
+
+
 
             SavePropiedadViewModel savedVm = await _propiedadService.AddAsync(savePropiedadViewModel);
 
@@ -144,7 +147,7 @@ namespace RealStateApp.Controllers
             if (!ModelState.IsValid)
             {
                 await CargarViewBags();
-                return View(savePropiedadViewModel);
+                return View("CrearPropiedad", savePropiedadViewModel);
             }
 
             PropiedadViewModel vm = await _propiedadService.GetByIdAsync(savePropiedadViewModel.Id);
@@ -186,7 +189,7 @@ namespace RealStateApp.Controllers
         }
 
         [HttpPost, ActionName("Eliminar")]
-        [ValidateAntiForgeryToken]
+       // [ValidateAntiForgeryToken]
         public async Task<IActionResult> EliminarPropiedad(int id)
         {
             if (id == 0)

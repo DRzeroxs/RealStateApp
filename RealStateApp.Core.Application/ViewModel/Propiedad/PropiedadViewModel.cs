@@ -27,6 +27,7 @@ namespace RealStateApp.Core.Application.ViewModel.Propiedad
         public int NumAceados { get; set; }
 
         public int TipoPropiedadId { get; set; }
+        public DateTime? CreatedDate { get; set; }   
 
         //eliminar
         public ImgPropiedadViewModel ImgUrl {  get; set; }

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RealStateApp.Core.Domain.Entities;
 
 namespace RealStateApp.Core.Application.Services
 {
@@ -70,9 +71,6 @@ namespace RealStateApp.Core.Application.Services
             var propiedades = await _propiedadRepository.GetAll();
 
             var agentes = from a in agentesList
-                          join p in propiedades
-                          on a.Id equals p.AgenteId into agentePropiedades
-                          from ap in agentePropiedades.DefaultIfEmpty()
                           select new AgenteViewModel
                           {
                               Id = a.Id,
@@ -82,17 +80,16 @@ namespace RealStateApp.Core.Application.Services
                               Cedula = a.Cedula,
                               IdentityId = a.IdentityId,
                               IsActive = a.IsActive,
-                              Propiedades = (ap == null ? new List<PropiedadViewModel>() :
-                                             new List<PropiedadViewModel>
+                              Propiedades = (from p in propiedades
+                                             where p.AgenteId == a.Id
+                                             select new PropiedadViewModel
                                              {
-                                         new PropiedadViewModel
-                                         {
-                                             Id = ap.Id,
-                                             Precio = ap.Precio,
-                                             Identifier = ap.Identifier
-                                         }
-                                             })
-                          };
+                                                 Id = p.Id,
+                                                 Size = p.Size,
+                                             }).ToList()
+                           }; 
+
+         
 
             return agentes.ToList();
         }
