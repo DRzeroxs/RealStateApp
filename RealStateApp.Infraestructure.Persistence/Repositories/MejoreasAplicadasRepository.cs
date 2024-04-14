@@ -23,5 +23,22 @@ namespace RealStateApp.Infraestructure.Persistence.Repositories
             var result = await _Context.MejorasAplicadas.Where(x => x.PropiedadId == PropiedadId).ToListAsync();
             return result;
         }
+
+        public async Task AgregarMejorasdePropiedad(int PropiedadId, List<int> MejoraId)
+        {
+            foreach (var Id in MejoraId)
+            {
+                MejorasAplicadas mejora = new MejorasAplicadas();
+
+                mejora.MejoraId = Id;
+                mejora.PropiedadId = PropiedadId;
+
+                await _Context.MejorasAplicadas.AddAsync(mejora);
+
+                await _Context.SaveChangesAsync();
+            }
+        }
+
+
     }
 }

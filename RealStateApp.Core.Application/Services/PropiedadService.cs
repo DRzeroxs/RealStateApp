@@ -90,16 +90,7 @@ namespace RealStateApp.Core.Application.Services
             Propiedad propiedad = _mapper.Map<Propiedad>(vm);
             propiedad = await _repository.AddAsync(propiedad);
 
-            foreach (var mejoraId in vm.Mejoras)
-            {
-                MejorasAplicadas mejora = new MejorasAplicadas
-                {
-                    PropiedadId = propiedad.Id,
-                    MejoraId = mejoraId
-                };
-
-                await _mejorasAplicadasRepository.AddAsync(mejora);
-            }
+            await _mejorasAplicadasRepository.AgregarMejorasdePropiedad(propiedad.Id, vm.Mejoras);
 
             List<string> rutaImg = FileManager.UploadFiles(vm.Files, propiedad.Id);
             List<ImgPropiedad> imgPropiedades = new List<ImgPropiedad>();
@@ -870,31 +861,43 @@ namespace RealStateApp.Core.Application.Services
         #region "Buscar Propiedades por el Id"
         public async Task<List<PropiedadViewModel>> GetAllPropertyByAgentId(int id)
         {
-            var listaPropiedadPorAgente = await _repository.GetAllPropertyByAgentId(id);
-            var tipoPropiedad = await _tipoPropiedadRepository.GetAllPropertyNameByAgentId(id);
-            var propiedad = new List<PropiedadViewModel>();
+            var propiedades = await _repository.GetAllPropertyByAgentId(id);
+            var tipoPropiedades = await _tipoPropiedadRepository.GetAllPropertyNameByAgentId(id);
 
-            foreach (var item in listaPropiedadPorAgente)
+            var propiedadesViewModel = new List<PropiedadViewModel>();
+
+            foreach (var propiedad in propiedades)
             {
-                var tipoPropiedadActual = tipoPropiedad.FirstOrDefault(x => x.Id == item.TipoPropiedadId);
+                var tipoPropiedad = tipoPropiedades.FirstOrDefault(tp => tp.Id == propiedad.TipoPropiedadId);
 
-                if (tipoPropiedadActual != null)
+                var propiedadViewModel = new PropiedadViewModel
                 {
-                    propiedad.Add(new PropiedadViewModel
+                    Id = propiedad.Id,
+                    TipoPropiedadNombre = tipoPropiedad.Nombre,
+                    Precio = propiedad.Precio,
+                    Identifier = propiedad.Identifier,
+                    Size = propiedad.Size,
+                    NumAceados = propiedad.NumAceados,
+                    NumHabitaciones = propiedad.NumHabitaciones,
+                    ImgUrlList = propiedad.ImgPropiedades.Select(imgPropiedad => new ImgPropiedadViewModel
                     {
-                        Id = item.Id,
-                        TipoPropiedadNombre = tipoPropiedadActual.Nombre,
-                        Precio = item.Precio,
-                        Identifier = item.Identifier,
-                        Size = item.Size,
-                        NumAceados = item.NumAceados,
-                        NumHabitaciones = item.NumHabitaciones,
-                        ImgURlString = item.ImgPropiedad.UrlImg
-                    });
-                }
+                        UrlImg = imgPropiedad.UrlImg,
+                        PropieadId = imgPropiedad.PropieadId,
+                        Propiedad = new PropiedadViewModel
+                        {
+                            // Puedes asignar otras propiedades de PropiedadViewModel si es necesario
+                        }
+                    }).ToList()
+                };
+
+                propiedadesViewModel.Add(propiedadViewModel);
             }
-            return propiedad;
+
+            return propiedadesViewModel;
         }
+
+
+
         #endregion
 
         #region"Buscar Propiedades Favoritas"
