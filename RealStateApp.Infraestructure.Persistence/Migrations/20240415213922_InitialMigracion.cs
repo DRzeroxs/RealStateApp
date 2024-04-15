@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RealStateApp.Infraestructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialMigracion : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -196,14 +196,12 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                         name: "FK_Favoritas_Clientes_ClienteId",
                         column: x => x.ClienteId,
                         principalTable: "Clientes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Favoritas_Propiedades_PropiedadId",
                         column: x => x.PropiedadId,
                         principalTable: "Propiedades",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -226,8 +224,7 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                         name: "FK_ImgPropiedades_Propiedades_PropieadId",
                         column: x => x.PropieadId,
                         principalTable: "Propiedades",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -250,14 +247,12 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                         name: "FK_MejorasAplicadas_Mejoras_MejoraId",
                         column: x => x.MejoraId,
                         principalTable: "Mejoras",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_MejorasAplicadas_Propiedades_PropiedadId",
                         column: x => x.PropiedadId,
                         principalTable: "Propiedades",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

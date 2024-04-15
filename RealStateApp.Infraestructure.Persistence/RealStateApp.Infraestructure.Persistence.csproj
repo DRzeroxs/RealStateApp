@@ -18,4 +18,8 @@
     <ProjectReference Include="..\RealStateApp.Core.Domain\RealStateApp.Core.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
