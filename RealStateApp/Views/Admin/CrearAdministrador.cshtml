@@ -74,15 +74,30 @@
                                 <span asp-validation-for="UserName" class="text-danger"></span>
 
                             </div>
-                            <div class="mb-2">
-                                <input asp-for="Password" class="form-control" placeholder="Password" />
-                                <span asp-validation-for="Password" class="text-danger"></span>
+                            @if(editMode){
+                                <div class="mb-2">
 
-                            </div>
-                            <div class="mb-2">
-                                <input asp-for="ConfirnPassword" class="form-control" placeholder="Confirm Password" />
-                                <span asp-validation-for="ConfirnPassword" class="text-danger"></span>
-                            </div>
+                                    <input asp-for="Password" class="form-control" placeholder="Password" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="mb-2">
+                                    <input asp-for="ConfirnPassword" class="form-control" placeholder="Confirm Password" />
+                                    <span asp-validation-for="ConfirnPassword" class="text-danger"></span>
+                                </div>
+                            }else{
+                                <div class="mb-2">
+
+                                    <input required asp-for="Password" class="form-control" placeholder="Password" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="mb-2">
+                                    <input required asp-for="ConfirnPassword" class="form-control" placeholder="Confirm Password" />
+                                    <span asp-validation-for="ConfirnPassword" class="text-danger"></span>
+                                </div>
+                            }
+                            
+                            
+
                             
 
                             <input type="hidden" asp-for="UserId" value="@Model.UserId"/>

@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace RealStateApp.Controllers
 {
-    [Authorize(Roles = "Agente")]
+    [Authorize(Roles = "Agente, Admin")]
     public class AgenteController : Controller
     {
         private readonly IAgenteService _agenteService;
