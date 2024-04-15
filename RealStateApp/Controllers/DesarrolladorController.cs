@@ -34,6 +34,7 @@ namespace RealStateApp.Controllers
         {
             if (!ModelState.IsValid)
             {
+                vm.UserId = "";
                 return View(vm);
             }
 
