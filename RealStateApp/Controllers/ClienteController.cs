@@ -56,5 +56,20 @@ namespace RealStateApp.Controllers
 
            return View(propiedades);    
         }
+        [HttpPost]
+        public async Task<IActionResult> EliminarPropiedadFavorita(int propiedadId, string userId)
+        {
+            var cliente = await _clienteService.GetClientePorIdentityId(userId);
+
+            SaveFavoritaViewModel vm = new();
+            vm.PropiedadId = propiedadId;
+            vm.ClienteId = cliente.Id;
+
+            var favorita = await _propiedadFavoritaService.GetPropiedadFavoritaPorPropiedadId(propiedadId);
+
+            await _propiedadFavoritaService.RemoveAsync(favorita.Id);
+
+            return RedirectToAction("PropiedadesFavoritas", new { userId = userId });
+        }
     }
 }

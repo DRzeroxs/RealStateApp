@@ -92,8 +92,18 @@
                                 <input asp-for="Files" class="form-control" placeholder="Foto de la propiedad" />
                                 <span asp-validation-for="Files" class="text-danger"></span>
                             </div>
-                            
+
                             <div class="mb-2">
+                                <input asp-for="Files" class="form-control" placeholder="Foto de la propiedad" />
+                                <span asp-validation-for="Files" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-2">
+                                <input asp-for="Files" class="form-control" placeholder="Foto de la propiedad" />
+                                <span asp-validation-for="Files" class="text-danger"></span>
+                            </div>
+                            
+                           @*  <div class="mb-2">
                                 <select asp-for="Mejoras" class="form-select">
                                     <option value="0">Selelciona ua mejora</option>
                                     @foreach(var mejorasDeLaPropiedad in mejoras)
@@ -102,6 +112,17 @@
                                     }
                                 </select>
                                 <span asp-validation-for="Mejoras" class="text-danger"></span>
+                            </div> *@
+                            <div>
+                                <select asp-for="Mejoras" class="form-control selectpicker" multiple>
+                                    <option value="0">Seleciona una mejora</option>
+
+                                    @foreach (var mejorasDeLaPropiedad in mejoras)
+                                    {
+                                        <option value="@mejorasDeLaPropiedad.Id">@mejorasDeLaPropiedad.Nombre</option>
+                                    }
+                                    <span asp-validation-for="Mejoras" class="text-danger"></span>
+                                </select>
                             </div>
 
                             
