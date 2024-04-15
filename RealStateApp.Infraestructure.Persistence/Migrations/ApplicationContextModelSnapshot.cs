@@ -431,7 +431,7 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                     b.HasOne("RealStateApp.Core.Domain.Entities.Propiedad", "Propiedad")
                         .WithMany("ImgPropiedades")
                         .HasForeignKey("PropieadId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Propiedad");
@@ -442,13 +442,13 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                     b.HasOne("RealStateApp.Core.Domain.Entities.Users.Cliente", "Cliente")
                         .WithMany("Favoritas")
                         .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("RealStateApp.Core.Domain.Entities.Propiedad", "Propiedad")
                         .WithMany("Favoritas")
                         .HasForeignKey("PropiedadId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Cliente");
@@ -459,15 +459,15 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.MejorasAplicadas", b =>
                 {
                     b.HasOne("RealStateApp.Core.Domain.Entities.Mejora", "Mejora")
-                        .WithMany("MejorasAplicadas")
+                        .WithMany()
                         .HasForeignKey("MejoraId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("RealStateApp.Core.Domain.Entities.Propiedad", "Propiedad")
                         .WithMany("MejorasAplicadas")
                         .HasForeignKey("PropiedadId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Mejora");
@@ -512,11 +512,6 @@ namespace RealStateApp.Infraestructure.Persistence.Migrations
                 {
                     b.Navigation("Propiedad")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Mejora", b =>
-                {
-                    b.Navigation("MejorasAplicadas");
                 });
 
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Propiedad", b =>

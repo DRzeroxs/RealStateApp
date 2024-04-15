@@ -15,10 +15,8 @@ namespace RealStateApp.Core.Domain.Entities
         public int MejoraId { get; set; }
 
         // Navegadores
-        [ForeignKey(nameof(PropiedadId))]
         public Propiedad Propiedad { get; set; }
 
-        [ForeignKey(nameof(MejoraId))]
         public Mejora Mejora { get; set; }
     }
 }

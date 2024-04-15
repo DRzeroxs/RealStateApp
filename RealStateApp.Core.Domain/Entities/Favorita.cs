@@ -16,7 +16,6 @@ namespace RealStateApp.Core.Domain.Entities
         public int ClienteId { get; set; }
 
         // Navegadores
-        [ForeignKey(nameof(PropiedadId))]
         public Propiedad Propiedad { get; set; }
 
         [ForeignKey(nameof(ClienteId))]

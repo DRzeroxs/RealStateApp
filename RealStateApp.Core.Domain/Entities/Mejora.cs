@@ -10,6 +10,5 @@ namespace RealStateApp.Core.Domain.Entities
 {
     public class Mejora : DescripcionBaseEntity
     {
-        public ICollection<MejorasAplicadas> MejorasAplicadas { get; set; }
     }
 }

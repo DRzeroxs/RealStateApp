@@ -16,7 +16,7 @@ namespace RealStateApp.Infraestructure.Persistence.Context
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
-            
+
         }
 
         public DbSet<Cliente> Clientes { get; set; }
@@ -29,7 +29,7 @@ namespace RealStateApp.Infraestructure.Persistence.Context
         public DbSet<ImgPropiedad> ImgPropiedades { get; set; }
         public DbSet<TipoPropiedad> TiposPropiedad { get; set; }
         public DbSet<TipoVenta> TiposVenta { get; set; }
-        
+
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -53,27 +53,37 @@ namespace RealStateApp.Infraestructure.Persistence.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-
             base.OnModelCreating(modelBuilder);
 
-            //// Relación entre MejorasAplicadas y Propiedades
-            //modelBuilder.Entity<MejorasAplicadas>()
-            //    .HasOne(ma => ma.Propiedad)
-            //    .WithMany(p => p.MejorasAplicadas)
-            //    .HasForeignKey(ma => ma.PropiedadId);
+            modelBuilder.Entity<MejorasAplicadas>()
+                .HasOne(ma => ma.Propiedad)
+                .WithMany(p => p.MejorasAplicadas)
+                .HasForeignKey(ma => ma.PropiedadId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //// Relación entre ImgPropiedades y Propiedades
-            //modelBuilder.Entity<ImgPropiedad>()
-            //    .HasOne(ip => ip.Propiedad)
-            //    .WithMany(p => p.ImgPropiedad)
-            //    .HasForeignKey(ip => ip.PropieadId);
+            modelBuilder.Entity<MejorasAplicadas>()
+                .HasOne(ma => ma.Mejora)
+                .WithMany()
+                .HasForeignKey(ma => ma.MejoraId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //// Relación entre Favorita y Propiedades
-            //modelBuilder.Entity<Favorita>()
-            //    .HasOne(f => f.Propiedad)
-            //    .WithMany(p => p.Favorita)
-            //    .HasForeignKey(f => f.PropiedadId);
+            modelBuilder.Entity<ImgPropiedad>()
+                .HasOne(ip => ip.Propiedad)
+                .WithMany(p => p.ImgPropiedades)
+                .HasForeignKey(ip => ip.PropieadId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Favorita>()
+                .HasOne(f => f.Propiedad)
+                .WithMany(p => p.Favoritas)
+                .HasForeignKey(f => f.PropiedadId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Favorita>()
+                .HasOne(f => f.Cliente)
+                .WithMany(c => c.Favoritas)
+                .HasForeignKey(f => f.ClienteId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             // Configurar el comportamiento predeterminado para los índices
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
@@ -84,6 +94,7 @@ namespace RealStateApp.Infraestructure.Persistence.Context
                 }
             }
         }
+
     }
 
 
