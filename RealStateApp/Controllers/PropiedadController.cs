@@ -9,7 +9,7 @@ using System.Numerics;
 
 namespace RealStateApp.Controllers
 {
-    //[Authorize(Roles = "Agente")]
+    [Authorize(Roles = "Agente")]
     public class PropiedadController : Controller
     {
 
