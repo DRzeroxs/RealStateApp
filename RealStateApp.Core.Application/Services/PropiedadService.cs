@@ -117,11 +117,12 @@ namespace RealStateApp.Core.Application.Services
         {
             Propiedad propiedad = _mapper.Map<Propiedad>(vm);
 
+            await ActualizarImagenesEnPropiedad(vm, propiedad.Id);
+
+            await ActualizarMejorasAplicadasEnPropiedad(vm, propiedad.Id);
+
             await _repository.UpdateAsync(propiedad, ID);
 
-            await ActualizarImagenesEnPropiedad(vm, propiedad.Id);
-
-            await ActualizarImagenesEnPropiedad(vm, propiedad.Id);
         }   
 
         public override async Task<PropiedadViewModel> GetByIdAsync(int Id)
@@ -1048,10 +1049,14 @@ namespace RealStateApp.Core.Application.Services
         private async Task ActualizarImagenesEnPropiedad(SavePropiedadViewModel vm, int propiedadId)
         {
             List<string> rutaImg = FileManager.UploadFiles(vm.Files, propiedadId);
+
             List<ImgPropiedad> ImgAntiguas = await _imgPropiedadRepository.GetImgPropiedadByPropiedadId(propiedadId);
+
+            List<string> rutasAntiguas = new List<string>();
 
             foreach (var item in ImgAntiguas)
             {
+                rutasAntiguas.Add(item.UrlImg);
                 await _imgPropiedadRepository.DeleteAsync(item);
             }
 
@@ -1065,6 +1070,8 @@ namespace RealStateApp.Core.Application.Services
 
                 await _imgPropiedadRepository.AddAsync(imgPropiedad);
             }
+
+            FileManager.DeletePropertyImages(rutasAntiguas);
         }
         #endregion
     }

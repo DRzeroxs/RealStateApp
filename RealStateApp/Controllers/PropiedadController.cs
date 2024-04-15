@@ -114,7 +114,7 @@ namespace RealStateApp.Controllers
 
             if (vm == null)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToRoute(new { controller = "Propiedad", action = "Index", userId = $"{userVm.Id}" });
             }
 
             SavePropiedadViewModel savePropiedadViewModel = new()
@@ -162,7 +162,7 @@ namespace RealStateApp.Controllers
 
             if (vm == null)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToRoute(new { controller = "Propiedad", action = "Index", userId = $"{userVm.Id}" });
             }
 
             List<string> urlsImgPropiedades = new();
@@ -190,7 +190,7 @@ namespace RealStateApp.Controllers
 
             if (vm == null)
             {
-                return RedirectToAction(nameof(Index));
+                RedirectToRoute(new { controller = "Propiedad", action = "Index", userId = $"{userVm.Id}" });
             }
 
             return View(vm);
@@ -202,7 +202,7 @@ namespace RealStateApp.Controllers
         {
             if (id == 0)
             {
-                return RedirectToAction(nameof(Index));
+                RedirectToRoute(new { controller = "Propiedad", action = "Index", userId = $"{userVm.Id}" });
             }
 
             await _propiedadService.RemoveAsync(id);
