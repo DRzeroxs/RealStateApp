@@ -21,6 +21,6 @@ namespace RealStateApp.Core.Application.ViewModel.User
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
         public string? ImgUrl { get; set; }
-        public IFormFile file { get; set; } 
+        public IFormFile? file { get; set; } 
     }
 }

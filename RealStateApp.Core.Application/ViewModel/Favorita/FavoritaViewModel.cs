@@ -12,6 +12,7 @@ namespace RealStateApp.Core.Application.ViewModel.Favorita
 {
     public class FavoritaViewModel
     {
+        public int Id { get; set; } 
         public int PropiedadId { get; set; }
  
         public int ClienteId { get; set; }
