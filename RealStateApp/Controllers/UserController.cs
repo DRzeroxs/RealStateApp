@@ -183,7 +183,7 @@ namespace RealStateApp.Controllers
 
             await _userServices.EditUser(vm);
 
-            return RedirectToAction("Index", "Agente");
+            return RedirectToAction("PropiedadesDelAgente", "Propiedad");
         }
     }
 }
