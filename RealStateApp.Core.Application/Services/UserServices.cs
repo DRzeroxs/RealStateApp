@@ -185,5 +185,11 @@ namespace RealStateApp.Core.Application.Services
         {
             await _accountServices.ActivarUsuario(userId);
         }
+        // Metodo para traer Usuarios del esquema Identity
+        public async Task AddUsuariosDb()
+        {
+            await _accountServices.AddUserDb();
+         
+        }
     }
 }

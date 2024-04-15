@@ -78,13 +78,15 @@ public class AccountService : IAccountService
         response.UserName = user.UserName;
 
         var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
-        await AddClienteEsquemaDb();
-        await AddAgentesEsquemaDb();
         response.Roles = rolesList.ToList();
         response.IsVerified = user.EmailConfirmed;
         return response;
     }
-
+    public async Task AddUserDb()
+    {
+        await AddAgentesEsquemaDb();
+        await AddClienteEsquemaDb();
+    }
     public async Task SingOutAsync()
     {
         await _signInManager.SignOutAsync();

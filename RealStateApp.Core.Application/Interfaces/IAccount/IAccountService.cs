@@ -7,6 +7,7 @@ public interface IAccountService
 {
 
     Task ActivarUsuario(string userId);
+    Task AddUserDb();
     Task<AuthenticationResponse> AuthenticateASYNC(AuthenticationRequest requuest);
     Task ConfirmAccountAsync(string userId);
     Task<string> ConfirmAccountAsync(string userId, string token);

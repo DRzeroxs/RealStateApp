@@ -26,5 +26,6 @@ namespace RealStateApp.Core.Application.Interfaces.IServices
         Task<RegistrerResponse> RegisterDesarrolladorAsync(RegistrerViewModel vm);
         Task InactivarUsuario(string userId);
         Task ActivarUsuario(string userId);
+        Task AddUsuariosDb();
     }
 }
