@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp;
+using RealStateApp.Core.Application.Dto.Account;
 using RealStateApp.Core.Application.Helpers;
 using RealStateApp.Core.Application.Interfaces.IServices;
 using RealStateApp.Core.Application.ViewModel.AppUsers.Agente;
@@ -9,7 +10,7 @@ using System.Numerics;
 
 namespace RealStateApp.Controllers
 {
-    //[Authorize(Roles = "Agente")]
+    [Authorize(Roles = "Agente")]
     public class PropiedadController : Controller
     {
 
@@ -18,23 +19,30 @@ namespace RealStateApp.Controllers
         private readonly ITipoVentaService _tipoVentaService;
         private readonly IMejoraService _mejoraService;
         private readonly IAgenteService _agenteService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly AuthenticationResponse userVm;
 
-        public PropiedadController(IPropiedadService propiedadService, ITipoPropiedadService tipoPropiedadService, ITipoVentaService tipoVentaService, IAgenteService agenteService, IMejoraService mejoraService)
+        public PropiedadController(IPropiedadService propiedadService, ITipoPropiedadService tipoPropiedadService, ITipoVentaService tipoVentaService, IAgenteService agenteService, IMejoraService mejoraService, IHttpContextAccessor httpContextAccessor)
         {
             _propiedadService = propiedadService;
             _tipoPropiedadService = tipoPropiedadService;
             _tipoVentaService = tipoVentaService;
             _agenteService = agenteService;
             _mejoraService = mejoraService;
+            _httpContextAccessor = httpContextAccessor;
+            userVm = httpContextAccessor.HttpContext.Session.get<AuthenticationResponse>("User");
         }
 
         #region lobby
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string userId)
         {
-            List<PropiedadViewModel> vm = await _propiedadService.GetAllPropiedades();
+            //List<PropiedadViewModel> vm = await _propiedadService.GetAllPropiedades();
+            var agente = await _agenteService.GetByIdentityId(userId);
 
-            return View(vm);
+            var propiedades = await _propiedadService.GetPropiedadesDelAgente(agente.Id);
+
+            return View(propiedades);
         }
 
         #endregion
@@ -87,7 +95,7 @@ namespace RealStateApp.Controllers
 
             savedVm.ImgUrls = FileManager.UploadFiles(savePropiedadViewModel.Files, savedVm.Id);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToRoute(new { controller = "Propiedad", action = "Index", userId = $"{userId}" });
         }
 
         #endregion
@@ -106,7 +114,7 @@ namespace RealStateApp.Controllers
 
             if (vm == null)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToRoute(new { controller = "Propiedad", action = "Index", userId = $"{userVm.Id}" });
             }
 
             SavePropiedadViewModel savePropiedadViewModel = new()
@@ -154,7 +162,7 @@ namespace RealStateApp.Controllers
 
             if (vm == null)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToRoute(new { controller = "Propiedad", action = "Index", userId = $"{userVm.Id}" });
             }
 
             List<string> urlsImgPropiedades = new();
@@ -168,7 +176,7 @@ namespace RealStateApp.Controllers
 
             await _propiedadService.UpdateAsync(savePropiedadViewModel, savePropiedadViewModel.Id);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToRoute(new { controller = "Propiedad", action = "Index", userId = $"{userVm.Id}" });
         }
 
         #endregion
@@ -182,7 +190,7 @@ namespace RealStateApp.Controllers
 
             if (vm == null)
             {
-                return RedirectToAction(nameof(Index));
+                RedirectToRoute(new { controller = "Propiedad", action = "Index", userId = $"{userVm.Id}" });
             }
 
             return View(vm);
@@ -194,12 +202,12 @@ namespace RealStateApp.Controllers
         {
             if (id == 0)
             {
-                return RedirectToAction(nameof(Index));
+                RedirectToRoute(new { controller = "Propiedad", action = "Index", userId = $"{userVm.Id}" });
             }
 
             await _propiedadService.RemoveAsync(id);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToRoute(new { controller = "Propiedad", action = "Index", userId = $"{userVm.Id}" });
         }
 
         #endregion
@@ -216,13 +224,15 @@ namespace RealStateApp.Controllers
         #endregion
 
         #region "Propiedades del Agente"
-        public async Task<IActionResult> PropiedadesDelAgente(string userId)
+        public async Task<IActionResult> PropiedadesDelAgente()
         {
-            var agente = await _agenteService.GetByIdentityId(userId);
+            //var agente = await _agenteService.GetByIdentityId(userId);
 
-            var propiedades = await _propiedadService.GetPropiedadesDelAgente(agente.Id);
+            //var propiedades = await _propiedadService.GetPropiedadesDelAgente(agente.Id);
 
-            return View(propiedades);
+            List<PropiedadViewModel> vm = await _propiedadService.GetAllPropiedades();
+
+            return View(vm);
         }
         #endregion
     }

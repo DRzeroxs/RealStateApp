@@ -11,16 +11,18 @@ namespace RealStateApp.Controllers
     public class HomeController : Controller
     {
         private readonly IPropiedadService _propiedadesService;
+        private readonly IUserServices _userServices;
         private readonly IBusquedaPersonalizada _busqueda;
-        public HomeController(IPropiedadService propieadadesService, IBusquedaPersonalizada busqueda)
+        public HomeController(IPropiedadService propieadadesService, IBusquedaPersonalizada busqueda, IUserServices userServices) 
         {
             _propiedadesService = propieadadesService;
             _busqueda = busqueda;
+            _userServices = userServices;
         }
         public async Task<IActionResult> Index()
         {
             var propiedades = await _propiedadesService.GetAllPropiedades();
-
+            await _userServices.AddUsuariosDb();
             return View(propiedades);
         }
 

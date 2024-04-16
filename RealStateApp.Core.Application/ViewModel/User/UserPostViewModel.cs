@@ -21,13 +21,13 @@ namespace RealStateApp.Core.Application.ViewModel.User
         public string? TypeOfUser { get; set; }
         public string? ImgUrl { get; set; }
         public string UserName { get; set; }
-        [Required(ErrorMessage = "La Contraseña es Requerida")]
+        //[Required(ErrorMessage = "La Contraseña es Requerida")]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
-        [Required(ErrorMessage = "El campo Confirmar Contraseña es Requerido")]
+        public string? Password { get; set; }
+        //[Required(ErrorMessage = "El campo Confirmar Contraseña es Requerido")]
         [DataType(DataType.Password)]
         [Compare(nameof(Password), ErrorMessage = "Las Contraseñas deben ser Iguales")]
-        public string ConfirnPassword { get; set; }
+        public string? ConfirnPassword { get; set; }
         [DataType(DataType.EmailAddress)]
         [Required(ErrorMessage = "El Campo Correo es Requerido")]
         public string Email { get; set; }

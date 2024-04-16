@@ -1,6 +1,10 @@
 ﻿@model RealStateApp.Core.Application.ViewModel.Propiedad.PropiedadViewModel;
+@using RealStateApp.Core.Application.Helpers;
+@using RealStateApp.Core.Application.Dto.Account;
+@inject IHttpContextAccessor httpContext;
 @{
     ViewData["Title"] = "Eliminar";
+    var user = httpContext.HttpContext.Session.get<AuthenticationResponse>("User");
 }
 
 <form asp-controller="Propiedad" asp-action="Eliminar" method="post" style="margin-bottom:500px ;">
@@ -9,7 +13,7 @@
     <div style="gap: 20px;" class="d-flex justify-content-center align-content-between mt-3 ">
         <input type="hidden" name="Id" value="@Model.Id" />
         <button class="btn btn-danger " type="submit">Eliminar</button>
-        <a asp-controller="Propiedad" class="btn btn-info text-white" asp-action="Index">Cancelar</a>
+        <a asp-controller="Propiedad" asp-route-userId="@user.Id" class="btn btn-info text-white" asp-action="Index">Cancelar</a>
     </div>
 
 </form>

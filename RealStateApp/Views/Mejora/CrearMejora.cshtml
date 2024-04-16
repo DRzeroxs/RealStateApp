@@ -33,7 +33,15 @@
                 <div class="card border-0 shadow">
                     <div class="card-body">
                         <div class="text-center">
-                            <h5 class="fw-bold" style="color: #023e8a">Tipo Venta</h5>
+                            @if(!editMode)
+                            {
+                                <h5 class="fw-bold" style="color: #023e8a">Agregar Mejora</h5>
+                            }
+                           
+                            @if(editMode)
+                            {
+                                <h5 class="fw-bold" style="color: #023e8a">Editar Mejora</h5>
+                            }
                         </div>
 
                         <form method="post" enctype="multipart/form-data" asp-controller="Mejora" asp-action="@(editMode ? "EditarMejora" : "CrearMejora")">

@@ -78,13 +78,15 @@ public class AccountService : IAccountService
         response.UserName = user.UserName;
 
         var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
-        await AddClienteEsquemaDb();
-        await AddAgentesEsquemaDb();
         response.Roles = rolesList.ToList();
         response.IsVerified = user.EmailConfirmed;
         return response;
     }
-
+    public async Task AddUserDb()
+    {
+        await AddAgentesEsquemaDb();
+        await AddClienteEsquemaDb();
+    }
     public async Task SingOutAsync()
     {
         await _signInManager.SignOutAsync();
@@ -591,10 +593,8 @@ public class AccountService : IAccountService
         {
             user.PasswordHash = await UpdatePassword(vm.UserId, vm.Password);
         }
-    
 
-        
-
+       
         var result = await _userManager.UpdateAsync(user);   
     }
     
@@ -661,10 +661,36 @@ public class AccountService : IAccountService
         {
             user.FirstName = vm.FirstName;  
             user.LastName = vm.LastName;    
-            user.PhoneNumber = vm.PhoneNumber;  
-            user.ImgUrl = user.ImgUrl = UploadFile(vm.file, user.Id);
+            user.PhoneNumber = vm.PhoneNumber;
 
-         var result = await _userManager.UpdateAsync(user);
+            if (vm.file == null)
+            {
+                user.ImgUrl = user.ImgUrl;
+            }
+            else
+            {
+                user.ImgUrl = user.ImgUrl = UploadFile(vm.file, user.Id);
+            }
+
+            var agente = await _agenteService.GetByIdentityId(user.Id);
+
+            if (agente != null)
+            {
+                SaveAgenteViewModel saveVm = new();
+                saveVm.IdentityId = vm.Id;
+                saveVm.Apellido = vm.LastName;
+                saveVm.ImgUrl = user.ImgUrl;
+                saveVm.Nombre = user.FirstName;
+                saveVm.Correo = user.Email;
+                saveVm.IsActive = user.EmailConfirmed;
+                saveVm.Telefono = user.PhoneNumber;
+                saveVm.Id = agente.Id;
+
+                await _agenteService.UpdateAsync(saveVm, saveVm.Id);
+            }
+
+
+            var result = await _userManager.UpdateAsync(user);
         }
 
     }

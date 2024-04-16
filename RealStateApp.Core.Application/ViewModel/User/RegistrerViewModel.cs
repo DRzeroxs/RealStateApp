@@ -27,7 +27,7 @@ namespace RealStateApp.Core.Application.ViewModel.User
         [DataType(DataType.Text)]
         public string UserName { get; set; }
         [Required(ErrorMessage = "La Contraseña es Campo Requerida.")]
-        [DataType(DataType.Text)]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
         public string? Cedula { get; set; }
 

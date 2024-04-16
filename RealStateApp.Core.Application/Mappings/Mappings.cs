@@ -106,6 +106,9 @@ namespace RealStateApp.Core.Application.Mappings
             CreateMap<SaveAgenteViewModel, AgenteViewModel>()
                .ReverseMap();
 
+            CreateMap<SaveAgenteViewModel, EditUserViewModel>()
+            .ReverseMap();
+
             CreateMap<AgenteDto, Agente>()
             .ForMember(opt => opt.CreatedBy, i => i.Ignore())
             .ForMember(opt => opt.CreatedDate, i => i.Ignore())
