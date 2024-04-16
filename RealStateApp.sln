@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealStateApp", "RealStateApp\RealStateApp.csproj", "{C2EED2FF-28D9-4BA3-AF08-5793F8447422}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{51C65589-1CDF-4812-BAB2-D5E239149E19}"
+	ProjectSection(SolutionItems) = preProject
+		Miembros.txt = Miembros.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{6F52D1F0-BBE7-4E28-AAFA-322D80435440}"
 EndProject
